@@ -25,7 +25,7 @@ title
  Diagram Test
 end title
 
-class Order
+class Order #ff0000
 {
 }
 class OrderItem
@@ -61,7 +61,7 @@ title
  Diagram Test
 end title
 
-class Order
+class Order #ff0000
 {
 }
 note top of Order
@@ -118,7 +118,7 @@ Order2 --{ OrderItem2:Items
     }
 
 
-    [UmlDiagram("Test")]
+    [UmlDiagram("Test", BackgroundColor = "ff0000")]
     public class Order
     {
         public List<OrderItem> Items { get; set; }
