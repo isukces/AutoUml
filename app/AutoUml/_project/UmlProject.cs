@@ -10,7 +10,7 @@ namespace AutoUml
             foreach (var i in Diagrams)
             {
                 var fileName = filenameFactory(i.Value);
-                i.Value.GenerateFile(fileName);
+                i.Value.SaveToFile(fileName);
             }
         }
 

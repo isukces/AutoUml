@@ -24,7 +24,7 @@ namespace AutoUml
             return Code;
         }
 
-        private string Code
+        public string Code
         {
             get
             {

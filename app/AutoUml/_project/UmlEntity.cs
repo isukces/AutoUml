@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
@@ -58,6 +59,11 @@ namespace AutoUml
         public List<UmlMember> Members    { get; set; } = new List<UmlMember>();
 
         private readonly Dictionary<NoteLocation, string> _notes = new Dictionary<NoteLocation, string>();
+
+        public IReadOnlyDictionary<NoteLocation, string> Notes
+        {
+            get { return _notes; }
+        }
     }
 
     public enum UmlTypes

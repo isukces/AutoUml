@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace AutoUml
 {
@@ -11,7 +12,13 @@ namespace AutoUml
             return type != null && _entities.ContainsKey(type);
         }
 
-        public void GenerateFile(string filename)
+        public void SaveToFile(string filename)
+        {
+            var file = CreateFile();
+            file.SaveIfDifferent(filename);
+        }
+
+        public PlantUmlFile CreateFile()
         {
             var file = new PlantUmlFile();
             Skin?.WriteTo(file.Top);
@@ -41,21 +48,26 @@ namespace AutoUml
 
             ProcessList(iter);
             file.Relations.AddRange(Relations);
-            file.SaveIfDifferent(filename);
+            return file;
         }
 
         public IEnumerable<UmlEntity> GetEntities()
         {
             return _entities.Values;
         }
+        
+        [CanBeNull]
+        public UmlEntity GetEntityByType(Type type)
+        {
+            if (type == null)
+                return null;
+            return _entities.TryGetValue(type, out var ent) ? ent : null;
+        }
+
 
         public string GetTypeName(Type type)
         {
-            return type.GetDiagramName(t =>
-            {
-                _entities.TryGetValue(type, out var info);
-                return info?.Name;
-            });
+            return type.GetDiagramName(t => GetEntityByType(type)?.Name);
         }
 
         public void UpdateTypeInfo(Type type, Action<UmlEntity, bool> modification)
@@ -94,6 +106,7 @@ namespace AutoUml
             if (!_entities.TryGetValue(t, out var info))
                 info = new UmlEntity(t);
             cf.Open(info.GetOpenClassCode());
+            
             foreach (var i in info.Members.OrderBy(q => q.Group))
             {
                 if (i.HideOnList) continue;
@@ -103,6 +116,13 @@ namespace AutoUml
             }
 
             cf.Close();
+            foreach (var i in info.Notes.OrderBy(a=>a.Key))
+            {
+                cf.Writeln($"note {i.Key.ToString().ToLower()} of {info.Name.AddQuotesIfNecessary()}");
+                foreach (var j in i.Value.Split('\n'))
+                    cf.Writeln(j);
+                cf.Writeln("end note");
+            }            
             return result;
         }
 
@@ -115,5 +135,6 @@ namespace AutoUml
         private readonly Dictionary<Type, UmlEntity> _entities = new Dictionary<Type, UmlEntity>();
 
         public event EventHandler<AddTypeToDiagramEventArgs> OnAddTypeToDiagram;
+
     }
 }
