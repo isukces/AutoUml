@@ -15,6 +15,7 @@ namespace AutoUml
                     return;
             }
 
+            new FileInfo(filename).Directory?.Create();
             File.WriteAllText(filename, txt);
         }
 
