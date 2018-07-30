@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net452;net461;netstandard2.0</TargetFrameworks>
+    <SignAssembly>true</SignAssembly>
+    <PackageId>isukces.AutoUml</PackageId>
+    <Authors>Piotr Stęclik</Authors>
+    <Company>Internet Sukces Piotr Stęclik</Company>
+    <Product>AutoUml</Product>
+    <Copyright>Internet Sukces Piotr Stęclik 2018</Copyright>
+    <AssemblyVersion>1.0.18211.1</AssemblyVersion>
+    <Version>1.0.18211.1</Version>
+    <FileVersion>1.0.18211.1</FileVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <DocumentationFile>bin\Debug\net452\AutoUml.Signed.xml</DocumentationFile>
+    <AssemblyName>AutoUml</AssemblyName>
+    <PackageProjectUrl>https://github.com/isukces/AutoUml</PackageProjectUrl>
+    <PackageIconUrl>https://github.com/isukces/AutoUml/blob/master/LICENSE</PackageIconUrl>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <Description>Create UML diagrams directly from .NET code using annotation</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" />
+  </ItemGroup>
+</Project>
