@@ -14,7 +14,14 @@ namespace AutoUml
             {
                 var diagram = umlProject.GetOrCreateDiagram(att.DiagramName);
                 diagram.UpdateTypeInfo(type,
-                    (info, created) => { info.BgColor = UmlColor.FromString(att.BackgroundColor); });
+                    (info, created) =>
+                    {
+                        info.BgColor = UmlColor.FromString(att.BackgroundColor);
+                        if (!string.IsNullOrEmpty(att.Note))
+                        {
+                            info.AddNote(att.NoteLocation, att.Note);
+                        }
+                    });
             }
         }
     }

@@ -14,5 +14,9 @@ namespace AutoUml
         public string DiagramName { get; }
 
         public string BackgroundColor { get; set; }
+
+        public string Note { get; set; }
+
+        public NoteLocation NoteLocation { get; set; }        
     }
 }

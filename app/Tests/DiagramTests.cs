@@ -32,7 +32,7 @@ class OrderItem
 {
 }
 
-Order --{ OrderItem:""Items""
+Order --{ OrderItem:Items
 @enduml
 ";
             Assert.Equal(expected, code);            
@@ -71,7 +71,43 @@ class OrderItem
 {
 }
 
-Order --{ OrderItem:""Items""
+Order --{ OrderItem:Items
+@enduml
+";
+            Assert.Equal(expected, code);            
+        }
+        
+        
+        [Fact]
+        public void T03_Should_create_simple_diagram_with_auto_entity_note()
+        {
+            var b = new ReflectionProjectBuilder(true)
+                .WithAssembly(typeof(DiagramTests).Assembly)
+                .Build();
+            Assert.NotNull(b);
+            Assert.True(b.Diagrams.ContainsKey("Test2"));
+            var diag = b.Diagrams["Test2"];
+            Assert.NotNull(diag);
+
+            var file = diag.CreateFile();
+            Assert.NotNull(file);
+            var code = file.Code;
+            var expected = @"@startuml
+title
+ Diagram Test2
+end title
+
+class Order2
+{
+}
+note right of Order2
+Note from annotation
+end note
+class OrderItem2
+{
+}
+
+Order2 --{ OrderItem2:Items
 @enduml
 ";
             Assert.Equal(expected, code);            
@@ -87,6 +123,18 @@ Order --{ OrderItem:""Items""
 
     [UmlDiagram("Test")]
     public class OrderItem
+    {
+    }
+    
+    
+    [UmlDiagram("Test2", Note = "Note from annotation", NoteLocation = NoteLocation.Right)]
+    public class Order2
+    {
+        public List<OrderItem2> Items { get; set; }
+    }
+
+    [UmlDiagram("Test2")]
+    public class OrderItem2
     {
     }
 }

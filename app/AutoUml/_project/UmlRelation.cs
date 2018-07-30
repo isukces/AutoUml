@@ -7,7 +7,7 @@
             var a = Left.Left + " " + Arrow + " " + Right.Right;
             if (string.IsNullOrEmpty(Label))
                 return a;
-            return a + ":" + Label.AddQuotes();
+            return a + ":" + Label.AddQuotesIfNecessary();
         }
 
         public UmlRelation With(UmlArrowDirections dir)
