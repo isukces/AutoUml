@@ -47,7 +47,7 @@
                 file.Writeln(sp + "handwritten true");
             Circle?.WriteTo(file);
             Class?.WriteTo(file, "class");
-            NoteFont.WriteTo(file, sp + "note");
+            NoteFont?.WriteTo(file, sp + "note");
         }
 
         public bool           Handwritten { get; set; }
