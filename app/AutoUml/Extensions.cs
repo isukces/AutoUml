@@ -53,6 +53,27 @@ namespace AutoUml
                 return name1 + "<" +
                        string.Join(",", type.GetGenericArguments().Select(a => a.GetDiagramName(tryGetAlias))) + ">";
             }
+
+            if (type.IsArray)
+            {
+                string qqq = "";
+                while (type.IsArray)
+                {
+                    var rank = type.GetArrayRank();
+
+                    if (rank == 1)
+                        qqq += "[]";
+                    else
+                        qqq += "[" + new string(',', rank - 1) + "]";
+                    var el = type.GetElementType();
+                    if (el == null)
+                        break;
+                    type = el;
+                }
+
+                qqq = GetDiagramName(type, tryGetAlias) + qqq;
+                return qqq;
+            }
             //var s = Extensions.TryGetSimpleType
 
             if (type == typeof(object)) return "object";

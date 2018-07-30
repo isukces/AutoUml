@@ -30,13 +30,22 @@ namespace AutoUml
 
         public static Type GetListElement(Type type)
         {
+            if (type.IsArray)
+            {
+                var el = type.GetElementType();
+                var el2 = GetListElement(el);
+                return el2 ?? el;
+            }
             while (true)
             {
-                if (type == null) return null;
+                if (type == null) return null;                
                 if (type.IsGenericType)
                 {
                     var ig = type.GetGenericTypeDefinition();
-                    if (ig == typeof(IList<>) || ig == typeof(IReadOnlyList<>) || ig == typeof(ICollection<>))
+                    if (ig == typeof(IList<>) 
+                        || ig == typeof(IReadOnlyList<>) 
+                        || ig == typeof(IReadOnlyCollection<>) 
+                        || ig == typeof(ICollection<>))
                         return type.GetGenericArguments()[0];
                 }
 
