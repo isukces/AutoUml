@@ -11,5 +11,7 @@ namespace AutoUml
         }
 
         public string Text { get; set; }
+
+        public NoteLocation NoteLocation { get; set; } = NoteLocation.Bottom;
     }
 }

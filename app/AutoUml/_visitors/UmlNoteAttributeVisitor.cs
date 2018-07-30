@@ -8,7 +8,7 @@ namespace AutoUml
         {
             var t = info.Type;
             foreach (var i in t.GetCustomAttributes<UmlNoteAttribute>())
-                info.AddNote(NoteLocation.Bottom, i.Text);
+                info.AddNote(i.NoteLocation, i.Text);
         }
     }
 }

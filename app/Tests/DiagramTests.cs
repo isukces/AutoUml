@@ -106,6 +106,9 @@ end note
 class OrderItem2
 {
 }
+note left of OrderItem2
+Note from UmlNote
+end note
 
 Order2 --{ OrderItem2:Items
 @enduml
@@ -134,6 +137,7 @@ Order2 --{ OrderItem2:Items
     }
 
     [UmlDiagram("Test2")]
+    [UmlNote("Note from UmlNote", NoteLocation = NoteLocation.Left)]
     public class OrderItem2
     {
     }
