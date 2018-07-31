@@ -1,0 +1,20 @@
+@startuml
+title
+ Diagram Test2
+end title
+
+class Order2
+{
+}
+note right of Order2
+Note from annotation
+end note
+class OrderItem2
+{
+}
+note left of OrderItem2
+Note from UmlNote
+end note
+
+Order2 --{ OrderItem2:Items
+@enduml

@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Tests
 {
-    public class DiagramTests
+    public class DiagramTests:TestsBase
     {
         [Fact]
         public void T01_Should_create_simple_diagram()
@@ -20,6 +20,8 @@ namespace Tests
             var file = diag.CreateFile();
             Assert.NotNull(file);
             var code = file.Code;
+            Save(code);
+            
             var expected = @"@startuml
 title
  Diagram Test
@@ -56,6 +58,8 @@ Order --{ OrderItem:Items
             var file = diag.CreateFile();
             Assert.NotNull(file);
             var code = file.Code;
+            Save(code);
+            // 1074296
             var expected = @"@startuml
 title
  Diagram Test
@@ -92,6 +96,7 @@ Order --{ OrderItem:Items
             var file = diag.CreateFile();
             Assert.NotNull(file);
             var code = file.Code;
+            Save(code);
             var expected = @"@startuml
 title
  Diagram Test2

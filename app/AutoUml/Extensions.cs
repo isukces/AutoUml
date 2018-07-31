@@ -24,17 +24,17 @@ namespace AutoUml
         public static string CamelToNormal(this string n, bool onlyFirstUpper)
         {
             n = n?.Trim();
-            if (string.IsNullOrEmpty(n))
-                return string.Empty;
+            if (String.IsNullOrEmpty(n))
+                return String.Empty;
             var sb = new StringBuilder();
             foreach (var i in n)
             {
-                var isUpper    = char.ToUpper(i) == i;
+                var isUpper    = Char.ToUpper(i) == i;
                 var isNotFirst = sb.Length > 0;
                 if (isUpper && isNotFirst)
                     sb.Append(" ");
                 if (isUpper && onlyFirstUpper && isNotFirst)
-                    sb.Append(char.ToLower(i));
+                    sb.Append(Char.ToLower(i));
                 else
                     sb.Append(i);
             }
@@ -51,7 +51,7 @@ namespace AutoUml
                     return type.GetGenericArguments()[0].GetDiagramName(tryGetAlias) + "?";
                 var name1 = gt.Name.Split('`').First();
                 return name1 + "<" +
-                       string.Join(",", type.GetGenericArguments().Select(a => a.GetDiagramName(tryGetAlias))) + ">";
+                       String.Join(",", type.GetGenericArguments().Select(a => a.GetDiagramName(tryGetAlias))) + ">";
             }
 
             if (type.IsArray)
@@ -94,7 +94,7 @@ namespace AutoUml
             if (type == typeof(bool)) return "bool";
 
             var name = tryGetAlias(type);
-            return string.IsNullOrEmpty(name) ? type.Name : name;
+            return String.IsNullOrEmpty(name) ? type.Name : name;
         }
 
         public static bool IsStruct(this Type type)
@@ -106,7 +106,7 @@ namespace AutoUml
         {
             var args = from parameter in methodInfo.GetParameters()
                 select retTypeName(parameter.ParameterType) + " " + parameter.Name;
-            var args2 = string.Join(",", args);
+            var args2 = String.Join(",", args);
             return $"{retTypeName(methodInfo.ReturnType)} {methodInfo.Name}({args2})";
         }
 
@@ -155,8 +155,22 @@ namespace AutoUml
         public static void Write(this CodeWriter code, string name, string value)
         {
             value = value?.Trim();
-            if (!string.IsNullOrEmpty(value))
+            if (!String.IsNullOrEmpty(value))
                 code.Writeln(name + " " + value);
+        }
+
+        public static void SaveContentIfDifferent(this FileInfo file, string txt)
+        {
+            var filename = file.FullName;
+            if (File.Exists(filename))
+            {
+                var existing = File.ReadAllText(filename);
+                if (txt == existing)
+                    return;
+            }
+
+            new FileInfo(filename).Directory?.Create();
+            File.WriteAllText(filename, txt);
         }
     }
 }

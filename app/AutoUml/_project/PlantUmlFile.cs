@@ -7,16 +7,7 @@ namespace AutoUml
     {
         public void SaveIfDifferent(string filename)
         {
-            var txt = Code;
-            if (File.Exists(filename))
-            {
-                var existing = File.ReadAllText(filename);
-                if (txt == existing)
-                    return;
-            }
-
-            new FileInfo(filename).Directory?.Create();
-            File.WriteAllText(filename, txt);
+            new FileInfo(filename).SaveContentIfDifferent(Code);
         }
 
         public override string ToString()

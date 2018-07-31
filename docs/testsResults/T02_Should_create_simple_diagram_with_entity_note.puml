@@ -1,0 +1,17 @@
+@startuml
+title
+ Diagram Test
+end title
+
+class Order #ff0000
+{
+}
+note top of Order
+Sample note
+end note
+class OrderItem
+{
+}
+
+Order --{ OrderItem:Items
+@enduml

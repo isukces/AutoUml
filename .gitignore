@@ -58,3 +58,4 @@ obj
 .vs
 *.log
 app/projects-versions.json
+docs/testsResults/run-plantuml.bat
