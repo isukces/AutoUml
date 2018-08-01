@@ -118,8 +118,11 @@ namespace AutoUml
             cf.Close();
             foreach (var i in info.Notes.OrderBy(a=>a.Key))
             {
-                cf.Writeln($"note {i.Key.ToString().ToLower()} of {info.Name.AddQuotesIfNecessary()}");
-                foreach (var j in i.Value.Split('\n'))
+                var bg = i.Value.Background?.GetCode();
+                if (!string.IsNullOrEmpty(bg))
+                    bg = " " + bg;
+                cf.Writeln($"note {i.Key.ToString().ToLower()} of {info.Name.AddQuotesIfNecessary()}{bg}");
+                foreach (var j in i.Value.Text.Split('\n'))
                     cf.Writeln(j);
                 cf.Writeln("end note");
             }            

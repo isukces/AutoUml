@@ -14,7 +14,7 @@ namespace AutoUml
     public interface INoteProvider
     {
         string GetNoteText();
-        NoteLocation? GetNoteLocation();
+        NoteLocation GetNoteLocation();
         IUmlFill GetNoteBackground();
     }
 }

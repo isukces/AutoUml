@@ -17,10 +17,7 @@ namespace AutoUml
                     (info, created) =>
                     {
                         info.Background = (att as IEntityBackgroundProvider).GetEntityBackground();
-                        if (!string.IsNullOrEmpty(att.Note))
-                        {
-                            info.AddNote(att.NoteLocation, att.Note);
-                        }
+                        info.AddNote(att);
                     });
             }
         }

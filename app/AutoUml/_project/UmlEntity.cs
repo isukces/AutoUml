@@ -20,14 +20,23 @@ namespace AutoUml
                 IsAbstract = true;
         }
 
-        public void AddNote(NoteLocation location, string note)
+        public void AddNote(INoteProvider np)
+        {
+            if (np == null)
+                return;
+            AddNote(np.GetNoteLocation(), np.GetNoteText(), np.GetNoteBackground());
+        }
+
+        public void AddNote(NoteLocation location, string note, IUmlFill background=null)
         {
             note = note?.Trim();
             if (string.IsNullOrEmpty(note))
                 return;
-            if (_notes.TryGetValue(location, out var currentText))
-                note = currentText + "\n" + note;
-            _notes[location] = note;
+            if (!_notes.TryGetValue(location, out var x))
+                _notes[location] = x = new UmlNote();
+            if (background != null)
+                x.Background = background;
+            x.Text += "\n" + note;
         }
 
         public string GetOpenClassCode()
@@ -60,12 +69,18 @@ namespace AutoUml
         public bool            IsAbstract { get; set; }
         public List<UmlMember> Members    { get; set; } = new List<UmlMember>();
 
-        public IReadOnlyDictionary<NoteLocation, string> Notes
+        public IReadOnlyDictionary<NoteLocation, UmlNote> Notes
         {
             get { return _notes; }
         }
 
-        private readonly Dictionary<NoteLocation, string> _notes = new Dictionary<NoteLocation, string>();
+        private readonly Dictionary<NoteLocation, UmlNote> _notes = new Dictionary<NoteLocation, UmlNote>();
+    }
+
+    public class UmlNote
+    {
+        public IUmlFill Background { get; set; }
+        public string   Text       { get; set; }
     }
 
     public enum UmlTypes

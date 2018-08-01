@@ -17,7 +17,7 @@ namespace AutoUml
             return UmlColor.FromString(NoteBackground).ToFill();
         }
 
-        NoteLocation? INoteProvider.GetNoteLocation()
+        NoteLocation INoteProvider.GetNoteLocation()
         {
             return NoteLocation;
         }
