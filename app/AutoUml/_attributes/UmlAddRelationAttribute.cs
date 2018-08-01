@@ -5,8 +5,7 @@ namespace AutoUml
     /// <summary>
     ///     Use it when additional relation is necessary
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Interface, AllowMultiple =
-        true)]
+    [AttributeUsage(AttributesConsts.Entities, AllowMultiple = true)]
     public class UmlAddRelationAttribute : Attribute
     {
         public UmlAddRelationAttribute(Type relatedType, string name,

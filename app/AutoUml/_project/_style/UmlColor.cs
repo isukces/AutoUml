@@ -3,14 +3,14 @@
     public struct UmlColor : IPlantUmlCodeProvider
     {
         public UmlColor(string colorCode)
-            :this(null, colorCode)
+            : this(null, colorCode)
         {
         }
 
         private UmlColor(string wellKnownName, string color)
         {
             _isSet        = true;
-            ColorCode = color?.TrimStart('#', ' ').TrimEnd() ?? string.Empty;
+            ColorCode     = color?.TrimStart('#', ' ').TrimEnd() ?? string.Empty;
             WellKnownName = wellKnownName;
         }
 
@@ -19,6 +19,11 @@
         {
             color = color?.Trim();
             return string.IsNullOrEmpty(color) ? Empty : new UmlColor(color);
+        }
+
+        public IUmlFill ToFill()
+        {
+            return IsEmpty ? (IUmlFill)null : new SolidColorFill(this);
         }
 
         public override string ToString()

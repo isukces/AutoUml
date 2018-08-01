@@ -70,7 +70,7 @@ namespace AutoUml
             return type.GetDiagramName(t => GetEntityByType(type)?.Name);
         }
 
-        public void UpdateTypeInfo(Type type, Action<UmlEntity, bool> modification)
+        public void UpdateTypeInfo(Type type, [CanBeNull]Action<UmlEntity, bool> modification)
         {
             var created = false;
             if (!_entities.TryGetValue(type, out var info))

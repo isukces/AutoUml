@@ -2,16 +2,33 @@
 
 namespace AutoUml
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Interface)]
-    public class UmlNoteAttribute : Attribute
+    [AttributeUsage(AttributesConsts.Entities)]
+    public class UmlNoteAttribute : Attribute, INoteProvider
     {
-        public UmlNoteAttribute(string text)
+        public UmlNoteAttribute(string note)
         {
-            Text = text;
+            Note = note;
         }
 
-        public string Text { get; set; }
+        IUmlFill INoteProvider.GetNoteBackground()
+        {
+            return UmlColor.FromString(NoteBackground).ToFill();
+        }
+
+        NoteLocation? INoteProvider.GetNoteLocation()
+        {
+            return NoteLocation;
+        }
+
+        string INoteProvider.GetNoteText()
+        {
+            return Note;
+        }
+
+        public string Note { get; set; }
 
         public NoteLocation NoteLocation { get; set; } = NoteLocation.Bottom;
+
+        public string NoteBackground { get; set; }
     }
 }

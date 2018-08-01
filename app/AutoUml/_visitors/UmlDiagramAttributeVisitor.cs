@@ -16,7 +16,7 @@ namespace AutoUml
                 diagram.UpdateTypeInfo(type,
                     (info, created) =>
                     {
-                        info.BgColor = UmlColor.FromString(att.BackgroundColor);
+                        info.Background = (att as IEntityBackgroundProvider).GetEntityBackground();
                         if (!string.IsNullOrEmpty(att.Note))
                         {
                             info.AddNote(att.NoteLocation, att.Note);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
@@ -41,8 +40,11 @@ namespace AutoUml
             var spot = Spot?.PlantUmlCode;
             if (!string.IsNullOrEmpty(spot))
                 items.Add(spot);
-            if (!BgColor.IsEmpty)
-                items.Add(BgColor.PlantUmlCode);
+            {
+                var code = Background?.GetCode();
+                if (!string.IsNullOrEmpty(code))
+                    items.Add(code);
+            }
             return string.Join(" ", items);
         }
 
@@ -51,19 +53,19 @@ namespace AutoUml
         public Type Type { get; }
 
         public string          Name       { get; set; }
-        public UmlColor        BgColor    { get; set; }
+        public IUmlFill        Background { get; set; }
         public int             OrderIndex { get; set; }
         public UmlSpot         Spot       { get; set; }
         public UmlTypes        KeyWord    { get; set; }
         public bool            IsAbstract { get; set; }
         public List<UmlMember> Members    { get; set; } = new List<UmlMember>();
 
-        private readonly Dictionary<NoteLocation, string> _notes = new Dictionary<NoteLocation, string>();
-
         public IReadOnlyDictionary<NoteLocation, string> Notes
         {
             get { return _notes; }
         }
+
+        private readonly Dictionary<NoteLocation, string> _notes = new Dictionary<NoteLocation, string>();
     }
 
     public enum UmlTypes
