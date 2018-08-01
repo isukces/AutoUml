@@ -7,9 +7,11 @@
             _color = color;
         }
 
-        public string GetCode()
+        public string GetCode(bool convertToRgb)
         {
-            return _color.PlantUmlCode;
+            if (_color.IsEmpty)
+                return "";
+            return convertToRgb ? _color.PlantUmlRgbCode : _color.PlantUmlCode;
         }
 
         private readonly UmlColor _color;

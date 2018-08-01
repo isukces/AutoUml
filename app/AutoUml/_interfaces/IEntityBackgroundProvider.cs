@@ -7,14 +7,28 @@ namespace AutoUml
 
     public interface IUmlFill
     {
-        string GetCode();
+        string GetCode(bool convertToRgb=false);
+    }
+
+    public static class UmlFillExt
+    {
+        public static string GetCodeWithSpace(this IUmlFill fill)
+        {
+            var code = fill?.GetCode();
+            return string.IsNullOrEmpty(code) ? string.Empty : " " + code;
+        }
+
+        public static bool IsEmpty(this IUmlFill fill)
+        {
+            return string.IsNullOrEmpty(fill?.GetCode());
+        }
     }
 
 
     public interface INoteProvider
     {
-        string GetNoteText();
-        NoteLocation GetNoteLocation();
         IUmlFill GetNoteBackground();
+        NoteLocation GetNoteLocation();
+        string GetNoteText();
     }
 }

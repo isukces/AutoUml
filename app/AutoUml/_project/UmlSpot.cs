@@ -2,7 +2,10 @@
 {
     public class UmlSpot : IPlantUmlCodeProvider
     {
-        public string   InCircle              { get; set; }
+        public string InCircle { get; set; }
+
+
+        // supports only color, IUmlFill will not work
         public UmlColor CircleBackgroundColor { get; set; }
         public string   Text                  { get; set; }
 
@@ -16,7 +19,7 @@
                 {
                     result = s;
                     if (!CircleBackgroundColor.IsEmpty)
-                        result += "," + CircleBackgroundColor.PlantUmlCode;
+                        result += "," + CircleBackgroundColor.PlantUmlRgbCode;
                     result = "(" + result + ")";
                 }
 

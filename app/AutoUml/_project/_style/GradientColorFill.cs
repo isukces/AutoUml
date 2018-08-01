@@ -11,10 +11,10 @@ namespace AutoUml
             _direction = direction;
         }
 
-        public string GetCode()
+        public string GetCode(bool convertToRgb)
         {
-            var c1 = _first.PlantUmlCode;
-            var c2 = _second.PlantUmlCode;
+            var c1 = convertToRgb ? _first.PlantUmlRgbCode : _first.PlantUmlCode;
+            var c2 = convertToRgb ? _second.PlantUmlRgbCode : _second.PlantUmlCode;
             if (_first.IsEmpty)
                 return c2;
             if (_second.IsEmpty)

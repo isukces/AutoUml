@@ -163,6 +163,47 @@ Order --{ OrderItem:Items
 ";
             Assert.Equal(expected, code);
         }
+
+
+        [Fact]
+        public void T05_Should_create_spot_with_background()
+        {
+            var b = new ReflectionProjectBuilder(true)
+                .WithAssembly(typeof(DiagramTests).Assembly)
+                .Build();
+            Assert.NotNull(b);
+            Assert.True(b.Diagrams.ContainsKey("Test"));
+            var diag = b.Diagrams["Test"];
+            Assert.NotNull(diag);
+
+            var ent = diag.GetEntityByType(typeof(Order));
+            ent.Spot = new UmlSpot
+            {
+                InCircle              = "X",
+                CircleBackgroundColor = UmlColor.Blue
+            };
+
+            var file = diag.CreateFile();
+            Assert.NotNull(file);
+            var code = file.Code;
+            Save(code);
+            var expected = @"@startuml
+title
+ Diagram Test
+end title
+
+class Order << (X,#0000ff) >> #ff0000
+{
+}
+class OrderItem
+{
+}
+
+Order --{ OrderItem:Items
+@enduml
+";
+            Assert.Equal(expected, code);
+        }
     }
 
 

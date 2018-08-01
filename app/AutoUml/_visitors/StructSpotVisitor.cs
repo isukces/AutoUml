@@ -18,10 +18,10 @@
             if (!isStruct) return;
             info.Spot                       = info.Spot ?? new UmlSpot();
             info.Spot.InCircle              = "S";
-            info.Spot.CircleBackgroundColor = UmlColor.FromString("FF7700");
+            info.Spot.CircleBackgroundColor = CircleBackgroundColor;
         }
 
         public UmlColor CircleBackgroundColor { get; set; }
-        public static readonly UmlColor DefaultColor = UmlColor.FromString("FF7700");
+        public static UmlColor DefaultColor = UmlColor.FromString("FF7700");
     }
 }
