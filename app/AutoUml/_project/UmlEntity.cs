@@ -20,7 +20,7 @@ namespace AutoUml
                 IsAbstract = true;
         }
 
-        public void AddNote(INoteProvider np)
+        public void AddNote(INoteWithLocationProvider np)
         {
             if (np == null)
                 return;

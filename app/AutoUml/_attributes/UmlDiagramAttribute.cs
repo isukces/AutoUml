@@ -3,7 +3,7 @@
 namespace AutoUml
 {
     [AttributeUsage(AttributesConsts.Entities, AllowMultiple = true)]
-    public class UmlDiagramAttribute : Attribute, IEntityBackgroundProvider, INoteProvider
+    public class UmlDiagramAttribute : Attribute, IEntityBackgroundProvider, INoteWithLocationProvider
     {
         public UmlDiagramAttribute(string diagramName)
         {
@@ -20,7 +20,7 @@ namespace AutoUml
             return UmlColor.FromString(NoteBackground).ToFill();
         }
 
-        NoteLocation INoteProvider.GetNoteLocation()
+        NoteLocation INoteWithLocationProvider.GetNoteLocation()
         {
             return NoteLocation;
         }

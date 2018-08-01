@@ -27,7 +27,7 @@ namespace AutoUml
                 {
                     cf.Writeln(t.ToString());
                     if (string.IsNullOrEmpty(t.Note)) continue;
-                    cf.Writeln("note on link " + t.NoteColor);
+                    cf.Writeln("note on link " + t.NoteBackground.GetCodeWithSpace(false));
                     foreach (var line in t.Note.Split('\n', '\r'))
                         if (!string.IsNullOrEmpty(line))
                             cf.Writeln(line);

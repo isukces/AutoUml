@@ -1,0 +1,17 @@
+@startuml
+title
+ Diagram Test
+end title
+
+class Order #ff0000
+{
+}
+class OrderItem
+{
+}
+
+Order --{ OrderItem:Items
+note on link  #aqua/aliceblue
+Note on rel
+end note
+@enduml

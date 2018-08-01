@@ -3,7 +3,7 @@
 namespace AutoUml
 {
     [AttributeUsage(AttributesConsts.Entities)]
-    public class UmlNoteAttribute : Attribute, INoteProvider
+    public class UmlNoteAttribute : Attribute, INoteWithLocationProvider
     {
         public UmlNoteAttribute(string note)
         {
@@ -15,7 +15,7 @@ namespace AutoUml
             return UmlColor.FromString(NoteBackground).ToFill();
         }
 
-        NoteLocation INoteProvider.GetNoteLocation()
+        NoteLocation INoteWithLocationProvider.GetNoteLocation()
         {
             return NoteLocation;
         }

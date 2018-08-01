@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using AutoUml;
 using Xunit;
 
@@ -164,6 +165,45 @@ Order --{ OrderItem:Items
             Assert.Equal(expected, code);
         }
 
+        [Fact]
+        public void T06_Should_create_note_on_relation()
+        {
+            var b = new ReflectionProjectBuilder(true)
+                .WithAssembly(typeof(DiagramTests).Assembly)
+                .Build();
+            Assert.NotNull(b);
+            Assert.True(b.Diagrams.ContainsKey("Test"));
+            var diag = b.Diagrams["Test"];
+            Assert.NotNull(diag);
+            var rel = diag.Relations.Single();
+            rel.Note = "Note on rel";
+            rel.NoteBackground = new GradientColorFill(UmlColor.Aqua, UmlColor.AliceBlue, GradientDirection.DownRight); 
+
+            var file = diag.CreateFile();
+            Assert.NotNull(file);
+            var code = file.Code;
+            Save(code);
+
+            var expected = @"@startuml
+title
+ Diagram Test
+end title
+
+class Order #ff0000
+{
+}
+class OrderItem
+{
+}
+
+Order --{ OrderItem:Items
+note on link  #aqua/aliceblue
+Note on rel
+end note
+@enduml
+";
+            Assert.Equal(expected, code);
+        }
 
         [Fact]
         public void T05_Should_create_spot_with_background()
