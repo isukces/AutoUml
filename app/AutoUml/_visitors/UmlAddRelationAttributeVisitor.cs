@@ -2,24 +2,19 @@
 
 namespace AutoUml
 {
-    public class UmlAddRelationAttributeVisitor : INewTypeInDiagramVisitor
+    public class UmlAddRelationAttributeVisitor : NewTypeMultipleAttributeVisitor<UmlAddRelationAttribute>
     {
-        public void Visit(UmlProjectDiagram diagram, UmlEntity info)
+        protected override void VisitInternal(UmlProjectDiagram diagram, UmlEntity info, UmlAddRelationAttribute att)
         {
-            var type = info.Type;
-            foreach (var att in type.GetCustomAttributes<UmlAddRelationAttribute>())
-            {
-                INoteProvider np = att;
-                var rel = new UmlRelation
+            var rel = new UmlRelation
                 {
-                    Left  = new UmlRelationEnd(diagram.GetTypeName(type)),
+                    Left  = new UmlRelationEnd(diagram.GetTypeName(info.Type)),
                     Right = new UmlRelationEnd(diagram.GetTypeName(att.RelatedType)),
                     Arrow = UmlRelationArrow.GetRelationByKind(att.Kind, att.Multiple),
-                    Label = att.Name,
+                    Label = att.Name
                 }
                 .WithNote(att);
-                diagram.Relations.Add(rel);
-            }
+            diagram.Relations.Add(rel);
         }
     }
 }

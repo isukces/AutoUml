@@ -2,13 +2,11 @@
 
 namespace AutoUml
 {
-    public class UmlNoteAttributeVisitor : INewTypeInDiagramVisitor
+    public class UmlNoteAttributeVisitor : NewTypeMultipleAttributeVisitor<UmlNoteAttribute>
     {
-        public void Visit(UmlProjectDiagram diagram, UmlEntity info)
+        protected override void VisitInternal(UmlProjectDiagram diagram, UmlEntity info, UmlNoteAttribute att)
         {
-            var t = info.Type;
-            foreach (var i in t.GetCustomAttributes<UmlNoteAttribute>())
-                info.AddNote(i);
+            info.AddNote(att);            
         }
     }
 }
