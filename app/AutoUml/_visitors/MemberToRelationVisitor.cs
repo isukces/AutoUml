@@ -36,19 +36,18 @@ namespace AutoUml
                         ti.IsCollection ? ArrowEnd.Multiple : ArrowEnd.ArrowOpen);
                     var owner          = diagClass.Type;
                     var component      = ti.ElementType;
-                    var ownerLabel     = "";
-                    var componentLabel = "";
-
+                    const string ownerLabel = "";
+                    const string componentLabel = "";
+                    
+                    
+                    var att            = prop.Property.GetCustomAttribute<UmlRelationAttribute>();
+                    if (att != null)
                     {
-                        var att = prop.Property.GetCustomAttribute<UmlRelationAttribute>();
-                        if (att != null)
-                        {
-                            arrow = UmlRelationArrow.GetRelationByKind(att.Kind, att.Multiple ?? ti.IsCollection);
-                            if (att.ArrowDirection != UmlArrowDirections.Auto)
-                                arrow.ArrowDirection = att.ArrowDirection;
-                            if (att.ForceAddToDiagram)
-                                typesToAdd.Add(ti.ElementType);
-                        }
+                        arrow = UmlRelationArrow.GetRelationByKind(att.Kind, att.Multiple ?? ti.IsCollection);
+                        if (att.ArrowDirection != UmlArrowDirections.Auto)
+                            arrow.ArrowDirection = att.ArrowDirection;
+                        if (att.ForceAddToDiagram)
+                            typesToAdd.Add(ti.ElementType);
                     }
 
                     var rel = new UmlRelation
@@ -57,7 +56,7 @@ namespace AutoUml
                         Right = new UmlRelationEnd(diagram.GetTypeName(component), componentLabel),
                         Arrow = arrow,
                         Label = prop.Name
-                    };
+                    }.WithNote(att);
                     diagram.Relations.Add(rel);
                 }
             }
