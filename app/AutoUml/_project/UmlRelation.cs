@@ -1,6 +1,8 @@
-﻿namespace AutoUml
+﻿using System.Collections.Generic;
+
+namespace AutoUml
 {
-    public class UmlRelation
+    public class UmlRelation : ICustomDataContainer
     {
         public override string ToString()
         {
@@ -27,9 +29,10 @@
         public UmlRelationEnd Left  { get; set; }
         public UmlRelationEnd Right { get; set; }
 
-        public UmlRelationArrow Arrow          { get; set; }
-        public string           Label          { get; set; }
-        public string           Note           { get; set; }
-        public IUmlFill         NoteBackground { get; set; }
+        public UmlRelationArrow           Arrow          { get; set; }
+        public string                     Label          { get; set; }
+        public string                     Note           { get; set; }
+        public IUmlFill                   NoteBackground { get; set; }
+        public Dictionary<string, object> CustomData     { get; } = new Dictionary<string, object>();
     }
 }

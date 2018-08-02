@@ -16,5 +16,4 @@
 
         private readonly UmlColor _color;
     }
-   
 }

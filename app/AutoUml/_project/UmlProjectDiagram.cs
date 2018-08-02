@@ -5,17 +5,11 @@ using JetBrains.Annotations;
 
 namespace AutoUml
 {
-    public class UmlProjectDiagram
+    public class UmlProjectDiagram : ICustomDataContainer
     {
         public bool ContainsType(Type type)
         {
             return type != null && _entities.ContainsKey(type);
-        }
-
-        public void SaveToFile(string filename)
-        {
-            var file = CreateFile();
-            file.SaveIfDifferent(filename);
         }
 
         public PlantUmlFile CreateFile()
@@ -55,7 +49,7 @@ namespace AutoUml
         {
             return _entities.Values;
         }
-        
+
         [CanBeNull]
         public UmlEntity GetEntityByType(Type type)
         {
@@ -70,7 +64,13 @@ namespace AutoUml
             return type.GetDiagramName(t => GetEntityByType(type)?.Name);
         }
 
-        public void UpdateTypeInfo(Type type, [CanBeNull]Action<UmlEntity, bool> modification)
+        public void SaveToFile(string filename)
+        {
+            var file = CreateFile();
+            file.SaveIfDifferent(filename);
+        }
+
+        public void UpdateTypeInfo(Type type, [CanBeNull] Action<UmlEntity, bool> modification)
         {
             var created = false;
             if (!_entities.TryGetValue(type, out var info))
@@ -106,7 +106,7 @@ namespace AutoUml
             if (!_entities.TryGetValue(t, out var info))
                 info = new UmlEntity(t);
             cf.Open(info.GetOpenClassCode());
-            
+
             foreach (var i in info.Members.OrderBy(q => q.Group))
             {
                 if (i.HideOnList) continue;
@@ -116,7 +116,7 @@ namespace AutoUml
             }
 
             cf.Close();
-            foreach (var i in info.Notes.OrderBy(a=>a.Key))
+            foreach (var i in info.Notes.OrderBy(a => a.Key))
             {
                 var bg = i.Value.Background?.GetCode();
                 if (!string.IsNullOrEmpty(bg))
@@ -126,19 +126,20 @@ namespace AutoUml
                     if (!string.IsNullOrEmpty(j))
                         cf.Writeln(j);
                 cf.Writeln("end note");
-            }            
+            }
+
             return result;
         }
 
+        public UmlDiagramScale            Scale      { get; set; }
+        public string                     Title      { get; set; }
+        public string                     Name       { get; set; }
+        public UmlSkinParams              Skin       { get; set; } = new UmlSkinParams();
+        public List<UmlRelation>          Relations  { get; set; } = new List<UmlRelation>();
+        public Dictionary<string, object> CustomData { get; }      = new Dictionary<string, object>();
 
-        public UmlDiagramScale   Scale     { get; set; }
-        public string            Title     { get; set; }
-        public string            Name      { get; set; }
-        public UmlSkinParams     Skin      { get; set; } = new UmlSkinParams();
-        public List<UmlRelation> Relations { get; set; } = new List<UmlRelation>();
         private readonly Dictionary<Type, UmlEntity> _entities = new Dictionary<Type, UmlEntity>();
 
         public event EventHandler<AddTypeToDiagramEventArgs> OnAddTypeToDiagram;
-
     }
 }
