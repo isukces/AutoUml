@@ -123,7 +123,8 @@ namespace AutoUml
                     bg = " " + bg;
                 cf.Writeln($"note {i.Key.ToString().ToLower()} of {info.Name.AddQuotesIfNecessary()}{bg}");
                 foreach (var j in i.Value.Text.Split('\n'))
-                    cf.Writeln(j);
+                    if (!string.IsNullOrEmpty(j))
+                        cf.Writeln(j);
                 cf.Writeln("end note");
             }            
             return result;

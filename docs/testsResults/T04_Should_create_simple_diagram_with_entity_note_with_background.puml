@@ -7,7 +7,6 @@ class Order #ff0000
 {
 }
 note top of Order #indianred
-
 Sample note
 end note
 class OrderItem

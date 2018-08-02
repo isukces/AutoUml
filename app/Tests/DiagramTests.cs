@@ -69,7 +69,6 @@ class Order #ff0000
 {
 }
 note top of Order
-
 Sample note
 end note
 class OrderItem
@@ -106,14 +105,12 @@ class Order2
 {
 }
 note right of Order2
-
 Note from annotation
 end note
 class OrderItem2
 {
 }
 note left of OrderItem2
-
 Note from UmlNote
 end note
 
@@ -151,7 +148,6 @@ class Order #ff0000
 {
 }
 note top of Order #indianred
-
 Sample note
 end note
 class OrderItem
@@ -271,7 +267,6 @@ class Order3
 {
 }
 note right of Order3
-
 Note from annotation
 end note
 class CompanyInfo
@@ -282,11 +277,14 @@ class OrderItem3
 {
 }
 note left of OrderItem3
-
 Note from UmlNote
 end note
 
-Order3 o--> CompanyInfo:Customer
+Order3 o-right-> CompanyInfo:Customer
+note on link  #ffe0f0
+Note on relation
+from UmlRelationAtribute
+end note
 Order3 *--{ OrderItem3:Items
 @enduml
 ";
