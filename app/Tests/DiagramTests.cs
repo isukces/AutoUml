@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using AutoUml;
 using Xunit;
@@ -166,46 +165,6 @@ Order --{ OrderItem:Items
         }
 
         [Fact]
-        public void T06_Should_create_note_on_relation()
-        {
-            var b = new ReflectionProjectBuilder(true)
-                .WithAssembly(typeof(DiagramTests).Assembly)
-                .Build();
-            Assert.NotNull(b);
-            Assert.True(b.Diagrams.ContainsKey("Test"));
-            var diag = b.Diagrams["Test"];
-            Assert.NotNull(diag);
-            var rel = diag.Relations.Single();
-            rel.Note = "Note on rel";
-            rel.NoteBackground = new GradientColorFill(UmlColor.Aqua, UmlColor.AliceBlue, GradientDirection.DownRight); 
-
-            var file = diag.CreateFile();
-            Assert.NotNull(file);
-            var code = file.Code;
-            Save(code);
-
-            var expected = @"@startuml
-title
- Diagram Test
-end title
-
-class Order #ff0000
-{
-}
-class OrderItem
-{
-}
-
-Order --{ OrderItem:Items
-note on link  #aqua/aliceblue
-Note on rel
-end note
-@enduml
-";
-            Assert.Equal(expected, code);
-        }
-
-        [Fact]
         public void T05_Should_create_spot_with_background()
         {
             var b = new ReflectionProjectBuilder(true)
@@ -244,30 +203,94 @@ Order --{ OrderItem:Items
 ";
             Assert.Equal(expected, code);
         }
-    }
+
+        [Fact]
+        public void T06_Should_create_note_on_relation()
+        {
+            var b = new ReflectionProjectBuilder(true)
+                .WithAssembly(typeof(DiagramTests).Assembly)
+                .Build();
+            Assert.NotNull(b);
+            Assert.True(b.Diagrams.ContainsKey("Test"));
+            var diag = b.Diagrams["Test"];
+            Assert.NotNull(diag);
+            var rel = diag.Relations.Single();
+            rel.Note           = "Note on rel";
+            rel.NoteBackground = new GradientColorFill(UmlColor.Aqua, UmlColor.AliceBlue, GradientDirection.DownRight);
+
+            var file = diag.CreateFile();
+            Assert.NotNull(file);
+            var code = file.Code;
+            Save(code);
+
+            var expected = @"@startuml
+title
+ Diagram Test
+end title
+
+class Order #ff0000
+{
+}
+class OrderItem
+{
+}
+
+Order --{ OrderItem:Items
+note on link  #aqua/aliceblue
+Note on rel
+end note
+@enduml
+";
+            Assert.Equal(expected, code);
+        }
 
 
-    [UmlDiagram("Test", BackgroundColor = "ff0000")]
-    public class Order
-    {
-        public List<OrderItem> Items { get; set; }
-    }
+        [Fact]
+        public void T07_Should_add_related_class_to_diagram()
+        {
+            var b = new ReflectionProjectBuilder(true)
+                .WithAssembly(typeof(DiagramTests).Assembly)
+                .Build();
+            Assert.NotNull(b);
+            Assert.True(b.Diagrams.ContainsKey("Test3"));
+            var diagram = b.Diagrams["Test3"];
+            Assert.NotNull(diagram);
+            Assert.Equal(3, diagram.GetEntities().Count());
+           
+            var file = diagram.CreateFile();
+            Assert.NotNull(file);
+            var code = file.Code;
+            Save(code);
 
-    [UmlDiagram("Test")]
-    public class OrderItem
-    {
-    }
+            var expected = @"@startuml
+title
+ Diagram Test3
+end title
 
+class Order3
+{
+}
+note right of Order3
 
-    [UmlDiagram("Test2", Note = "Note from annotation", NoteLocation = NoteLocation.Right)]
-    public class Order2
-    {
-        public List<OrderItem2> Items { get; set; }
-    }
+Note from annotation
+end note
+class CompanyInfo
+{
+    string Name
+}
+class OrderItem3
+{
+}
+note left of OrderItem3
 
-    [UmlDiagram("Test2")]
-    [UmlNote("Note from UmlNote", NoteLocation = NoteLocation.Left)]
-    public class OrderItem2
-    {
+Note from UmlNote
+end note
+
+Order3 o--> CompanyInfo:Customer
+Order3 *--{ OrderItem3:Items
+@enduml
+";
+            Assert.Equal(expected, code);
+        }
     }
 }

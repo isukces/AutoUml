@@ -7,7 +7,8 @@ namespace AutoUml
         public void Visit(UmlProjectDiagram diagram, UmlEntity info)
         {
             var t = info.Type;
-            foreach (var pi in t.GetProperties(BindingFlags.Instance | BindingFlags.Public))
+            
+            foreach (var pi in t.GetProperties2())
             {
                 info.Members.Add(new PropertyUmlMember
                 {

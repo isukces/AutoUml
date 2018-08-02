@@ -2,7 +2,7 @@
 
 namespace AutoUml
 {
-    public class UmlRelationAttribute : Attribute, INoteWithLocationProvider
+    public class UmlRelationAttribute : Attribute, INoteProvider
     {
         public UmlRelationAttribute(UmlRelationKind kind = UmlRelationKind.Aggregation,
             UmlArrowDirections arrowDirection = UmlArrowDirections.Auto)
@@ -15,11 +15,7 @@ namespace AutoUml
         {
             return UmlColor.FromString(NoteBackground).ToFill();
         }
-
-        NoteLocation INoteWithLocationProvider.GetNoteLocation()
-        {
-            return NoteLocation;
-        }
+       
 
         string INoteProvider.GetNoteText()
         {
@@ -32,7 +28,6 @@ namespace AutoUml
         public bool ForceAddToDiagram { get; set; }
 
         public string Note { get; set; }
-        public string NoteBackground { get; set; }
-        public NoteLocation NoteLocation { get; set; }
+        public string NoteBackground { get; set; }         
     }
 }

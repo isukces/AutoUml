@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace AutoUml
@@ -10,6 +12,7 @@ namespace AutoUml
     {
         public void VisitBeforeEmit(UmlProjectDiagram diagram)
         {
+            var typesToAdd = new List<Type>();
             foreach (var diagClass in diagram.GetEntities())
             {
                 foreach (var prop in diagClass.Members.OfType<PropertyUmlMember>())
@@ -43,6 +46,8 @@ namespace AutoUml
                             arrow = UmlRelationArrow.GetRelationByKind(att.Kind, att.Multiple ?? ti.IsCollection);
                             if (att.ArrowDirection != UmlArrowDirections.Auto)
                                 arrow.ArrowDirection = att.ArrowDirection;
+                            if (att.ForceAddToDiagram)
+                                typesToAdd.Add(ti.ElementType);
                         }
                     }
 
@@ -56,10 +61,33 @@ namespace AutoUml
                     diagram.Relations.Add(rel);
                 }
             }
+
+            foreach (var i in typesToAdd)
+            {
+                diagram.UpdateTypeInfo(i, null);
+            }
         }
 
         public void VisitDiagramCreated(UmlProjectDiagram diagram)
         {
+        }
+    }
+
+
+    /// <summary>
+    ///     Converts class members into relations
+    /// </summary>
+    public class ForceAddToDiagramVisitor : INewTypeInDiagramVisitor
+    {
+        public void Visit(UmlProjectDiagram diagram, UmlEntity info)
+        {
+            foreach (var prop in info.Type.GetProperties2())
+            {
+                var att = prop.GetCustomAttribute<UmlRelationAttribute>();
+                if (att == null|| !att.ForceAddToDiagram) continue;
+                var tti = new TypeExInfo(prop.PropertyType);
+                diagram.UpdateTypeInfo(tti.ElementType, null);
+            }
         }
     }
 }

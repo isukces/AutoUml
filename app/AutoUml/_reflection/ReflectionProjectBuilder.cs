@@ -62,10 +62,12 @@ namespace AutoUml
             NewTypeVisitors.Add(new UmlAddRelationAttributeVisitor());
             NewTypeVisitors.Add(new UmlNoteAttributeVisitor());
             NewTypeVisitors.Add(new ClassMemberScannerVisitor());
+            NewTypeVisitors.Add(new ForceAddToDiagramVisitor());
 
             DiagramVisitors.Add(new MemberToRelationVisitor());
             DiagramVisitors.Add(new HideTrivialMethodsVisitor());
             DiagramVisitors.Add(new AddInheritRelationVisitor());
+            
             return this;
         }
 

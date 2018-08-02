@@ -24,17 +24,17 @@ namespace AutoUml
         public static string CamelToNormal(this string n, bool onlyFirstUpper)
         {
             n = n?.Trim();
-            if (String.IsNullOrEmpty(n))
-                return String.Empty;
+            if (string.IsNullOrEmpty(n))
+                return string.Empty;
             var sb = new StringBuilder();
             foreach (var i in n)
             {
-                var isUpper    = Char.ToUpper(i) == i;
+                var isUpper    = char.ToUpper(i) == i;
                 var isNotFirst = sb.Length > 0;
                 if (isUpper && isNotFirst)
                     sb.Append(" ");
                 if (isUpper && onlyFirstUpper && isNotFirst)
-                    sb.Append(Char.ToLower(i));
+                    sb.Append(char.ToLower(i));
                 else
                     sb.Append(i);
             }
@@ -51,7 +51,7 @@ namespace AutoUml
                     return type.GetGenericArguments()[0].GetDiagramName(tryGetAlias) + "?";
                 var name1 = gt.Name.Split('`').First();
                 return name1 + "<" +
-                       String.Join(",", type.GetGenericArguments().Select(a => a.GetDiagramName(tryGetAlias))) + ">";
+                       string.Join(",", type.GetGenericArguments().Select(a => a.GetDiagramName(tryGetAlias))) + ">";
             }
 
             if (type.IsArray)
@@ -94,7 +94,12 @@ namespace AutoUml
             if (type == typeof(bool)) return "bool";
 
             var name = tryGetAlias(type);
-            return String.IsNullOrEmpty(name) ? type.Name : name;
+            return string.IsNullOrEmpty(name) ? type.Name : name;
+        }
+
+        public static PropertyInfo[] GetProperties2(this Type type)
+        {
+            return type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
         }
 
         public static bool IsStruct(this Type type)
@@ -106,8 +111,22 @@ namespace AutoUml
         {
             var args = from parameter in methodInfo.GetParameters()
                 select retTypeName(parameter.ParameterType) + " " + parameter.Name;
-            var args2 = String.Join(",", args);
+            var args2 = string.Join(",", args);
             return $"{retTypeName(methodInfo.ReturnType)} {methodInfo.Name}({args2})";
+        }
+
+        public static void SaveContentIfDifferent(this FileInfo file, string txt)
+        {
+            var filename = file.FullName;
+            if (File.Exists(filename))
+            {
+                var existing = File.ReadAllText(filename);
+                if (txt == existing)
+                    return;
+            }
+
+            new FileInfo(filename).Directory?.Create();
+            File.WriteAllText(filename, txt);
         }
 
 
@@ -155,22 +174,8 @@ namespace AutoUml
         public static void Write(this CodeWriter code, string name, string value)
         {
             value = value?.Trim();
-            if (!String.IsNullOrEmpty(value))
+            if (!string.IsNullOrEmpty(value))
                 code.Writeln(name + " " + value);
-        }
-
-        public static void SaveContentIfDifferent(this FileInfo file, string txt)
-        {
-            var filename = file.FullName;
-            if (File.Exists(filename))
-            {
-                var existing = File.ReadAllText(filename);
-                if (txt == existing)
-                    return;
-            }
-
-            new FileInfo(filename).Directory?.Create();
-            File.WriteAllText(filename, txt);
         }
     }
 }
