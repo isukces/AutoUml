@@ -4,6 +4,11 @@ namespace AutoUml
 {
     public class MethodUmlMember : UmlMember
     {
+        public override MemberInfo GetMemberInfo()
+        {
+            return Method;
+        }
+
         public override string ToString()
         {
             return "m " + Method;

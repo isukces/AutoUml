@@ -67,6 +67,7 @@ namespace AutoUml
             DiagramVisitors.Add(new MemberToRelationVisitor());
             DiagramVisitors.Add(new HideTrivialMethodsVisitor());
             DiagramVisitors.Add(new AddInheritRelationVisitor());
+            DiagramVisitors.Add(new UmlAddMetaAttributeVisitor());
             
             return this;
         }

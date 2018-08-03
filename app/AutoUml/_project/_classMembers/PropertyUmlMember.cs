@@ -4,6 +4,11 @@ namespace AutoUml
 {
     public class PropertyUmlMember : UmlMember
     {
+        public override MemberInfo GetMemberInfo()
+        {
+            return Property;
+        }
+
         public override string ToString()
         {
             return "p " + Property;

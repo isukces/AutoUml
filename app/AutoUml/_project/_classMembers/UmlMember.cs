@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 
 namespace AutoUml
 {
@@ -9,5 +10,7 @@ namespace AutoUml
         public string                     Name       { get; set; }
         public bool                       HideOnList { get; set; }
         public Dictionary<string, object> CustomData { get; } = new Dictionary<string, object>();
+
+        public abstract MemberInfo GetMemberInfo();
     }
 }
