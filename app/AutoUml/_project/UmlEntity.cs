@@ -27,16 +27,16 @@ namespace AutoUml
             AddNote(np.GetNoteLocation(), np.GetNoteText(), np.GetNoteBackground());
         }
 
-        public void AddNote(NoteLocation location, string note, IUmlFill background = null)
+        public UmlNote AddNote(NoteLocation location, string noteText, IUmlFill background = null)
         {
-            note = note?.Trim();
-            if (string.IsNullOrEmpty(note))
-                return;
-            if (!_notes.TryGetValue(location, out var x))
-                _notes[location] = x = new UmlNote();
+            noteText = noteText?.Trim();
+            if (string.IsNullOrEmpty(noteText))
+                return null;
+            var note = GetOrCreateNote(location);
             if (background != null)
-                x.Background = background;
-            x.Text += "\n" + note;
+                note.Background = background;
+            note.Text += "\n" + noteText;
+            return note;
         }
 
         public string GetOpenClassCode()
@@ -57,6 +57,13 @@ namespace AutoUml
             return string.Join(" ", items);
         }
 
+        [NotNull]
+        public UmlNote GetOrCreateNote(NoteLocation location)
+        {
+            if (!_notes.TryGetValue(location, out var note))
+                _notes[location] = note = new UmlNote();
+            return note;
+        }
 
         [NotNull]
         public Type Type { get; }
@@ -69,9 +76,8 @@ namespace AutoUml
         public bool            IsAbstract { get; set; }
         public List<UmlMember> Members    { get; set; } = new List<UmlMember>();
 
-        public IReadOnlyDictionary<NoteLocation, UmlNote> Notes => _notes;
-
-        public Dictionary<string, object> Metadata { get; } = new Dictionary<string, object>();
+        public IReadOnlyDictionary<NoteLocation, UmlNote> Notes    => _notes;
+        public Dictionary<string, object>                 Metadata { get; } = new Dictionary<string, object>();
 
         private readonly Dictionary<NoteLocation, UmlNote> _notes = new Dictionary<NoteLocation, UmlNote>();
     }
