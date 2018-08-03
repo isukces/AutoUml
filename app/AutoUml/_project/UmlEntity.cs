@@ -69,10 +69,7 @@ namespace AutoUml
         public bool            IsAbstract { get; set; }
         public List<UmlMember> Members    { get; set; } = new List<UmlMember>();
 
-        public IReadOnlyDictionary<NoteLocation, UmlNote> Notes
-        {
-            get { return _notes; }
-        }
+        public IReadOnlyDictionary<NoteLocation, UmlNote> Notes => _notes;
 
         public Dictionary<string, object> Metadata { get; } = new Dictionary<string, object>();
 

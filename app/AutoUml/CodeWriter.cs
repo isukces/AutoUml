@@ -40,10 +40,7 @@ namespace AutoUml
                 _sb.AppendLine(txt);
         }
 
-        public string Code
-        {
-            get { return _sb.ToString(); }
-        }
+        public string Code => _sb.ToString();
 
         private readonly StringBuilder _sb = new StringBuilder();
 

@@ -53,31 +53,16 @@ namespace AutoUml
         }
 
 
-        public static UmlRelationArrow AggregationLeft
-        {
-            get { return new UmlRelationArrow(ArrowEnd.DiamondWhite, ArrowEnd.ArrowOpen); }
-        }
+        public static UmlRelationArrow AggregationLeft => new UmlRelationArrow(ArrowEnd.DiamondWhite, ArrowEnd.ArrowOpen);
 
-        public static UmlRelationArrow AggregationLeftMany
-        {
-            get { return new UmlRelationArrow(ArrowEnd.DiamondWhite, ArrowEnd.Multiple); }
-        }
+        public static UmlRelationArrow AggregationLeftMany => new UmlRelationArrow(ArrowEnd.DiamondWhite, ArrowEnd.Multiple);
 
-        public static UmlRelationArrow CompositionLeft
-        {
-            get { return new UmlRelationArrow(ArrowEnd.DiamondBlack, ArrowEnd.ArrowOpen); }
-        }
+        public static UmlRelationArrow CompositionLeft => new UmlRelationArrow(ArrowEnd.DiamondBlack, ArrowEnd.ArrowOpen);
 
-        public static UmlRelationArrow CompositionLeftMany
-        {
-            get { return new UmlRelationArrow(ArrowEnd.DiamondBlack, ArrowEnd.Multiple); }
-        }
+        public static UmlRelationArrow CompositionLeftMany => new UmlRelationArrow(ArrowEnd.DiamondBlack, ArrowEnd.Multiple);
 
 
-        public static UmlRelationArrow InheritRight
-        {
-            get { return new UmlRelationArrow(ArrowEnd.Empty, ArrowEnd.ArrowWhite); }
-        }
+        public static UmlRelationArrow InheritRight => new UmlRelationArrow(ArrowEnd.Empty, ArrowEnd.ArrowWhite);
 
         public UmlColor Color { get; set; }
 

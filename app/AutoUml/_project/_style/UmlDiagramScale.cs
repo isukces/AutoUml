@@ -16,18 +16,12 @@
             return Width.ToInv() + "*" + Height.ToInv();
         }
 
-        public static UmlDiagramScale Max
-        {
-            get { return new UmlDiagramScale(4096, 4096); }
-        }
+        public static UmlDiagramScale Max => new UmlDiagramScale(4096, 4096);
 
         public int Width  { get; }
         public int Height { get; }
 
-        public bool IsEmpty
-        {
-            get { return !_isSet; }
-        }
+        public bool IsEmpty => !_isSet;
 
         private readonly bool _isSet;
     }

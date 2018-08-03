@@ -28,10 +28,7 @@
             }
         }
 
-        private string QuotedName
-        {
-            get { return Name.AddQuotesIfNecessary(); }
-        }
+        private string QuotedName => Name.AddQuotesIfNecessary();
 
         public string Name  { get; }
         public string Label { get; }
