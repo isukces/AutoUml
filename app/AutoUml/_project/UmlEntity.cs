@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 
 namespace AutoUml
 {
-    public class UmlEntity : ICustomDataContainer
+    public class UmlEntity : IMetadataContainer
     {
         public UmlEntity([NotNull] Type type)
         {
@@ -74,7 +74,7 @@ namespace AutoUml
             get { return _notes; }
         }
 
-        public Dictionary<string, object> CustomData { get; } = new Dictionary<string, object>();
+        public Dictionary<string, object> Metadata { get; } = new Dictionary<string, object>();
 
         private readonly Dictionary<NoteLocation, UmlNote> _notes = new Dictionary<NoteLocation, UmlNote>();
     }

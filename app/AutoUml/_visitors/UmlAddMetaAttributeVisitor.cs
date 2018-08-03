@@ -5,11 +5,11 @@ namespace AutoUml
 {
     public class UmlAddMetaAttributeVisitor : IDiagramVisitor
     {
-        private static void UpdateContainerFromAttributes(ICustomDataContainer target, MemberInfo mi)
+        private static void UpdateContainerFromAttributes(IMetadataContainer target, MemberInfo mi)
         {
             var atts = mi.GetCustomAttributes(false).OfType<UmlAddMetaAttribute>();
             foreach (var attribute in atts)
-                target.CustomData[attribute.Name] = attribute.ValueString;
+                target.Metadata[attribute.Name] = attribute.ValueString;
         }
 
         public void VisitBeforeEmit(UmlProjectDiagram diagram)

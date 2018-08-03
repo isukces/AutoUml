@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 
 namespace AutoUml
 {
-    public class UmlProjectDiagram : ICustomDataContainer
+    public class UmlProjectDiagram : IMetadataContainer
     {
         public bool ContainsType(Type type)
         {
@@ -136,7 +136,7 @@ namespace AutoUml
         public string                     Name       { get; set; }
         public UmlSkinParams              Skin       { get; set; } = new UmlSkinParams();
         public List<UmlRelation>          Relations  { get; set; } = new List<UmlRelation>();
-        public Dictionary<string, object> CustomData { get; }      = new Dictionary<string, object>();
+        public Dictionary<string, object> Metadata { get; }      = new Dictionary<string, object>();
 
         private readonly Dictionary<Type, UmlEntity> _entities = new Dictionary<Type, UmlEntity>();
 

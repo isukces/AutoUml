@@ -3,10 +3,10 @@ using JetBrains.Annotations;
 
 namespace AutoUml
 {
-    public interface ICustomDataContainer
+    public interface IMetadataContainer
     {
         
         [NotNull]
-        Dictionary<string, object> CustomData { get; }
+        Dictionary<string, object> Metadata { get; }
     }
 }
