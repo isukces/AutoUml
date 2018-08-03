@@ -51,7 +51,7 @@ namespace AutoUml
         }
 
         [CanBeNull]
-        public UmlEntity GetEntityByType(Type type)
+        public UmlEntity TryGetEntityByType(Type type)
         {
             if (type == null)
                 return null;
@@ -61,7 +61,7 @@ namespace AutoUml
 
         public string GetTypeName(Type type)
         {
-            return type.GetDiagramName(t => GetEntityByType(type)?.Name);
+            return type.GetDiagramName(t => TryGetEntityByType(type)?.Name);
         }
 
         public void SaveToFile(string filename)

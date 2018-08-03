@@ -4,6 +4,7 @@ using AutoUml;
 namespace Tests
 {
     [UmlDiagram("Test3", Note = "Note from annotation", NoteLocation = NoteLocation.Right)]
+    [UmlAddMeta("hello","world")]
     public class Order3
     {
         [UmlRelation(UmlRelationKind.Aggregation,

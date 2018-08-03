@@ -52,7 +52,7 @@ Order --{ OrderItem:Items
             var diag = b.Diagrams["Test"];
             Assert.NotNull(diag);
 
-            var ent = diag.GetEntityByType(typeof(Order));
+            var ent = diag.TryGetEntityByType(typeof(Order));
             ent.AddNote(NoteLocation.Top, "Sample note");
 
             var file = diag.CreateFile();
@@ -131,7 +131,7 @@ Order2 --{ OrderItem2:Items
             var diag = b.Diagrams["Test"];
             Assert.NotNull(diag);
 
-            var ent = diag.GetEntityByType(typeof(Order));
+            var ent = diag.TryGetEntityByType(typeof(Order));
             ent.AddNote(NoteLocation.Top, "Sample note", UmlColor.IndianRed.ToFill());
 
             var file = diag.CreateFile();
@@ -171,7 +171,7 @@ Order --{ OrderItem:Items
             var diag = b.Diagrams["Test"];
             Assert.NotNull(diag);
 
-            var ent = diag.GetEntityByType(typeof(Order));
+            var ent = diag.TryGetEntityByType(typeof(Order));
             ent.Spot = new UmlSpot
             {
                 InCircle              = "X",
@@ -289,6 +289,28 @@ Order3 *--{ OrderItem3:Items
 @enduml
 ";
             Assert.Equal(expected, code);
+        }
+        
+        
+        [Fact]
+        public void T08_Should_add_metadata_with_reflection()
+        {
+            var b = new ReflectionProjectBuilder(true)
+                .WithAssembly(typeof(DiagramTests).Assembly)
+                .Build();
+            Assert.NotNull(b);
+            Assert.True(b.Diagrams.ContainsKey("Test3"));
+            var diagram = b.Diagrams["Test3"];
+            Assert.NotNull(diagram);
+
+
+            var x = diagram.TryGetEntityByType(typeof(Order3));
+            Assert.Equal("world", x.TryGetStringMetadata("hello"));
+            Assert.Null(x.TryGetStringMetadata("hello 2"));
+
+            x = diagram.TryGetEntityByType(typeof(OrderItem3));
+            Assert.Null(x.TryGetStringMetadata("hello"));
+            Assert.Null(x.TryGetStringMetadata("hello 2"));
         }
     }
 }
