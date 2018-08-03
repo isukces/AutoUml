@@ -131,12 +131,12 @@ namespace AutoUml
             return result;
         }
 
-        public UmlDiagramScale            Scale      { get; set; }
-        public string                     Title      { get; set; }
-        public string                     Name       { get; set; }
-        public UmlSkinParams              Skin       { get; set; } = new UmlSkinParams();
-        public List<UmlRelation>          Relations  { get; set; } = new List<UmlRelation>();
-        public Dictionary<string, object> Metadata { get; }      = new Dictionary<string, object>();
+        public UmlDiagramScale            Scale     { get; set; }
+        public string                     Title     { get; set; }
+        public string                     Name      { get; set; }
+        public UmlSkinParams              Skin      { get; set; } = new UmlSkinParams();
+        public List<UmlRelation>          Relations { get; set; } = new List<UmlRelation>();
+        public Dictionary<string, object> Metadata  { get; }      = new Dictionary<string, object>();
 
         private readonly Dictionary<Type, UmlEntity> _entities = new Dictionary<Type, UmlEntity>();
 

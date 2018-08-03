@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace AutoUml
+﻿namespace AutoUml
 {
     public class UmlAddRelationAttributeVisitor : NewTypeMultipleAttributeVisitor<UmlAddRelationAttribute>
     {

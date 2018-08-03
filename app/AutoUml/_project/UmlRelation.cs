@@ -33,6 +33,6 @@ namespace AutoUml
         public string                     Label          { get; set; }
         public string                     Note           { get; set; }
         public IUmlFill                   NoteBackground { get; set; }
-        public Dictionary<string, object> Metadata     { get; } = new Dictionary<string, object>();
+        public Dictionary<string, object> Metadata       { get; } = new Dictionary<string, object>();
     }
 }

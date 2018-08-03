@@ -5,7 +5,6 @@ namespace AutoUml
 {
     public interface IMetadataContainer
     {
-        
         [NotNull]
         Dictionary<string, object> Metadata { get; }
     }

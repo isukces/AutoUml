@@ -252,7 +252,7 @@ end note
             var diagram = b.Diagrams["Test3"];
             Assert.NotNull(diagram);
             Assert.Equal(3, diagram.GetEntities().Count());
-           
+
             var file = diagram.CreateFile();
             Assert.NotNull(file);
             var code = file.Code;

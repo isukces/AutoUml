@@ -9,7 +9,6 @@ namespace AutoUml
     {
         public void Visit(UmlProjectDiagram diagram, UmlEntity info)
         {
-            
             var t = info.Type;
             foreach (var att in t.GetCustomAttributes<T>())
                 VisitInternal(diagram, info, att);

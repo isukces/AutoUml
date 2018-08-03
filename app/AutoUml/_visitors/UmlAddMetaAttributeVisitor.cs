@@ -23,7 +23,7 @@ namespace AutoUml
         }
 
         public void VisitDiagramCreated(UmlProjectDiagram diagram)
-        {            
+        {
         }
     }
 }

@@ -6,6 +6,6 @@ namespace AutoUml
     {
         public IUmlFill                   Background { get; set; }
         public string                     Text       { get; set; }
-        public Dictionary<string, object> Metadata { get; } = new Dictionary<string, object>();
+        public Dictionary<string, object> Metadata   { get; } = new Dictionary<string, object>();
     }
 }

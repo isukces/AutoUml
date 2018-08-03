@@ -34,13 +34,12 @@ namespace AutoUml
                     var arrow = new UmlRelationArrow(
                         ArrowEnd.Empty,
                         ti.IsCollection ? ArrowEnd.Multiple : ArrowEnd.ArrowOpen);
-                    var owner          = diagClass.Type;
-                    var component      = ti.ElementType;
-                    const string ownerLabel = "";
+                    var          owner          = diagClass.Type;
+                    var          component      = ti.ElementType;
+                    const string ownerLabel     = "";
                     const string componentLabel = "";
-                    
-                    
-                    var att            = prop.Property.GetCustomAttribute<UmlRelationAttribute>();
+
+                    var att = prop.Property.GetCustomAttribute<UmlRelationAttribute>();
                     if (att != null)
                     {
                         arrow = UmlRelationArrow.GetRelationByKind(att.Kind, att.Multiple ?? ti.IsCollection);
@@ -83,7 +82,7 @@ namespace AutoUml
             foreach (var prop in info.Type.GetProperties2())
             {
                 var att = prop.GetCustomAttribute<UmlRelationAttribute>();
-                if (att == null|| !att.ForceAddToDiagram) continue;
+                if (att == null || !att.ForceAddToDiagram) continue;
                 var tti = new TypeExInfo(prop.PropertyType);
                 diagram.UpdateTypeInfo(tti.ElementType, null);
             }
