@@ -312,5 +312,66 @@ Order3 *--{ OrderItem3:Items
             Assert.Null(x.TryGetStringMetadata("hello"));
             Assert.Null(x.TryGetStringMetadata("hello 2"));
         }
+        
+        
+        [Fact]
+        public void T09_Should_add_sprite()
+        {
+            var b = new ReflectionProjectBuilder(true)
+                .WithAssembly(typeof(DiagramTests).Assembly)
+                .Build();
+            Assert.NotNull(b);
+            Assert.True(b.Diagrams.ContainsKey("Test"));
+            var diag = b.Diagrams["Test"];
+            Assert.NotNull(diag);
+
+
+            diag.Sprites["test"] = new UmlSprite
+            {
+                Width     = 50,
+                Height    = 100,
+                GrayLevel = SpriteGrayLevels.Level8,
+                Zipped    = true,
+                Data = @"xTH5ZiL034NHHzd_aflHglgMco5t6fsW7M3UcJW5yL0u6WlE0Esf-Fp7OAB7IA1FUP4jjimHxvFiUrUhpqqyzSXARDuKMIkF8SpI5un8viBuR07YSpiZr-Ex
+1udm72ddBks43nEFqKvYIqxO3wES8nQ9cnot6y8aVk9qr6s8Ok8v9Mm5oo4F1N-cy4Pe9o2kHLX44nDNqHFD19HO9EaYzgd-z_ietoNCEXCk9Q76N2IEkHVK
+UWwv5Kf7gk1AW8vxKObc0aeu4t0y54mq4r3CNbGo5107egQfeAE2QvHVbYD-QYsKVMi1NWXVtHav1J6dGlYlmiCHrn7N96dlV6JTbYXcRNED-PEVmiHlxXe
+"
+            };         
+            /*
+            var rel = diag.Relations.Single();
+            rel.Note           = "<$test>Note on rel";
+            rel.NoteBackground = new GradientColorFill(UmlColor.Aqua, UmlColor.AliceBlue, GradientDirection.DownRight);
+ */
+            diag.GetEntities().First().Members.Add(new UmlTextMember(UmlSprite.MakeCode("test")));
+            var file = diag.CreateFile();
+            Assert.NotNull(file);
+            var code = file.Code;
+            Save(code);
+
+            var expected = @"@startuml
+title
+ Diagram Test
+end title
+sprite $test [50x100/8z] {
+xTH5ZiL034NHHzd_aflHglgMco5t6fsW7M3UcJW5yL0u6WlE0Esf-Fp7OAB7IA1FUP4jjimHxvFiUrUhpqqyzSXARDuKMIkF8SpI5un8viBuR07YSpiZr-Ex
+1udm72ddBks43nEFqKvYIqxO3wES8nQ9cnot6y8aVk9qr6s8Ok8v9Mm5oo4F1N-cy4Pe9o2kHLX44nDNqHFD19HO9EaYzgd-z_ietoNCEXCk9Q76N2IEkHVK
+UWwv5Kf7gk1AW8vxKObc0aeu4t0y54mq4r3CNbGo5107egQfeAE2QvHVbYD-QYsKVMi1NWXVtHav1J6dGlYlmiCHrn7N96dlV6JTbYXcRNED-PEVmiHlxXe
+}
+
+class Order #ff0000
+{
+    <$test>
+}
+class OrderItem
+{
+}
+
+Order --{ OrderItem:Items
+@enduml
+";
+            Assert.Equal(expected, code);
+        }
     }
+
+   
 }

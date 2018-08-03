@@ -25,6 +25,9 @@ namespace AutoUml
                 file.Top.Writeln("end title");
             }
 
+            // sprites
+            foreach (var i in Sprites.OrderBy(a => a.Key))
+                i.Value.Save(file, i.Key);
             var iter = _entities.OrderBy(a => a.Value.OrderIndex).Select(a => a.Key)
                 .ToList();
             var alreadyProcessed = new HashSet<Type>();
@@ -50,14 +53,6 @@ namespace AutoUml
             return _entities.Values;
         }
 
-        [CanBeNull]
-        public UmlEntity TryGetEntityByType(Type type)
-        {
-            if (type == null)
-                return null;
-            return _entities.TryGetValue(type, out var ent) ? ent : null;
-        }
-
 
         public string GetTypeName(Type type)
         {
@@ -68,6 +63,14 @@ namespace AutoUml
         {
             var file = CreateFile();
             file.SaveIfDifferent(filename);
+        }
+
+        [CanBeNull]
+        public UmlEntity TryGetEntityByType(Type type)
+        {
+            if (type == null)
+                return null;
+            return _entities.TryGetValue(type, out var ent) ? ent : null;
         }
 
         public void UpdateTypeInfo(Type type, [CanBeNull] Action<UmlEntity, bool> modification)
@@ -137,6 +140,7 @@ namespace AutoUml
         public UmlSkinParams              Skin      { get; set; } = new UmlSkinParams();
         public List<UmlRelation>          Relations { get; set; } = new List<UmlRelation>();
         public Dictionary<string, object> Metadata  { get; }      = new Dictionary<string, object>();
+        public Dictionary<string, UmlSprite> Sprites { get; } = new Dictionary<string, UmlSprite>();
 
         private readonly Dictionary<Type, UmlEntity> _entities = new Dictionary<Type, UmlEntity>();
 
