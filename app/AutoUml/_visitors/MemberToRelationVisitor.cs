@@ -79,7 +79,7 @@ namespace AutoUml
     {
         public void Visit(UmlProjectDiagram diagram, UmlEntity info)
         {
-            foreach (var prop in info.Type.GetProperties2())
+            foreach (var prop in info.Type.GetPropertiesInstancePublic())
             {
                 var att = prop.GetCustomAttribute<UmlRelationAttribute>();
                 if (att == null || !att.ForceAddToDiagram) continue;

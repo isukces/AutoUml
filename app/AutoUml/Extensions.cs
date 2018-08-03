@@ -97,7 +97,7 @@ namespace AutoUml
             return string.IsNullOrEmpty(name) ? type.Name : name;
         }
 
-        public static PropertyInfo[] GetProperties2(this Type type)
+        public static PropertyInfo[] GetPropertiesInstancePublic(this Type type)
         {
             return type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
         }

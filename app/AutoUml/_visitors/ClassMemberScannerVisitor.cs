@@ -8,7 +8,7 @@ namespace AutoUml
         {
             var t = info.Type;
 
-            foreach (var pi in t.GetProperties2())
+            foreach (var pi in t.GetPropertiesInstancePublic())
             {
                 info.Members.Add(new PropertyUmlMember
                 {
