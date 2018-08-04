@@ -6,7 +6,7 @@ namespace AutoUml
     public abstract class UmlMember : IMetadataContainer
     {
         public abstract MemberInfo GetMemberInfo();
-        public abstract void WriteTo(CodeWriter cf, UmlProjectDiagram diagram);
+        public abstract void WriteTo(CodeWriter cf, UmlDiagram diagram);
         public int                        Group      { get; set; }
         public string                     Name       { get; set; }
         public bool                       HideOnList { get; set; }

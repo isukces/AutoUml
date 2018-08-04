@@ -4,7 +4,7 @@ namespace AutoUml
 {
     public class AddInheritRelationVisitor : IDiagramVisitor
     {
-        private static UmlRelation Inherits(Type baseClass, Type subClass, UmlProjectDiagram diagram)
+        private static UmlRelation Inherits(Type baseClass, Type subClass, UmlDiagram diagram)
         {
             var rel = new UmlRelation
             {
@@ -16,7 +16,7 @@ namespace AutoUml
         }
 
 
-        public void VisitBeforeEmit(UmlProjectDiagram diagram)
+        public void VisitBeforeEmit(UmlDiagram diagram)
         {
             foreach (var e in diagram.GetEntities())
             {
@@ -35,7 +35,7 @@ namespace AutoUml
         }
 
 
-        public void VisitDiagramCreated(UmlProjectDiagram diagram)
+        public void VisitDiagramCreated(UmlDiagram diagram)
         {
         }
     }

@@ -44,7 +44,7 @@ namespace AutoUml
             return this;
         }
 
-        public ReflectionProjectBuilder WithNewDiagramSettings(Action<UmlProjectDiagram> diagramUpdateAction)
+        public ReflectionProjectBuilder WithNewDiagramSettings(Action<UmlDiagram> diagramUpdateAction)
         {
             if (diagramUpdateAction != null)
             {

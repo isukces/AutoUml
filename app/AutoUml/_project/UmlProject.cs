@@ -5,7 +5,7 @@ namespace AutoUml
 {
     public class UmlProject
     {
-        public void GenerateAll(Func<UmlProjectDiagram, string> filenameFactory)
+        public void GenerateAll(Func<UmlDiagram, string> filenameFactory)
         {
             foreach (var i in Diagrams)
             {
@@ -14,10 +14,10 @@ namespace AutoUml
             }
         }
 
-        public UmlProjectDiagram GetOrCreateDiagram(string diagramName)
+        public UmlDiagram GetOrCreateDiagram(string diagramName)
         {
             if (Diagrams.TryGetValue(diagramName, out var x)) return x;
-            Diagrams[diagramName] = x = new UmlProjectDiagram
+            Diagrams[diagramName] = x = new UmlDiagram
             {
                 Name  = diagramName,
                 Title = "Diagram " + diagramName
@@ -41,8 +41,8 @@ namespace AutoUml
             handler(this, e);
         }
 
-        public Dictionary<string, UmlProjectDiagram> Diagrams { get; } =
-            new Dictionary<string, UmlProjectDiagram>();
+        public Dictionary<string, UmlDiagram> Diagrams { get; } =
+            new Dictionary<string, UmlDiagram>();
 
         public event EventHandler<AddTypeToDiagramEventArgs> OnAddTypeToDiagram;
         public event EventHandler<AddDiagramEventArgs>       OnAddDiagram;

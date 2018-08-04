@@ -12,7 +12,7 @@
                 : circleBackgroundColor;
         }
 
-        public void Visit(UmlProjectDiagram diagram, UmlEntity info)
+        public void Visit(UmlDiagram diagram, UmlEntity info)
         {
             var isStruct = info.Type.IsStruct();
             if (!isStruct) return;

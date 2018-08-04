@@ -10,7 +10,7 @@ namespace AutoUml
     /// </summary>
     public class MemberToRelationVisitor : IDiagramVisitor
     {
-        public void VisitBeforeEmit(UmlProjectDiagram diagram)
+        public void VisitBeforeEmit(UmlDiagram diagram)
         {
             var typesToAdd = new List<Type>();
             foreach (var diagClass in diagram.GetEntities())
@@ -66,7 +66,7 @@ namespace AutoUml
             }
         }
 
-        public void VisitDiagramCreated(UmlProjectDiagram diagram)
+        public void VisitDiagramCreated(UmlDiagram diagram)
         {
         }
     }
@@ -77,7 +77,7 @@ namespace AutoUml
     /// </summary>
     public class ForceAddToDiagramVisitor : INewTypeInDiagramVisitor
     {
-        public void Visit(UmlProjectDiagram diagram, UmlEntity info)
+        public void Visit(UmlDiagram diagram, UmlEntity info)
         {
             foreach (var prop in info.Type.GetPropertiesInstancePublic())
             {

@@ -4,7 +4,7 @@ namespace AutoUml
 {
     public class ClassMemberScannerVisitor : INewTypeInDiagramVisitor
     {
-        public void Visit(UmlProjectDiagram diagram, UmlEntity info)
+        public void Visit(UmlDiagram diagram, UmlEntity info)
         {
             var t = info.Type;
 

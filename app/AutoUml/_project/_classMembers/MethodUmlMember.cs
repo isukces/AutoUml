@@ -14,7 +14,7 @@ namespace AutoUml
             return "m " + Method;
         }
 
-        public override void WriteTo(CodeWriter cf, UmlProjectDiagram diagram)
+        public override void WriteTo(CodeWriter cf, UmlDiagram diagram)
         {
             var code = Method.MethodToUml(diagram.GetTypeName);
             cf.Writeln(code);

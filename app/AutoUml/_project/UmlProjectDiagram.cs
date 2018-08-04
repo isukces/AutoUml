@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 
 namespace AutoUml
 {
-    public class UmlProjectDiagram : IMetadataContainer
+    public class UmlDiagram : IMetadataContainer
     {
         public bool ContainsType(Type type)
         {

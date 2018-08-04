@@ -14,7 +14,7 @@ namespace AutoUml
             return "p " + Property;
         }
 
-        public override void WriteTo(CodeWriter cf, UmlProjectDiagram diagram)
+        public override void WriteTo(CodeWriter cf, UmlDiagram diagram)
         {
             var code = diagram.GetTypeName(Property.PropertyType) + " " + Property.Name;
             cf.Writeln(code);

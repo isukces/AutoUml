@@ -2,7 +2,7 @@
 {
     public class UmlAddRelationAttributeVisitor : NewTypeMultipleAttributeVisitor<UmlAddRelationAttribute>
     {
-        protected override void VisitInternal(UmlProjectDiagram diagram, UmlEntity info, UmlAddRelationAttribute att)
+        protected override void VisitInternal(UmlDiagram diagram, UmlEntity info, UmlAddRelationAttribute att)
         {
             var rel = new UmlRelation
                 {

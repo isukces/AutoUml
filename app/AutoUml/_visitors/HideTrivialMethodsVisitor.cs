@@ -8,7 +8,7 @@ namespace AutoUml
     /// </summary>
     public class HideTrivialMethodsVisitor : IDiagramVisitor
     {
-        public void VisitBeforeEmit(UmlProjectDiagram diagram)
+        public void VisitBeforeEmit(UmlDiagram diagram)
         {
             bool AlreadyOnDiagram(Type entityType, Type declaringType)
             {
@@ -37,7 +37,7 @@ namespace AutoUml
             }
         }
 
-        public void VisitDiagramCreated(UmlProjectDiagram diagram)
+        public void VisitDiagramCreated(UmlDiagram diagram)
         {
         }
     }

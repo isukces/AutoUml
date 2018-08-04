@@ -2,7 +2,7 @@
 {
     public interface IDiagramVisitor
     {
-        void VisitBeforeEmit(UmlProjectDiagram diagram);
-        void VisitDiagramCreated(UmlProjectDiagram diagram);
+        void VisitBeforeEmit(UmlDiagram diagram);
+        void VisitDiagramCreated(UmlDiagram diagram);
     }
 }

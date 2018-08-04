@@ -5,6 +5,6 @@ namespace AutoUml
     public class AddTypeToDiagramEventArgs : EventArgs
     {
         public UmlEntity         Info    { get; set; }
-        public UmlProjectDiagram Diagram { get; set; }
+        public UmlDiagram Diagram { get; set; }
     }
 }

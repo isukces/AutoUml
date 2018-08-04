@@ -12,7 +12,7 @@ namespace AutoUml
                 target.Metadata[attribute.Name] = attribute.ValueString;
         }
 
-        public void VisitBeforeEmit(UmlProjectDiagram diagram)
+        public void VisitBeforeEmit(UmlDiagram diagram)
         {
             foreach (var info in diagram.GetEntities())
             {
@@ -22,7 +22,7 @@ namespace AutoUml
             }
         }
 
-        public void VisitDiagramCreated(UmlProjectDiagram diagram)
+        public void VisitDiagramCreated(UmlDiagram diagram)
         {
         }
     }

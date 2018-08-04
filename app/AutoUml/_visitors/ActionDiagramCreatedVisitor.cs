@@ -4,21 +4,21 @@ namespace AutoUml
 {
     public class ActionDiagramCreatedVisitor : IDiagramVisitor
     {
-        public ActionDiagramCreatedVisitor(Action<UmlProjectDiagram> action)
+        public ActionDiagramCreatedVisitor(Action<UmlDiagram> action)
         {
             _action = action;
         }
 
-        public void VisitBeforeEmit(UmlProjectDiagram diagram)
+        public void VisitBeforeEmit(UmlDiagram diagram)
         {
         }
 
-        public void VisitDiagramCreated(UmlProjectDiagram diagram)
+        public void VisitDiagramCreated(UmlDiagram diagram)
         {
             if (_action != null)
                 _action(diagram);
         }
 
-        private readonly Action<UmlProjectDiagram> _action;
+        private readonly Action<UmlDiagram> _action;
     }
 }

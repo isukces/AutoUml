@@ -5,6 +5,6 @@
     /// </summary>
     public interface INewTypeInDiagramVisitor
     {
-        void Visit(UmlProjectDiagram diagram, UmlEntity info);
+        void Visit(UmlDiagram diagram, UmlEntity info);
     }
 }

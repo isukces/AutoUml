@@ -2,7 +2,7 @@
 {
     public class UmlNoteAttributeVisitor : NewTypeMultipleAttributeVisitor<UmlNoteAttribute>
     {
-        protected override void VisitInternal(UmlProjectDiagram diagram, UmlEntity info, UmlNoteAttribute att)
+        protected override void VisitInternal(UmlDiagram diagram, UmlEntity info, UmlNoteAttribute att)
         {
             info.AddNote(att);
         }

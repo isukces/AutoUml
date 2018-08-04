@@ -10,7 +10,7 @@ namespace AutoUml
     public abstract class NewTypeSingleAttributeVisitor<T> : INewTypeInDiagramVisitor
         where T : Attribute
     {
-        public void Visit(UmlProjectDiagram diagram, UmlEntity info)
+        public void Visit(UmlDiagram diagram, UmlEntity info)
         {
             var att = info.Type.GetCustomAttribute<T>();
             if (att == null)
@@ -18,6 +18,6 @@ namespace AutoUml
             VisitInternal(diagram, info, att);
         }
 
-        protected abstract void VisitInternal(UmlProjectDiagram diagram, UmlEntity info, [NotNull] T att);
+        protected abstract void VisitInternal(UmlDiagram diagram, UmlEntity info, [NotNull] T att);
     }
 }
