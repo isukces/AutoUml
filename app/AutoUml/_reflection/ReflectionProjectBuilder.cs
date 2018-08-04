@@ -61,6 +61,7 @@ namespace AutoUml
             NewTypeVisitors.Add(new StructSpotVisitor(UmlColor.Empty));
             NewTypeVisitors.Add(new UmlAddRelationAttributeVisitor());
             NewTypeVisitors.Add(new UmlNoteAttributeVisitor());
+            NewTypeVisitors.Add(new UmlPackageAttributeVisitor());
             NewTypeVisitors.Add(new ClassMemberScannerVisitor());
             NewTypeVisitors.Add(new ForceAddToDiagramVisitor());
 
@@ -68,6 +69,8 @@ namespace AutoUml
             DiagramVisitors.Add(new HideTrivialMethodsVisitor());
             DiagramVisitors.Add(new AddInheritRelationVisitor());
             DiagramVisitors.Add(new UmlAddMetaAttributeVisitor());
+            
+            AssemblyVisitors.Add(new UmlPackageStyleAttributeVisitor());
 
             return this;
         }
@@ -89,6 +92,11 @@ namespace AutoUml
 
         private void ProjectOnOnAddDiagram(object sender, AddDiagramEventArgs e)
         {
+            foreach (var a in _scannedAssemblies)
+            {
+                foreach(var v in AssemblyVisitors)
+                    v.Visit(a, e.Diagram);
+            }
             foreach (var i in DiagramVisitors)
                 i.VisitDiagramCreated(e.Diagram);
         }
@@ -122,6 +130,7 @@ namespace AutoUml
         public List<IReflectionTypeVisitor>   ReflectionTypeVisitors { get; } = new List<IReflectionTypeVisitor>();
         public List<INewTypeInDiagramVisitor> NewTypeVisitors        { get; } = new List<INewTypeInDiagramVisitor>();
         public List<IDiagramVisitor>          DiagramVisitors        { get; } = new List<IDiagramVisitor>();
+        public List<IAssemblyVisitor>         AssemblyVisitors       { get; } = new List<IAssemblyVisitor>();
 
         private UmlProject _project = new UmlProject();
         private readonly HashSet<Assembly> _scannedAssemblies = new HashSet<Assembly>();

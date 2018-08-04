@@ -24,6 +24,7 @@ namespace Tests
     {
     }
 
+    [UmlDiagram("Test4")]
     public class CompanyInfo
     {
         public string Name { get; set; }

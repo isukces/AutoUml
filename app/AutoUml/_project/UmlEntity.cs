@@ -68,13 +68,14 @@ namespace AutoUml
         [NotNull]
         public Type Type { get; }
 
-        public string          Name       { get; set; }
-        public IUmlFill        Background { get; set; }
-        public int             OrderIndex { get; set; }
-        public UmlSpot         Spot       { get; set; }
-        public UmlTypes        KeyWord    { get; set; }
-        public bool            IsAbstract { get; set; }
-        public List<UmlMember> Members    { get; set; } = new List<UmlMember>();
+        public string          Name        { get; set; }
+        public IUmlFill        Background  { get; set; }
+        public int             OrderIndex  { get; set; }
+        public UmlSpot         Spot        { get; set; }
+        public UmlTypes        KeyWord     { get; set; }
+        public bool            IsAbstract  { get; set; }
+        public List<UmlMember> Members     { get; set; } = new List<UmlMember>();
+        public string          PackageName { get; set; }
 
         public IReadOnlyDictionary<NoteLocation, UmlNote> Notes    => _notes;
         public Dictionary<string, object>                 Metadata { get; } = new Dictionary<string, object>();

@@ -32,6 +32,12 @@ namespace AutoUml
             IncIndent();
         }
 
+        public void OpenSameLine(string s)
+        {
+            Writeln(s.TrimEnd() + " {");
+            IncIndent();
+        }
+
         public void Writeln(string txt)
         {
             if (_indentCount > 0)

@@ -290,8 +290,8 @@ Order3 *--{ OrderItem3:Items
 ";
             Assert.Equal(expected, code);
         }
-        
-        
+
+
         [Fact]
         public void T08_Should_add_metadata_with_reflection()
         {
@@ -303,7 +303,6 @@ Order3 *--{ OrderItem3:Items
             var diagram = b.Diagrams["Test3"];
             Assert.NotNull(diagram);
 
-
             var x = diagram.TryGetEntityByType(typeof(Order3));
             Assert.Equal("world", x.TryGetStringMetadata("hello"));
             Assert.Null(x.TryGetStringMetadata("hello 2"));
@@ -312,8 +311,8 @@ Order3 *--{ OrderItem3:Items
             Assert.Null(x.TryGetStringMetadata("hello"));
             Assert.Null(x.TryGetStringMetadata("hello 2"));
         }
-        
-        
+
+
         [Fact]
         public void T09_Should_add_sprite()
         {
@@ -325,18 +324,18 @@ Order3 *--{ OrderItem3:Items
             var diag = b.Diagrams["Test"];
             Assert.NotNull(diag);
 
-
             diag.Sprites["test"] = new UmlSprite
             {
                 Width     = 50,
                 Height    = 100,
                 GrayLevel = SpriteGrayLevels.Level8,
                 Zipped    = true,
-                Data = @"xTH5ZiL034NHHzd_aflHglgMco5t6fsW7M3UcJW5yL0u6WlE0Esf-Fp7OAB7IA1FUP4jjimHxvFiUrUhpqqyzSXARDuKMIkF8SpI5un8viBuR07YSpiZr-Ex
+                Data =
+                    @"xTH5ZiL034NHHzd_aflHglgMco5t6fsW7M3UcJW5yL0u6WlE0Esf-Fp7OAB7IA1FUP4jjimHxvFiUrUhpqqyzSXARDuKMIkF8SpI5un8viBuR07YSpiZr-Ex
 1udm72ddBks43nEFqKvYIqxO3wES8nQ9cnot6y8aVk9qr6s8Ok8v9Mm5oo4F1N-cy4Pe9o2kHLX44nDNqHFD19HO9EaYzgd-z_ietoNCEXCk9Q76N2IEkHVK
 UWwv5Kf7gk1AW8vxKObc0aeu4t0y54mq4r3CNbGo5107egQfeAE2QvHVbYD-QYsKVMi1NWXVtHav1J6dGlYlmiCHrn7N96dlV6JTbYXcRNED-PEVmiHlxXe
 "
-            };         
+            };
             /*
             var rel = diag.Relations.Single();
             rel.Note           = "<$test>Note on rel";
@@ -371,7 +370,45 @@ Order --{ OrderItem:Items
 ";
             Assert.Equal(expected, code);
         }
-    }
 
-   
+        [Fact]
+        public void T10_Should_create_packages()
+        {
+            var b = new ReflectionProjectBuilder(true)
+                .WithAssembly(typeof(DiagramTests).Assembly)
+                .Build();
+            Assert.NotNull(b);
+            Assert.True(b.Diagrams.ContainsKey("Test4"));
+            var diagram = b.Diagrams["Test4"];
+            Assert.NotNull(diagram);
+
+            var file = diagram.CreateFile();
+            Assert.NotNull(file);
+            var code = file.Code;
+            Save(code);
+
+            var expected = @"@startuml
+title
+ Diagram Test4
+end title
+
+class CompanyInfo
+{
+    string Name
+}
+package Orders <<Cloud>> {
+    class Order4
+    {
+    }
+    class OrderItem4
+    {
+    }
+}
+
+Order4 --{ OrderItem4:Items
+@enduml
+";
+            Assert.Equal(expected, code);
+        }
+    }
 }

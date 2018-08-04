@@ -1,0 +1,20 @@
+@startuml
+title
+ Diagram Test4
+end title
+
+class CompanyInfo
+{
+    string Name
+}
+package Orders <<Cloud>> {
+    class Order4
+    {
+    }
+    class OrderItem4
+    {
+    }
+}
+
+Order4 --{ OrderItem4:Items
+@enduml

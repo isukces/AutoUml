@@ -28,22 +28,68 @@ namespace AutoUml
             // sprites
             foreach (var i in Sprites.OrderBy(a => a.Key))
                 i.Value.Save(file, i.Key);
-            var iter = _entities.OrderBy(a => a.Value.OrderIndex).Select(a => a.Key)
-                .ToList();
             var alreadyProcessed = new HashSet<Type>();
 
-            void ProcessList(IEnumerable<Type> typesList)
+            bool isPackageOpen = false;
+
+            void ClosePackage()
+            {
+                if (isPackageOpen)
+                    file.Classes.Close();
+                isPackageOpen = false;
+            }
+
+            void OpenPackage(string pn, string kind)
+            {
+                ClosePackage();
+                if (string.IsNullOrEmpty(pn))
+                    return;
+                file.Classes.OpenSameLine("package " + pn.AddQuotesIfNecessary() + " <<" + kind + ">>");
+                isPackageOpen = true;
+            }
+
+            var usedPackages = new Dictionary<string, UmlPackage>(StringComparer.CurrentCultureIgnoreCase);
+            int typesToDo    = 0;
+
+            void ProcessList(IEnumerable<Type> typesList, string currentPackageName, bool usePackageName)
             {
                 foreach (var t in typesList)
                 {
                     if (!ContainsType(t))
                         continue;
-                    var list = AddToFile(file, t, alreadyProcessed);
-                    ProcessList(list);
+                    if (alreadyProcessed.Contains(t))
+                        continue;
+                    if (!_entities.TryGetValue(t, out var entity))
+                        continue;
+                    var entityPackageName = entity.PackageName?.Trim() ?? string.Empty;
+                    if (!usePackageName)
+                    {
+                        usePackageName     = true;
+                        currentPackageName = entityPackageName;
+                        if (!Packages.TryGetValue(currentPackageName, out var package))
+                            package = new UmlPackage();
+                        usedPackages[currentPackageName] = package;
+                        OpenPackage(currentPackageName, package.Kind.ToString());
+                    }
+
+                    if (!string.Equals(currentPackageName, entityPackageName, StringComparison.OrdinalIgnoreCase))
+                        continue;
+                    alreadyProcessed.Add(t);
+                    var list = AddToFile(file, t);
+                    typesToDo--;
+                    ProcessList(list, currentPackageName, true);
                 }
             }
 
-            ProcessList(iter);
+            var types = _entities.OrderBy(a => a.Value.OrderIndex).Select(a => a.Key)
+                .ToList();
+            typesToDo = types.Count;
+            while (typesToDo > 0)
+            {
+                ProcessList(types, null, false);
+            }
+            ClosePackage();
+
             file.Relations.AddRange(Relations);
             return file;
         }
@@ -95,17 +141,10 @@ namespace AutoUml
             handler.Invoke(this, args);
         }
 
-        private IEnumerable<Type> AddToFile(PlantUmlFile file, Type t,
-            HashSet<Type> processed)
+        private IEnumerable<Type> AddToFile(PlantUmlFile file, Type t)
         {
             var result = new List<Type>();
-            if (!_entities.TryGetValue(t, out _))
-                return result;
-            if (!processed.Add(t))
-                return result;
-
-            var cf = file.Classes;
-
+            var cf     = file.Classes;
             if (!_entities.TryGetValue(t, out var info))
                 info = new UmlEntity(t);
             cf.Open(info.GetOpenClassCode());
@@ -134,13 +173,16 @@ namespace AutoUml
             return result;
         }
 
-        public UmlDiagramScale            Scale     { get; set; }
-        public string                     Title     { get; set; }
-        public string                     Name      { get; set; }
-        public UmlSkinParams              Skin      { get; set; } = new UmlSkinParams();
-        public List<UmlRelation>          Relations { get; set; } = new List<UmlRelation>();
-        public Dictionary<string, object> Metadata  { get; }      = new Dictionary<string, object>();
-        public Dictionary<string, UmlSprite> Sprites { get; } = new Dictionary<string, UmlSprite>();
+        public UmlDiagramScale               Scale     { get; set; }
+        public string                        Title     { get; set; }
+        public string                        Name      { get; set; }
+        public UmlSkinParams                 Skin      { get; set; } = new UmlSkinParams();
+        public List<UmlRelation>             Relations { get; set; } = new List<UmlRelation>();
+        public Dictionary<string, object>    Metadata  { get; }      = new Dictionary<string, object>();
+        public Dictionary<string, UmlSprite> Sprites   { get; }      = new Dictionary<string, UmlSprite>();
+
+        public Dictionary<string, UmlPackage> Packages { get; } =
+            new Dictionary<string, UmlPackage>(StringComparer.CurrentCultureIgnoreCase);
 
         private readonly Dictionary<Type, UmlEntity> _entities = new Dictionary<Type, UmlEntity>();
 
