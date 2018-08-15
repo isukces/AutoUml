@@ -396,12 +396,20 @@ class CompanyInfo
 {
     string Name
 }
+class OrderItem4Related1
+{
+}
+class OrderItem4Related3
+{
+}
 package Orders <<Cloud>> {
     class Order4
     {
     }
     class OrderItem4
     {
+        OrderItem4Related1 DoSomething1()
+        OrderItem4Related2 DoSomething2()
     }
 }
 

@@ -7,6 +7,12 @@ class CompanyInfo
 {
     string Name
 }
+class OrderItem4Related1
+{
+}
+class OrderItem4Related3
+{
+}
 package Orders <<Cloud>> {
     class Order4
     {
@@ -17,4 +23,6 @@ package Orders <<Cloud>> {
 }
 
 Order4 --{ OrderItem4:Items
+OrderItem4 o--> OrderItem4Related1:DoSomething1(a)
+OrderItem4 o--> OrderItem4Related3:DoSomething2()
 @enduml
