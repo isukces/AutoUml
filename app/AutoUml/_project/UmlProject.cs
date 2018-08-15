@@ -5,13 +5,22 @@ namespace AutoUml
 {
     public class UmlProject
     {
-        public void GenerateAll(Func<UmlDiagram, string> filenameFactory)
+        public IReadOnlyList<SavedFileInfo> GenerateAll(Func<UmlDiagram, string> filenameFactory)
         {
+            var result = new List<SavedFileInfo>(Diagrams.Count);
             foreach (var i in Diagrams)
             {
                 var fileName = filenameFactory(i.Value);
-                i.Value.SaveToFile(fileName);
+                var wasSaved = i.Value.SaveToFile(fileName);
+                result.Add(new SavedFileInfo
+                {
+                    FileName = fileName,
+                    WasSaved = wasSaved,
+                    Diagram  = i.Value
+                });
             }
+
+            return result;
         }
 
         public UmlDiagram GetOrCreateDiagram(string diagramName)
@@ -43,6 +52,13 @@ namespace AutoUml
 
         public Dictionary<string, UmlDiagram> Diagrams { get; } =
             new Dictionary<string, UmlDiagram>();
+
+        public struct SavedFileInfo
+        {
+            public UmlDiagram Diagram  { get; set; }
+            public string     FileName { get; set; }
+            public bool       WasSaved { get; set; }
+        }
 
         public event EventHandler<AddTypeToDiagramEventArgs> OnAddTypeToDiagram;
         public event EventHandler<AddDiagramEventArgs>       OnAddDiagram;

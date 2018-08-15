@@ -105,10 +105,10 @@ namespace AutoUml
             return type.GetDiagramName(t => TryGetEntityByType(t)?.Name);
         }
 
-        public void SaveToFile(string filename)
+        public bool SaveToFile(string filename)
         {
             var file = CreateFile();
-            file.SaveIfDifferent(filename);
+            return file.SaveIfDifferent(filename);
         }
 
         [CanBeNull]

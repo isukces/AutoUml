@@ -5,9 +5,9 @@ namespace AutoUml
 {
     public class PlantUmlFile
     {
-        public void SaveIfDifferent(string filename)
+        public bool SaveIfDifferent(string filename)
         {
-            new FileInfo(filename).SaveContentIfDifferent(Code);
+            return new FileInfo(filename).SaveContentIfDifferent(Code);
         }
 
         public override string ToString()

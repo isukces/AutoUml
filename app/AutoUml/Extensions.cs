@@ -122,18 +122,19 @@ namespace AutoUml
             return $"{retTypeName(methodInfo.ReturnType)} {methodInfo.Name}({args2})";
         }
 
-        public static void SaveContentIfDifferent(this FileInfo file, string txt)
+        public static bool SaveContentIfDifferent(this FileInfo file, string txt)
         {
             var filename = file.FullName;
             if (File.Exists(filename))
             {
                 var existing = File.ReadAllText(filename);
                 if (txt == existing)
-                    return;
+                    return false;
             }
 
             new FileInfo(filename).Directory?.Create();
             File.WriteAllText(filename, txt);
+            return true;
         }
 
 
