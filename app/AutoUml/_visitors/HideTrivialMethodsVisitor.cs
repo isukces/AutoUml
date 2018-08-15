@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace AutoUml
 {
@@ -16,23 +15,30 @@ namespace AutoUml
                     return false;
                 while (true)
                 {
-                    if (entityType.BaseType == null)
+                    var bt = entityType.BaseType.MeOrGeneric();
+                    if (bt == null)
                         return false;
-                    if (diagram.ContainsType(entityType.BaseType))
+                    if (diagram.ContainsType(bt))
                         return true;
-                    entityType = entityType.BaseType;
+                    entityType = bt;
                 }
             }
 
             foreach (var entity in diagram.GetEntities())
             {
-                foreach (var m in entity.Members.OfType<MethodUmlMember>())
+                foreach (var me in entity.Members)
                 {
-                    var mi = m.Method;
-                    if (mi.DeclaringType == typeof(object))
-                        m.HideOnList = true;
-                    else if (AlreadyOnDiagram(entity.Type, mi.DeclaringType))
-                        m.HideOnList = true;
+                    var hide = HideMember?.Invoke(me);
+                    if (hide != null)
+                        me.HideOnList = hide.Value;
+                    else if (me is MethodUmlMember m)
+                    {
+                        var mi = m.Method;
+                        if (mi.DeclaringType == typeof(object))
+                            m.HideOnList = true;
+                        else if (AlreadyOnDiagram(entity.Type, mi.DeclaringType))
+                            m.HideOnList = true;
+                    }
                 }
             }
         }
@@ -40,5 +46,7 @@ namespace AutoUml
         public void VisitDiagramCreated(UmlDiagram diagram)
         {
         }
+
+        public Func<UmlMember, bool?> HideMember { get; set; }
     }
 }
