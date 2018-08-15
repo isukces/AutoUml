@@ -26,6 +26,7 @@ namespace AutoUml
         public UmlArrowDirections ArrowDirection    { get; set; }
         public bool?              Multiple          { get; set; }
         public bool               ForceAddToDiagram { get; set; }
+        public Type               ForceType         { get; set; }
 
         public string Note           { get; set; }
         public string NoteBackground { get; set; }

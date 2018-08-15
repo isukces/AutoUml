@@ -42,11 +42,12 @@ namespace AutoUml
                     var att = prop.Property.GetCustomAttribute<UmlRelationAttribute>();
                     if (att != null)
                     {
-                        arrow = UmlRelationArrow.GetRelationByKind(att.Kind, att.Multiple ?? ti.IsCollection);
+                        var relationTi = new TypeExInfo(att.ForceType ?? prop.Property.PropertyType); 
+                        arrow = UmlRelationArrow.GetRelationByKind(att.Kind, att.Multiple ?? relationTi.IsCollection);
                         if (att.ArrowDirection != UmlArrowDirections.Auto)
                             arrow.ArrowDirection = att.ArrowDirection;
                         if (att.ForceAddToDiagram)
-                            typesToAdd.Add(ti.ElementType);
+                            typesToAdd.Add(relationTi.ElementType);
                     }
 
                     var rel = new UmlRelation
