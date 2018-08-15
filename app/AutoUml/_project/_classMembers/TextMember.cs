@@ -16,7 +16,7 @@ namespace AutoUml
 
         public override void WriteTo(CodeWriter cf, UmlDiagram diagram)
         {
-            cf.Writeln(Text);
+            cf.Writeln(GetCodePrefix() + Text);
         }
 
         public string Text { get; set; }

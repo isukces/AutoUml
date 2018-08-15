@@ -27,6 +27,11 @@ namespace Tests
         {
             return null;
         }
+
+        public static void SomeStaticMethod()
+        {
+            
+        }
     }
 
     public class OrderItem4Related1
@@ -37,8 +42,8 @@ namespace Tests
     {
         
     }
-    public class OrderItem4Related3
+    public abstract class OrderItem4Related3
     {
-        
+        public abstract int CalculateSum(int a, int b);
     }
 }

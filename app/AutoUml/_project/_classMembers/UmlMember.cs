@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace AutoUml
@@ -11,5 +12,31 @@ namespace AutoUml
         public string                     Name       { get; set; }
         public bool                       HideOnList { get; set; }
         public Dictionary<string, object> Metadata   { get; } = new Dictionary<string, object>();
+        
+        
+        public UmlMemberKind Kind { get; set; }
+        
+        
+        protected string GetCodePrefix()
+        {
+            switch (Kind)
+            {
+                case UmlMemberKind.Normal:
+                    return "";
+                case UmlMemberKind.Abstract:
+                    return "{abstract} ";
+                case UmlMemberKind.Static:
+                    return "{static} ";
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+    }
+
+    public enum UmlMemberKind
+    {
+        Normal,
+        Abstract,
+        Static
     }
 }

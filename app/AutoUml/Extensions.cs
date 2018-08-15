@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -46,6 +47,18 @@ namespace AutoUml
             }
 
             return sb.ToString();
+        }
+
+        public static void DeleteFromListIf<T>(this List<T> list, Func<T, bool> predicate)
+        {
+            if (list == null)
+                return;
+            for (var index = list.Count - 1; index >= 0; index--)
+            {
+                var element = list[index];
+                if (predicate(element))
+                    list.RemoveAt(index);
+            }
         }
 
         public static string GetDiagramName(this Type type, Func<Type, string> tryGetAlias)

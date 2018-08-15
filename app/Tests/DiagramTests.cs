@@ -399,8 +399,9 @@ class CompanyInfo
 class OrderItem4Related1
 {
 }
-class OrderItem4Related3
+abstract class OrderItem4Related3
 {
+    {abstract} int CalculateSum(int a,int b)
 }
 package Orders <<Cloud>> {
     class Order4
@@ -418,8 +419,7 @@ OrderItem4 o--> OrderItem4Related3:""DoSomething2()""
 ";
             Assert.Equal(expected, code);
         }
-        
-        
+
         [Fact]
         public void T11_Should_convert_generics()
         {
@@ -458,6 +458,62 @@ class NonGeneric
 ""Generic1<T>"" -up-|> GenericBase
 ""Generic2<TModel,TElement>"" -up-|> ""Generic1<T>""
 NonGeneric -up-|> ""Generic2<TModel,TElement>""
+@enduml
+";
+            Assert.Equal(expected, code);
+        }
+
+
+        [Fact]
+        public void T12_Should_mark_static_method()
+        {
+            var b = new ReflectionProjectBuilder(true)
+                .UpdateVisitor<ClassMemberScannerVisitor>(a =>
+                {
+                    a.MethodsBindingFlags |= ReflectionFlags.Static;
+                })
+                .WithAssembly(typeof(DiagramTests).Assembly)
+                .Build();
+            
+            Assert.NotNull(b);
+            Assert.True(b.Diagrams.ContainsKey("Test4"));
+            var diagram = b.Diagrams["Test4"];
+            Assert.NotNull(diagram);
+
+            var file = diagram.CreateFile();
+            Assert.NotNull(file);
+            var code = file.Code;
+            Save(code);
+
+            var expected = @"@startuml
+title
+ Diagram Test4
+end title
+
+class CompanyInfo
+{
+    string Name
+}
+class OrderItem4Related1
+{
+}
+abstract class OrderItem4Related3
+{
+    {abstract} int CalculateSum(int a,int b)
+}
+package Orders <<Cloud>> {
+    class Order4
+    {
+    }
+    class OrderItem4
+    {
+        {static} void SomeStaticMethod()
+    }
+}
+
+Order4 --{ OrderItem4:Items
+OrderItem4 o--> OrderItem4Related1:""DoSomething1(a)""
+OrderItem4 o--> OrderItem4Related3:""DoSomething2()""
 @enduml
 ";
             Assert.Equal(expected, code);

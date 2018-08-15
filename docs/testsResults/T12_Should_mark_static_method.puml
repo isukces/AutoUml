@@ -20,6 +20,7 @@ package Orders <<Cloud>> {
     }
     class OrderItem4
     {
+        {static} void SomeStaticMethod()
     }
 }
 

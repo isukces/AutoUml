@@ -25,6 +25,20 @@ namespace AutoUml
             return result;
         }
 
+        public ReflectionProjectBuilder UpdateVisitor<T>(Action<T> updateAction)
+            where T : IUmlVisitor
+        {
+            if (updateAction == null)
+                return this;
+            foreach (var element in NewTypeVisitors)
+                if (element is T t)
+                    updateAction(t);
+            foreach (var element in DiagramVisitors)
+                if (element is T t)
+                    updateAction(t);
+            return this;
+        }
+
         public ReflectionProjectBuilder VisitType(Type type)
         {
             VisitTypeInternal(type, true);
@@ -55,6 +69,15 @@ namespace AutoUml
             return this;
         }
 
+        public ReflectionProjectBuilder WithoutVisitor<T>()
+            where T : IUmlVisitor
+        {
+            NewTypeVisitors.DeleteFromListIf(i => i.GetType().IsInstanceOfType(typeof(T)));
+            DiagramVisitors.DeleteFromListIf(i => i.GetType().IsInstanceOfType(typeof(T)));
+            return this;
+        }
+
+
         public ReflectionProjectBuilder WithStandardVisitors()
         {
             ReflectionTypeVisitors.Add(new UmlDiagramAttributeVisitor());
@@ -69,11 +92,12 @@ namespace AutoUml
             DiagramVisitors.Add(new HideTrivialMethodsVisitor());
             DiagramVisitors.Add(new AddInheritRelationVisitor());
             DiagramVisitors.Add(new UmlAddMetaAttributeVisitor());
-            
+
             AssemblyVisitors.Add(new UmlPackageStyleAttributeVisitor());
 
             return this;
         }
+
 
         public ReflectionProjectBuilder WithVisitor(INewTypeInDiagramVisitor v, bool addFirst = false)
         {
@@ -84,9 +108,12 @@ namespace AutoUml
             return this;
         }
 
-        public ReflectionProjectBuilder WithVisitor(IDiagramVisitor v)
+        public ReflectionProjectBuilder WithVisitor(IDiagramVisitor v, bool addFirst = false)
         {
-            DiagramVisitors.Add(v);
+            if (addFirst && DiagramVisitors.Any())
+                DiagramVisitors.Insert(0, v);
+            else
+                DiagramVisitors.Add(v);
             return this;
         }
 
@@ -94,9 +121,10 @@ namespace AutoUml
         {
             foreach (var a in _scannedAssemblies)
             {
-                foreach(var v in AssemblyVisitors)
+                foreach (var v in AssemblyVisitors)
                     v.Visit(a, e.Diagram);
             }
+
             foreach (var i in DiagramVisitors)
                 i.VisitDiagramCreated(e.Diagram);
         }
