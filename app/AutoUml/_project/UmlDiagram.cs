@@ -102,7 +102,7 @@ namespace AutoUml
 
         public string GetTypeName(Type type)
         {
-            return type.GetDiagramName(t => TryGetEntityByType(type)?.Name);
+            return type.GetDiagramName(t => TryGetEntityByType(t)?.Name);
         }
 
         public void SaveToFile(string filename)
@@ -118,6 +118,7 @@ namespace AutoUml
                 return null;
             return _entities.TryGetValue(type, out var ent) ? ent : null;
         }
+         
 
         public void UpdateTypeInfo(Type type, [CanBeNull] Action<UmlEntity, bool> modification)
         {
@@ -125,7 +126,7 @@ namespace AutoUml
             if (!_entities.TryGetValue(type, out var info))
             {
                 created         = true;
-                _entities[type] = info = new UmlEntity(type);
+                _entities[type] = info = new UmlEntity(type, GetTypeName);
             }
 
             if (modification != null)
@@ -146,7 +147,7 @@ namespace AutoUml
             var result = new List<Type>();
             var cf     = file.Classes;
             if (!_entities.TryGetValue(t, out var info))
-                info = new UmlEntity(t);
+                info = new UmlEntity(t, GetTypeName);
             cf.Open(info.GetOpenClassCode());
 
             foreach (var i in info.Members.OrderBy(q => q.Group))

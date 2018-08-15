@@ -23,6 +23,6 @@ package Orders <<Cloud>> {
 }
 
 Order4 --{ OrderItem4:Items
-OrderItem4 o--> OrderItem4Related1:DoSomething1(a)
-OrderItem4 o--> OrderItem4Related3:DoSomething2()
+OrderItem4 o--> OrderItem4Related1:"DoSomething1(a)"
+OrderItem4 o--> OrderItem4Related3:"DoSomething2()"
 @enduml

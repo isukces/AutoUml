@@ -18,7 +18,13 @@ namespace AutoUml
 
         public static string AddQuotesIfNecessary(this string name)
         {
-            return name.Contains(' ') ? name.AddQuotes() : name;
+            foreach (var c in name)
+            {
+                if (!char.IsLetterOrDigit(c))
+                    return name.AddQuotes();
+            }
+
+            return name;
         }
 
         public static string CamelToNormal(this string n, bool onlyFirstUpper)
@@ -49,9 +55,10 @@ namespace AutoUml
                 var gt = type.GetGenericTypeDefinition();
                 if (gt == typeof(Nullable<>))
                     return type.GetGenericArguments()[0].GetDiagramName(tryGetAlias) + "?";
-                var name1 = gt.Name.Split('`').First();
-                return name1 + "<" +
-                       string.Join(",", type.GetGenericArguments().Select(a => a.GetDiagramName(tryGetAlias))) + ">";
+                var name1         = gt.Name.Split('`').First();
+                var argCollection = type.GetGenericArguments().Select(a => a.GetDiagramName(tryGetAlias)).ToArray();
+                var result        = name1 + "<" + string.Join(",", argCollection) + ">";
+                return result;
             }
 
             if (type.IsArray)

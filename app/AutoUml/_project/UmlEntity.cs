@@ -6,10 +6,10 @@ namespace AutoUml
 {
     public class UmlEntity : IMetadataContainer
     {
-        public UmlEntity([NotNull] Type type)
+        public UmlEntity([NotNull] Type type, Func<Type, string> tryGetAlias)
         {
             Type = type ?? throw new ArgumentNullException(nameof(type));
-            Name = type.Name;
+            Name = type.GetDiagramName(tryGetAlias);
             if (type.IsInterface)
                 KeyWord = UmlTypes.UmlInterface;
             else if (type.IsEnum)

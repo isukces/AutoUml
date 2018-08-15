@@ -1,0 +1,21 @@
+@startuml
+title
+ Diagram Generics
+end title
+
+class GenericBase
+{
+}
+class "Generic1<T>"
+{
+}
+class "Generic2<TModel,TElement>"
+{
+}
+class NonGeneric
+{
+    Dictionary<string,double> GenericDic
+}
+
+"Generic1<T>" -up-|> GenericBase
+@enduml

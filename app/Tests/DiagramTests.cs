@@ -408,12 +408,54 @@ package Orders <<Cloud>> {
     }
     class OrderItem4
     {
-        OrderItem4Related1 DoSomething1()
-        OrderItem4Related2 DoSomething2()
     }
 }
 
 Order4 --{ OrderItem4:Items
+OrderItem4 o--> OrderItem4Related1:""DoSomething1(a)""
+OrderItem4 o--> OrderItem4Related3:""DoSomething2()""
+@enduml
+";
+            Assert.Equal(expected, code);
+        }
+        
+        
+        [Fact]
+        public void T11_Should_convert_generics()
+        {
+            var b = new ReflectionProjectBuilder(true)
+                .WithAssembly(typeof(DiagramTests).Assembly)
+                .Build();
+            Assert.NotNull(b);
+            Assert.True(b.Diagrams.ContainsKey("Generics"));
+            var diagram = b.Diagrams["Generics"];
+            Assert.NotNull(diagram);
+
+            var file = diagram.CreateFile();
+            Assert.NotNull(file);
+            var code = file.Code;
+            Save(code);
+
+            var expected = @"@startuml
+title
+ Diagram Generics
+end title
+
+class GenericBase
+{
+}
+class ""Generic1<T>""
+{
+}
+class ""Generic2<TModel,TElement>""
+{
+}
+class NonGeneric
+{
+    Dictionary<string,double> GenericDic
+}
+
+""Generic1<T>"" -up-|> GenericBase
 @enduml
 ";
             Assert.Equal(expected, code);
