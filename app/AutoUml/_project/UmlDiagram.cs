@@ -53,7 +53,7 @@ namespace AutoUml
 
             void ProcessList(IEnumerable<Type> typesList, string currentPackageName, bool usePackageName)
             {
-                foreach (var t in typesList)
+                foreach (var t in typesList.Select(a=>a.MeOrGeneric()))
                 {
                     if (!ContainsType(t))
                         continue;

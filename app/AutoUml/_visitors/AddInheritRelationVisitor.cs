@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace AutoUml
 {
@@ -21,15 +22,13 @@ namespace AutoUml
             foreach (var e in diagram.GetEntities())
             {
                 var t = e.Type;
-                var bt = t.BaseType;
-                if (bt != null && bt.IsGenericType)
-                    bt = bt.GetGenericTypeDefinition();
+                var bt = t.BaseType.MeOrGeneric();
                 if (t.BaseType != null && diagram.ContainsType(bt))
                 {
                     diagram.Relations.Add(Inherits(bt, t, diagram).With(UmlArrowDirections.Up));
                 }
 
-                foreach (var i in t.GetInterfaces())
+                foreach (var i in t.GetInterfaces().Select(a=>a.MeOrGeneric()))
                 {
                     if (diagram.ContainsType(i))
                         diagram.Relations.Add(Inherits(i, t, diagram).With(UmlArrowDirections.Up));

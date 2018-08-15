@@ -22,7 +22,7 @@ namespace AutoUml
         {
             if (diagClass.Type != member.Method.DeclaringType)
             {
-                if (diagram.ContainsType(diagClass.Type.BaseType))
+                if (diagram.ContainsType(diagClass.Type.BaseType.MeOrGeneric()))
                 {
                     member.HideOnList = true;
                     yield break;

@@ -198,5 +198,14 @@ namespace AutoUml
             if (!string.IsNullOrEmpty(value))
                 code.Writeln(name + " " + value);
         }
+
+        public static Type MeOrGeneric(this Type type)
+        {
+            if (type == null)
+                return null;
+            if (type.IsGenericType)
+                return type.GetGenericTypeDefinition();
+            return type;
+        }
     }
 }
