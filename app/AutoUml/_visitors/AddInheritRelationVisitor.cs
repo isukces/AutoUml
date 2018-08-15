@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 
 namespace AutoUml
 {
@@ -25,7 +26,25 @@ namespace AutoUml
                 var bt = t.BaseType.MeOrGeneric();
                 if (t.BaseType != null && diagram.ContainsType(bt))
                 {
-                    diagram.Relations.Add(Inherits(bt, t, diagram).With(UmlArrowDirections.Up));
+                    var rel = Inherits(bt, t, diagram).With(UmlArrowDirections.Up);
+                    var a1 = t.BaseType.GetGenericTypeArgumentsIfPossible();
+                    if (a1.Length > 0)
+                    {
+                        var a4 = t.BaseType.MeOrGeneric().GetGenericArguments();
+                        var sb = new StringBuilder();
+                        for (int i = 0; i < a4.Length; i++)
+                        {
+                            var t1 = a1[i];
+                            var t2 = a4[i];
+                            var txt = t2.Name + "=" + diagram.GetTypeName(t1);
+                            if (i > 0)
+                                sb.Append(", ");
+                            sb.Append(txt);
+                        }
+
+                        rel.Label = sb.ToString();
+                    }                    
+                    diagram.Relations.Add(rel);
                 }
 
                 foreach (var i in t.GetInterfaces().Select(a=>a.MeOrGeneric()))

@@ -456,8 +456,8 @@ class NonGeneric
 }
 
 ""Generic1<T>"" -up-|> GenericBase
-""Generic2<TModel,TElement>"" -up-|> ""Generic1<T>""
-NonGeneric -up-|> ""Generic2<TModel,TElement>""
+""Generic2<TModel,TElement>"" -up-|> ""Generic1<T>"":""T=TModel""
+NonGeneric -up-|> ""Generic2<TModel,TElement>"":""TModel=int, TElement=string""
 @enduml
 ";
             Assert.Equal(expected, code);

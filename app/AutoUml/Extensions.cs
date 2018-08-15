@@ -61,6 +61,15 @@ namespace AutoUml
             }
         }
 
+        public static Type[] GetGenericTypeArgumentsIfPossible(this Type type)
+        {
+            if (type == null)
+                return new Type[0];
+            if (type.IsGenericType)
+                return type.GenericTypeArguments;
+            return new Type[0];
+        }
+
         public static string GetDiagramName(this Type type, Func<Type, string> tryGetAlias)
         {
             if (type.IsGenericType)
@@ -125,6 +134,15 @@ namespace AutoUml
         public static bool IsStruct(this Type type)
         {
             return type.IsValueType && !type.IsEnum && !type.IsPrimitive;
+        }
+
+        public static Type MeOrGeneric(this Type type)
+        {
+            if (type == null)
+                return null;
+            if (type.IsGenericType)
+                return type.GetGenericTypeDefinition();
+            return type;
         }
 
         public static string MethodToUml(this MethodInfo methodInfo, Func<Type, string> retTypeName)
@@ -197,15 +215,6 @@ namespace AutoUml
             value = value?.Trim();
             if (!string.IsNullOrEmpty(value))
                 code.Writeln(name + " " + value);
-        }
-
-        public static Type MeOrGeneric(this Type type)
-        {
-            if (type == null)
-                return null;
-            if (type.IsGenericType)
-                return type.GetGenericTypeDefinition();
-            return type;
         }
     }
 }

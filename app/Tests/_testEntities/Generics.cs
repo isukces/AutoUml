@@ -23,4 +23,5 @@ namespace Tests
     {
         public Dictionary<string, double> GenericDic { get; set; }
     }
+        
 }
