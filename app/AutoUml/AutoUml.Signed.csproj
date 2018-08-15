@@ -10,9 +10,9 @@
     <Company>Internet Sukces Piotr Stęclik</Company>
     <Product>AutoUml</Product>
     <Copyright>Internet Sukces Piotr Stęclik 2018</Copyright>
-    <AssemblyVersion>1.0.18216.7</AssemblyVersion>
-    <Version>1.0.18216.7</Version>
-    <FileVersion>1.0.18216.7</FileVersion>
+    <AssemblyVersion>1.0.18227.8</AssemblyVersion>
+    <Version>1.0.18227.8</Version>
+    <FileVersion>1.0.18227.8</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
     <DocumentationFile>bin\Debug\net452\AutoUml.Signed.xml</DocumentationFile>
