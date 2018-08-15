@@ -21,9 +21,12 @@ namespace AutoUml
             foreach (var e in diagram.GetEntities())
             {
                 var t = e.Type;
-                if (t.BaseType != null && diagram.ContainsType(t.BaseType))
+                var bt = t.BaseType;
+                if (bt != null && bt.IsGenericType)
+                    bt = bt.GetGenericTypeDefinition();
+                if (t.BaseType != null && diagram.ContainsType(bt))
                 {
-                    diagram.Relations.Add(Inherits(t.BaseType, t, diagram).With(UmlArrowDirections.Up));
+                    diagram.Relations.Add(Inherits(bt, t, diagram).With(UmlArrowDirections.Up));
                 }
 
                 foreach (var i in t.GetInterfaces())
