@@ -398,6 +398,7 @@ class CompanyInfo
 }
 class OrderItem4Related1
 {
+    +int SomeMethodWithNestedMethods()
 }
 abstract class OrderItem4Related3
 {
@@ -497,6 +498,7 @@ class CompanyInfo
 }
 class OrderItem4Related1
 {
+    +int SomeMethodWithNestedMethods()
 }
 abstract class OrderItem4Related3
 {

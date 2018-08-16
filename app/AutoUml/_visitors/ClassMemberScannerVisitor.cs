@@ -151,6 +151,8 @@ namespace AutoUml
             {
                 if (mi.IsSpecialName)
                     continue;
+                if (mi.GetCustomAttribute<System.Runtime.CompilerServices.CompilerGeneratedAttribute>() != null)
+                    continue;
                 if (mi.DeclaringType == typeof(object))
                     continue;
                 var flag = GetMFlag(mi, ReflectionFlags.PublicMethod, ReflectionFlags.ProtectedMethod,
