@@ -11,7 +11,7 @@ Note from annotation
 end note
 class CompanyInfo
 {
-    string Name
+    +string Name
 }
 class OrderItem3
 {

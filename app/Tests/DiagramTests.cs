@@ -271,7 +271,7 @@ Note from annotation
 end note
 class CompanyInfo
 {
-    string Name
+    +string Name
 }
 class OrderItem3
 {
@@ -394,14 +394,14 @@ end title
 
 class CompanyInfo
 {
-    string Name
+    +string Name
 }
 class OrderItem4Related1
 {
 }
 abstract class OrderItem4Related3
 {
-    {abstract} int CalculateSum(int a,int b)
+    +{abstract} int CalculateSum(int a,int b)
 }
 package Orders <<Cloud>> {
     class Order4
@@ -409,6 +409,7 @@ package Orders <<Cloud>> {
     }
     class OrderItem4
     {
+        +{static} void SomeStaticMethod()
     }
 }
 
@@ -452,7 +453,7 @@ class ""Generic2<TModel,TElement>""
 }
 class NonGeneric
 {
-    Dictionary<string,double> GenericDic
+    +Dictionary<string,double> GenericDic
 }
 
 ""Generic1<T>"" -up-|> GenericBase
@@ -470,7 +471,7 @@ NonGeneric -up-|> ""Generic2<TModel,TElement>"":""TModel=int, TElement=string""
             var b = new ReflectionProjectBuilder(true)
                 .UpdateVisitor<ClassMemberScannerVisitor>(a =>
                 {
-                    a.MethodsBindingFlags |= ReflectionFlags.Static;
+                    a.ScanFlags |= ReflectionFlags.StaticMethod;
                 })
                 .WithAssembly(typeof(DiagramTests).Assembly)
                 .Build();
@@ -492,14 +493,14 @@ end title
 
 class CompanyInfo
 {
-    string Name
+    +string Name
 }
 class OrderItem4Related1
 {
 }
 abstract class OrderItem4Related3
 {
-    {abstract} int CalculateSum(int a,int b)
+    +{abstract} int CalculateSum(int a,int b)
 }
 package Orders <<Cloud>> {
     class Order4
@@ -507,7 +508,7 @@ package Orders <<Cloud>> {
     }
     class OrderItem4
     {
-        {static} void SomeStaticMethod()
+        +{static} void SomeStaticMethod()
     }
 }
 

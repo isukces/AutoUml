@@ -5,14 +5,14 @@ end title
 
 class CompanyInfo
 {
-    string Name
+    +string Name
 }
 class OrderItem4Related1
 {
 }
 abstract class OrderItem4Related3
 {
-    {abstract} int CalculateSum(int a,int b)
+    +{abstract} int CalculateSum(int a,int b)
 }
 package Orders <<Cloud>> {
     class Order4
@@ -20,7 +20,7 @@ package Orders <<Cloud>> {
     }
     class OrderItem4
     {
-        {static} void SomeStaticMethod()
+        +{static} void SomeStaticMethod()
     }
 }
 

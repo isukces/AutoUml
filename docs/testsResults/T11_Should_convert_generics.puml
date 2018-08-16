@@ -14,7 +14,7 @@ class "Generic2<TModel,TElement>"
 }
 class NonGeneric
 {
-    Dictionary<string,double> GenericDic
+    +Dictionary<string,double> GenericDic
 }
 
 "Generic1<T>" -up-|> GenericBase
