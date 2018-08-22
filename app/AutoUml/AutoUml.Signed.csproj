@@ -10,16 +10,16 @@
     <Company>Internet Sukces Piotr Stęclik</Company>
     <Product>AutoUml</Product>
     <Copyright>Internet Sukces Piotr Stęclik 2018</Copyright>
-    <AssemblyVersion>1.0.18228.9</AssemblyVersion>
-    <Version>1.0.18228.9</Version>
-    <FileVersion>1.0.18228.9</FileVersion>
+    <AssemblyVersion>1.0.18234.10</AssemblyVersion>
+    <Version>1.0.18234.10</Version>
+    <FileVersion>1.0.18234.10</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
     <DocumentationFile>bin\Debug\net452\AutoUml.Signed.xml</DocumentationFile>
     <AssemblyName>AutoUml</AssemblyName>
     <PackageProjectUrl>https://github.com/isukces/AutoUml</PackageProjectUrl>
     <PackageIconUrl>https://github.com/isukces/AutoUml/blob/master/LICENSE</PackageIconUrl>
-    <PackageReleaseNotes>Basic support for sprites</PackageReleaseNotes>
+    <PackageReleaseNotes>Fix bugs</PackageReleaseNotes>
     <Description>Create UML diagrams directly from .NET code using annotation</Description>
   </PropertyGroup>
   <ItemGroup>
