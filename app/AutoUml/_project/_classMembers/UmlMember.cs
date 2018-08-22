@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using JetBrains.Annotations;
 
 namespace AutoUml
 {
     public abstract class UmlMember : IMetadataContainer
     {
+        [CanBeNull]
         public abstract MemberInfo GetMemberInfo();
         public abstract void WriteTo(CodeWriter cf, UmlDiagram diagram);
 
