@@ -63,6 +63,8 @@ namespace AutoUml
         private static IEnumerable<Type> ProcessProperty(UmlDiagram diagram, UmlEntity diagClass,
             PropertyUmlMember prop)
         {
+            if (prop.Property.GetCustomAttribute<DontConvertToRelationAttribute>() != null)
+                yield break;
             if (diagClass.Type != prop.Property.DeclaringType)
             {
                 if (diagram.ContainsType(diagClass.Type.BaseType))
