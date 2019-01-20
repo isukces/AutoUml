@@ -10,9 +10,9 @@
     <Company>Internet Sukces Piotr Stęclik</Company>
     <Product>AutoUml</Product>
     <Copyright>Internet Sukces Piotr Stęclik 2018</Copyright>
-    <AssemblyVersion>1.0.18234.10</AssemblyVersion>
-    <Version>1.0.18234.10</Version>
-    <FileVersion>1.0.18234.10</FileVersion>
+    <AssemblyVersion>1.0.19020.12</AssemblyVersion>
+    <Version>1.0.19020.12</Version>
+    <FileVersion>1.0.19020.12</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
     <DocumentationFile>bin\Debug\net452\AutoUml.Signed.xml</DocumentationFile>
@@ -23,6 +23,6 @@
     <Description>Create UML diagrams directly from .NET code using annotation</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" />
+    <PackageReference Include="JetBrains.Annotations" Version="2018.3.0" />
   </ItemGroup>
 </Project>

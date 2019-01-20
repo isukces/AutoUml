@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -7,10 +6,17 @@ namespace AutoUml
 {
     public class PlantUmlRunner
     {
-        public static bool IsPngUpToDate(FileInfo puml)
+        public static FileInfo GetPngFileInfo(FileInfo puml)
         {
             var png = new FileInfo(puml.FullName.Substring(0, puml.FullName.Length - 5) + ".png");
+            return png;
+        }
+
+        public static bool IsPngUpToDate(FileInfo puml)
+        {
+            var png = GetPngFileInfo(puml);
             if (!png.Exists) return false;
+            if (png.Length == 0) return false;
             return png.LastWriteTime >= puml.LastWriteTime;
         }
 
@@ -49,7 +55,8 @@ namespace AutoUml
                 startInfo.EnvironmentVariables["GRAPHVIZ_DOT"] = GraphVizDot;
             startInfo.UseShellExecute = false;
             startInfo.FileName        = JavaExe;
-            startInfo.Arguments       = string.Format("-jar {0} -charset UTF-8 {1}", Quote(PlantUmlJar), Quote(puml.Name));
+            startInfo.Arguments =
+                string.Format("-jar {0} -charset UTF-8 {1}", Quote(PlantUmlJar), Quote(puml.Name));
             if (puml.Directory != null)
                 startInfo.WorkingDirectory = puml.Directory.FullName;
             startInfo.UseShellExecute        = false;
