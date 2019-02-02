@@ -62,6 +62,8 @@ namespace AutoUml
                     if (!_entities.TryGetValue(t, out var entity))
                         continue;
                     var entityPackageName = entity.PackageName?.Trim() ?? string.Empty;
+                    if (IgnorePackages)
+                        entityPackageName = string.Empty;
                     if (!usePackageName)
                     {
                         usePackageName     = true;
@@ -181,6 +183,7 @@ namespace AutoUml
         public List<UmlRelation>             Relations { get; set; } = new List<UmlRelation>();
         public Dictionary<string, object>    Metadata  { get; }      = new Dictionary<string, object>();
         public Dictionary<string, UmlSprite> Sprites   { get; }      = new Dictionary<string, UmlSprite>();
+        public bool IgnorePackages { get; set; }
 
         public Dictionary<string, UmlPackage> Packages { get; } =
             new Dictionary<string, UmlPackage>(StringComparer.CurrentCultureIgnoreCase);
@@ -188,5 +191,6 @@ namespace AutoUml
         private readonly Dictionary<Type, UmlEntity> _entities = new Dictionary<Type, UmlEntity>();
 
         public event EventHandler<AddTypeToDiagramEventArgs> OnAddTypeToDiagram;
+
     }
 }
