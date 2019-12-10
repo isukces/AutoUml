@@ -2,6 +2,7 @@
 
 namespace AutoUml
 {
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method | AttributeTargets.Property)]
     public class UmlRelationAttribute : Attribute, INoteProvider
     {
         public UmlRelationAttribute(UmlRelationKind kind = UmlRelationKind.Aggregation,

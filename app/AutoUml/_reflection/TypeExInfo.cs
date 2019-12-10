@@ -30,6 +30,16 @@ namespace AutoUml
 
         public static Type GetListElement(Type type)
         {
+            {
+                var h = OnGetListElement;
+                if (h != null)
+                {
+                    var args = new OnGetListElementEventArgs(type);
+                    h.Invoke(null, args);
+                    if (args.Handled)
+                        return args.ElementType;
+                }
+            }
             if (type.IsArray)
             {
                 var el  = type.GetElementType();
@@ -66,5 +76,19 @@ namespace AutoUml
         public Type GenericTypeDef { get; }
         public bool IsGeneric      { get; }
         public bool IsCollection   { get; }
+
+        public static EventHandler<OnGetListElementEventArgs> OnGetListElement;
+
+        public class OnGetListElementEventArgs
+        {
+            public OnGetListElementEventArgs(Type type)
+            {
+                Type = type;
+            }
+
+            public Type Type        { get; }
+            public bool Handled     { get; set; }
+            public Type ElementType { get; set; }
+        }
     }
 }
