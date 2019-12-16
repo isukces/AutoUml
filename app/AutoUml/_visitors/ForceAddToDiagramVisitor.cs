@@ -11,8 +11,8 @@ namespace AutoUml
         {
             var att = memberInfo.GetCustomAttribute<UmlRelationAttribute>();
             if (att == null || !att.ForceAddToDiagram) return null;
-            if (att.ForceType != null)
-                return new TypeExInfo(att.ForceType);
+            if (att.RelatedType != null)
+                return new TypeExInfo(att.RelatedType);
             switch (memberInfo)
             {
                 case FieldInfo fieldInfo:

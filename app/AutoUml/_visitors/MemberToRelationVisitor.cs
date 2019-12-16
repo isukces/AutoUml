@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace AutoUml
 {
@@ -10,6 +11,22 @@ namespace AutoUml
     /// </summary>
     public class MemberToRelationVisitor : IDiagramVisitor
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool GetMultiplicity(Multiplicity kind, bool isCollection)
+        {
+            switch (kind)
+            {
+                case Multiplicity.Auto:
+                    return isCollection;
+                case Multiplicity.Multiple:
+                    return true;
+                case Multiplicity.Single:
+                    return false;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+            }
+        }
+
         private static string GetLabel(MethodUmlMember member)
         {
             var argsCollection = member.Method.GetParameters()
@@ -21,19 +38,17 @@ namespace AutoUml
         private static IEnumerable<Type> ProcessMethod(UmlDiagram diagram, UmlEntity diagClass, MethodUmlMember member)
         {
             if (diagClass.Type != member.Method.DeclaringType)
-            {
                 if (diagram.ContainsType(diagClass.Type.BaseType.MeOrGeneric()))
                 {
                     member.HideOnList = true;
                     yield break;
                 }
-            }
 
             var att = member.Method.GetCustomAttribute<UmlRelationAttribute>();
             if (att == null)
                 yield break;
 
-            var ti = new TypeExInfo(att.ForceType ?? member.Method.ReturnType);
+            var ti = new TypeExInfo(att.RelatedType ?? member.Method.ReturnType);
             if (!diagram.ContainsType(ti.ElementType)) yield break;
             // create relation
 
@@ -44,9 +59,7 @@ namespace AutoUml
             const string ownerLabel     = "";
             const string componentLabel = "";
 
-            var arrow = UmlRelationArrow.GetRelationByKind(att.Kind, att.Multiple ?? ti.IsCollection);
-            if (att.ArrowDirection != UmlArrowDirections.Auto)
-                arrow.ArrowDirection = att.ArrowDirection;
+            var arrow = UmlRelationArrow.MkArrow(att, GetMultiplicity(att.Multiple, ti.IsCollection));
             if (att.ForceAddToDiagram)
                 yield return ti.ElementType;
 
@@ -55,7 +68,7 @@ namespace AutoUml
                 Left  = new UmlRelationEnd(diagram.GetTypeName(owner), ownerLabel),
                 Right = new UmlRelationEnd(diagram.GetTypeName(component), componentLabel),
                 Arrow = arrow,
-                Label = GetLabel(member)
+                Label = string.IsNullOrEmpty(att.Name) ? GetLabel(member) : att.Name 
             }.WithNote(att);
             diagram.Relations.Add(rel);
         }
@@ -66,13 +79,11 @@ namespace AutoUml
             if (prop.Property.GetCustomAttribute<DontConvertToRelationAttribute>() != null)
                 yield break;
             if (diagClass.Type != prop.Property.DeclaringType)
-            {
                 if (diagram.ContainsType(diagClass.Type.BaseType))
                 {
                     prop.HideOnList = true;
                     yield break;
                 }
-            }
 
             var ti = new TypeExInfo(prop.Property.PropertyType);
             if (!diagram.ContainsType(ti.ElementType)) yield break;
@@ -90,10 +101,8 @@ namespace AutoUml
             var att = prop.Property.GetCustomAttribute<UmlRelationAttribute>();
             if (att != null)
             {
-                var relationTi = new TypeExInfo(att.ForceType ?? prop.Property.PropertyType);
-                arrow = UmlRelationArrow.GetRelationByKind(att.Kind, att.Multiple ?? relationTi.IsCollection);
-                if (att.ArrowDirection != UmlArrowDirections.Auto)
-                    arrow.ArrowDirection = att.ArrowDirection;
+                var relationTi = new TypeExInfo(att.RelatedType ?? prop.Property.PropertyType);
+                arrow = UmlRelationArrow.MkArrow(att, GetMultiplicity(att.Multiple, relationTi.IsCollection));
                 if (att.ForceAddToDiagram)
                     yield return relationTi.ElementType;
             }
@@ -103,7 +112,7 @@ namespace AutoUml
                 Left  = new UmlRelationEnd(diagram.GetTypeName(owner), ownerLabel),
                 Right = new UmlRelationEnd(diagram.GetTypeName(component), componentLabel),
                 Arrow = arrow,
-                Label = prop.Name
+                Label = string.IsNullOrEmpty(att?.Name) ? prop.Name : att.Name
             }.WithNote(att);
             diagram.Relations.Add(rel);
         }
@@ -112,27 +121,21 @@ namespace AutoUml
         {
             var typesToAdd = new List<Type>();
             foreach (var diagClass in diagram.GetEntities())
-            {
-                foreach (var mem in diagClass.Members)
+            foreach (var mem in diagClass.Members)
+                switch (mem)
                 {
-                    switch (mem)
-                    {
-                        case MethodUmlMember methodUmlMember:
-                            var types1 = ProcessMethod(diagram, diagClass, methodUmlMember);
-                            typesToAdd.AddRange(types1);
-                            break;
-                        case PropertyUmlMember propertyUmlMember:
-                            var types2 = ProcessProperty(diagram, diagClass, propertyUmlMember);
-                            typesToAdd.AddRange(types2);
-                            break;
-                    }
+                    case MethodUmlMember methodUmlMember:
+                        var types1 = ProcessMethod(diagram, diagClass, methodUmlMember);
+                        typesToAdd.AddRange(types1);
+                        break;
+                    case PropertyUmlMember propertyUmlMember:
+                        var types2 = ProcessProperty(diagram, diagClass, propertyUmlMember);
+                        typesToAdd.AddRange(types2);
+                        break;
                 }
-            }
 
-            foreach (var i in typesToAdd)
-            {
+            foreach (var i in typesToAdd) 
                 diagram.UpdateTypeInfo(i, null);
-            }
         }
 
         public void VisitDiagramCreated(UmlDiagram diagram)

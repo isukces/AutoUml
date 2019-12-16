@@ -22,7 +22,7 @@ namespace Tests
             return null;
         }
 
-        [UmlRelation(ForceType = typeof(OrderItem4Related3), ForceAddToDiagram = true)]
+        [UmlRelation(RelatedType = typeof(OrderItem4Related3), ForceAddToDiagram = true)]
         public OrderItem4Related2 DoSomething2()
         {
             return null;

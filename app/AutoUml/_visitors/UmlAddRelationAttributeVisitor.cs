@@ -8,11 +8,13 @@
                 {
                     Left  = new UmlRelationEnd(diagram.GetTypeName(info.Type)),
                     Right = new UmlRelationEnd(diagram.GetTypeName(att.RelatedType)),
-                    Arrow = UmlRelationArrow.GetRelationByKind(att.Kind, att.Multiple),
+                    Arrow = UmlRelationArrow.MkArrow(att, att.Multiple),
                     Label = att.Name
                 }
                 .WithNote(att);
             diagram.Relations.Add(rel);
+            if (att.ForceAddToDiagram)
+                diagram.UpdateTypeInfo(att.RelatedType, null);
         }
     }
 }

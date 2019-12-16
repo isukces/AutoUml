@@ -35,6 +35,13 @@ namespace AutoUml
             return result;
         }
 
+        public static UmlRelationArrow MkArrow(BaseRelationAttribute att, bool isCollectionRelation)
+        {
+            var arrow = GetRelationByKind(att.Kind, isCollectionRelation)
+                .WithAttribute(att);
+            return arrow;
+        }
+
         public override string ToString()
         {
             var line = IsDotted ? "." : "-";
@@ -52,17 +59,40 @@ namespace AutoUml
             return this;
         }
 
+        public UmlRelationArrow WithAttribute(BaseRelationAttribute att)
+        {
+            if (att is null || att.ArrowDirection == UmlArrowDirections.Auto)
+                return this;
+            ArrowDirection = att.ArrowDirection;
+            return this;
+        }
 
-        public static UmlRelationArrow AggregationLeft => new UmlRelationArrow(ArrowEnd.DiamondWhite, ArrowEnd.ArrowOpen);
 
-        public static UmlRelationArrow AggregationLeftMany => new UmlRelationArrow(ArrowEnd.DiamondWhite, ArrowEnd.Multiple);
+        public static UmlRelationArrow AggregationLeft
+        {
+            get { return new UmlRelationArrow(ArrowEnd.DiamondWhite, ArrowEnd.ArrowOpen); }
+        }
 
-        public static UmlRelationArrow CompositionLeft => new UmlRelationArrow(ArrowEnd.DiamondBlack, ArrowEnd.ArrowOpen);
+        public static UmlRelationArrow AggregationLeftMany
+        {
+            get { return new UmlRelationArrow(ArrowEnd.DiamondWhite, ArrowEnd.Multiple); }
+        }
 
-        public static UmlRelationArrow CompositionLeftMany => new UmlRelationArrow(ArrowEnd.DiamondBlack, ArrowEnd.Multiple);
+        public static UmlRelationArrow CompositionLeft
+        {
+            get { return new UmlRelationArrow(ArrowEnd.DiamondBlack, ArrowEnd.ArrowOpen); }
+        }
+
+        public static UmlRelationArrow CompositionLeftMany
+        {
+            get { return new UmlRelationArrow(ArrowEnd.DiamondBlack, ArrowEnd.Multiple); }
+        }
 
 
-        public static UmlRelationArrow InheritRight => new UmlRelationArrow(ArrowEnd.Empty, ArrowEnd.ArrowWhite);
+        public static UmlRelationArrow InheritRight
+        {
+            get { return new UmlRelationArrow(ArrowEnd.Empty, ArrowEnd.ArrowWhite); }
+        }
 
         public UmlColor Color { get; set; }
 
