@@ -1,0 +1,39 @@
+@startuml
+title
+ Diagram Test15
+end title
+
+class Info15A
+{
+    +DateTime Created
+}
+class Info15B
+{
+    +int Count
+}
+interface Interface15A
+{
+}
+interface Interface15B
+{
+}
+interface Interface15C
+{
+}
+interface Interface15D
+{
+}
+class Class15
+{
+    +Info15A CreationInfo
+    +Info15B InfoB
+}
+
+Interface15A --> Info15A:CreationInfo
+Interface15A --> Info15B:InfoB
+Interface15B --> Info15B:InfoB
+Interface15C -up-|> Interface15A
+Interface15D -up-|> Interface15B
+Interface15D -up-|> Interface15C
+Class15 -up-|> Interface15D
+@enduml

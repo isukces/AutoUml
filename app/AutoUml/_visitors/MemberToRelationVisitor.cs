@@ -129,9 +129,12 @@ namespace AutoUml
             
             var interfaces = reflectedType.GetInterfaces();
             var propertyName = prop.Property.Name;
+            if (reflectedType.IsInterface) 
+                return true;
             foreach (var intf in interfaces)
                 if (diagram.ContainsType(intf))
                 {
+                    //
                     var map = reflectedType.GetInterfaceMap(intf);
                     foreach (var i in map.TargetMethods)
                     {
@@ -148,7 +151,7 @@ namespace AutoUml
                 var tt = reflectedType.BaseType;
                 while (tt != null)
                 {
-                    if (diagram.ContainsType(tt)) 
+                    if (diagram.ContainsType(tt))
                         return false;
                     if (tt == declaringType)
                         break;

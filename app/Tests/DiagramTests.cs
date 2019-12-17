@@ -670,5 +670,71 @@ DerivedClass14 -up-|> Class14
 ";
             Assert.Equal(expected, code);
         }
+        
+            
+        [Fact]
+        public void T15_Should_do_not_add_relation_property_if_declaring_interface_is_on_diagram()
+        {
+            const string diagramName = "Test15";
+            var b = new ReflectionProjectBuilder(true)
+                .UpdateVisitor<ClassMemberScannerVisitor>(a =>
+                {
+                    a.ScanFlags |= ReflectionFlags.StaticMethod;
+                })
+                .WithAssembly(typeof(DiagramTests).Assembly)
+                .Build();
+
+            Assert.NotNull(b);
+            Assert.True(b.Diagrams.ContainsKey(diagramName));
+            var diagram = b.Diagrams[diagramName];
+            Assert.NotNull(diagram);
+
+            var file = diagram.CreateFile();
+            Assert.NotNull(file);
+            var code = file.Code;
+            Save(code);
+
+            var expected = @"@startuml
+title
+ Diagram Test15
+end title
+
+class Info15A
+{
+    +DateTime Created
+}
+class Info15B
+{
+    +int Count
+}
+interface Interface15A
+{
+}
+interface Interface15B
+{
+}
+interface Interface15C
+{
+}
+interface Interface15D
+{
+}
+class Class15
+{
+    +Info15A CreationInfo
+    +Info15B InfoB
+}
+
+Interface15A --> Info15A:CreationInfo
+Interface15A --> Info15B:InfoB
+Interface15B --> Info15B:InfoB
+Interface15C -up-|> Interface15A
+Interface15D -up-|> Interface15B
+Interface15D -up-|> Interface15C
+Class15 -up-|> Interface15D
+@enduml
+";
+            Assert.Equal(expected, code);
+        }
     }
 }
