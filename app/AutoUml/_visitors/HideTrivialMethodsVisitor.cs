@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using JetBrains.Annotations;
 
 namespace AutoUml
@@ -8,8 +9,16 @@ namespace AutoUml
     /// </summary>
     public class HideTrivialMethodsVisitor : IDiagramVisitor
     {
+        public static bool IsShouldSerializeMethod(MethodInfo mi)
+        {
+            if (mi.Name.StartsWith("ShouldSerialize"))
+                if (mi.ReturnType == typeof(bool) && mi.GetParameters().Length == 0)
+                    return true;
+            return false;
+        }
+
         [UsedImplicitly]
-        public static bool? DefaultHideMethod(UmlDiagram diagram, UmlMember umlMember, UmlEntity entity)
+        public SetFlagResult DefaultHideMethod(UmlDiagram diagram, UmlMember umlMember, UmlEntity entity)
         {
             bool AlreadyOnDiagram(Type entityType, Type declaringType)
             {
@@ -27,14 +36,18 @@ namespace AutoUml
             }
 
             if (!(umlMember is MethodUmlMember mum))
-                return null;
+                return SetFlagResult.LeaveUnchanged;
             var mi = mum.Method;
             if (mi.DeclaringType == typeof(object))
-                return true;
+                return SetFlagResult.SetToTrue;
             if (AlreadyOnDiagram(entity.Type, mi.DeclaringType))
-                return true;
+                return SetFlagResult.SetToTrue;
 
-            return null;
+            if (HideShouldSerializeMethods)
+                if (IsShouldSerializeMethod(mi))
+                    return SetFlagResult.SetToTrue;
+
+            return SetFlagResult.LeaveUnchanged;
         }
 
         public void VisitBeforeEmit(UmlDiagram diagram)
@@ -42,11 +55,12 @@ namespace AutoUml
             foreach (var entity in diagram.GetEntities())
             foreach (var me in entity.Members)
             {
-                var hide = HideMember?.Invoke(diagram, me, entity);
-                if (hide is null)
+                var hide = HideMember?.Invoke(diagram, me, entity) ?? SetFlagResult.LeaveUnchanged;
+
+                if (hide == SetFlagResult.LeaveUnchanged)
                     hide = DefaultHideMethod(diagram, me, entity);
-                if (hide != null)
-                    me.HideOnList = hide.Value;
+                if (hide != SetFlagResult.LeaveUnchanged)
+                    me.HideOnList = hide == SetFlagResult.SetToTrue;
             }
         }
 
@@ -54,6 +68,20 @@ namespace AutoUml
         {
         }
 
-        public Func<UmlDiagram, UmlMember, UmlEntity, bool?> HideMember { get; set; }
+        public CheckHideMemeberDelegate HideMember { get; set; }
+
+        /// <summary>
+        ///     Hides bool ShouldSerializeXXX() methods usually used for Json serialization
+        /// </summary>
+        public bool HideShouldSerializeMethods { get; set; }
+    }
+
+    public delegate SetFlagResult CheckHideMemeberDelegate(UmlDiagram diagram, UmlMember umlMember, UmlEntity entity);
+
+    public enum SetFlagResult
+    {
+        LeaveUnchanged,
+        SetToTrue,
+        SetToFalse
     }
 }

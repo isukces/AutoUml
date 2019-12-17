@@ -80,7 +80,7 @@ namespace AutoUml
                             Name       = pi.Name,
                             Property   = pi,
                             Kind       = kind,
-                            Visibility = GetVisibilityFromFlags(getterFlag | setterFlag)
+                            Visibility = GetVisibilityFromFlags(getterFlag | setterFlag),
                         };
                 }
             }
