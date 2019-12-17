@@ -610,5 +610,68 @@ AttributesList --> AttributesListItem:Item
 ";
             Assert.Equal(expected, code);
         }
+        
+        
+        [Fact]
+        public void T14_Should_do_not_add_relation_to_base_interface()
+        {
+            const string diagramName = "Test14";
+            var b = new ReflectionProjectBuilder(true)
+                .UpdateVisitor<ClassMemberScannerVisitor>(a =>
+                {
+                    a.ScanFlags |= ReflectionFlags.StaticMethod;
+                })
+                .WithAssembly(typeof(DiagramTests).Assembly)
+                .Build();
+
+            Assert.NotNull(b);
+            Assert.True(b.Diagrams.ContainsKey(diagramName));
+            var diagram = b.Diagrams[diagramName];
+            Assert.NotNull(diagram);
+
+            var file = diagram.CreateFile();
+            Assert.NotNull(file);
+            var code = file.Code;
+            Save(code);
+
+            var expected = @"@startuml
+title
+ Diagram Test14
+end title
+
+interface ITopInterface14
+{
+    +string Name
+}
+class Info14
+{
+    +DateTime Created
+}
+interface INestedInterface14
+{
+    +int Count
+}
+class Class14
+{
+    +int Count
+    +string Name
+    +Info14 CreationInfo
+    +ExInfo14 ExInfo
+}
+class DerivedClass14
+{
+}
+
+ITopInterface14 o-up-> Info14:CreationInfo
+INestedInterface14 -up-|> ITopInterface14
+Class14 -up-|> INestedInterface14
+Class14 -up-|> ITopInterface14
+DerivedClass14 -up-|> Class14
+DerivedClass14 -up-|> INestedInterface14
+DerivedClass14 -up-|> ITopInterface14
+@enduml
+";
+            Assert.Equal(expected, code);
+        }
     }
 }

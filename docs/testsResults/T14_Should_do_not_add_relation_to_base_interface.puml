@@ -1,0 +1,36 @@
+@startuml
+title
+ Diagram Test14
+end title
+
+interface ITopInterface14
+{
+    +string Name
+}
+class Info14
+{
+    +DateTime Created
+}
+interface INestedInterface14
+{
+    +int Count
+}
+class Class14
+{
+    +int Count
+    +string Name
+    +Info14 CreationInfo
+    +ExInfo14 ExInfo
+}
+class DerivedClass14
+{
+}
+
+ITopInterface14 o-up-> Info14:CreationInfo
+INestedInterface14 -up-|> ITopInterface14
+Class14 -up-|> INestedInterface14
+Class14 -up-|> ITopInterface14
+DerivedClass14 -up-|> Class14
+DerivedClass14 -up-|> INestedInterface14
+DerivedClass14 -up-|> ITopInterface14
+@enduml
