@@ -665,10 +665,7 @@ class DerivedClass14
 ITopInterface14 o-up-> Info14:CreationInfo
 INestedInterface14 -up-|> ITopInterface14
 Class14 -up-|> INestedInterface14
-Class14 -up-|> ITopInterface14
 DerivedClass14 -up-|> Class14
-DerivedClass14 -up-|> INestedInterface14
-DerivedClass14 -up-|> ITopInterface14
 @enduml
 ";
             Assert.Equal(expected, code);
