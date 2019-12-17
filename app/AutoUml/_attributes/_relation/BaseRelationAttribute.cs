@@ -32,6 +32,12 @@ namespace AutoUml
         public bool ForceAddToDiagram { get; set; }
         
         public Type RelatedType { get; set; }
+        
+        /// <summary>
+        /// Creates one-to-one relation to collection type instead of one-to-many relation to
+        /// collection's element type
+        /// </summary>
+        public bool DoNotResolveCollections { get; set; }
 
     }
 }

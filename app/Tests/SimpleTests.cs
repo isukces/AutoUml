@@ -50,7 +50,7 @@ namespace Tests
         [InlineData(typeof(int[,]))]
         public void T02_Should_recognize_collections(Type t)
         {
-            var ex = new TypeExInfo(t);
+            var ex = new TypeExInfo(t, false);
             Assert.True(ex.IsCollection);
             Assert.Equal(typeof(int), ex.ElementType);
         }

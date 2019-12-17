@@ -48,7 +48,7 @@ namespace AutoUml
             if (att == null)
                 yield break;
 
-            var ti = new TypeExInfo(att.RelatedType ?? member.Method.ReturnType);
+            var ti = new TypeExInfo(att.RelatedType ?? member.Method.ReturnType, att.DoNotResolveCollections);
             if (!diagram.ContainsType(ti.ElementType)) yield break;
             // create relation
 
@@ -85,7 +85,7 @@ namespace AutoUml
                     yield break;
                 }
 
-            var ti = new TypeExInfo(prop.Property.PropertyType);
+            var ti = new TypeExInfo(prop.Property.PropertyType, false);
             if (!diagram.ContainsType(ti.ElementType)) yield break;
             // create relation
 
@@ -94,23 +94,25 @@ namespace AutoUml
                 ArrowEnd.Empty,
                 ti.IsCollection ? ArrowEnd.Multiple : ArrowEnd.ArrowOpen);
             var          owner          = diagClass.Type;
-            var          component      = ti.ElementType;
+            var          arrowTargetType      = ti.ElementType;
             const string ownerLabel     = "";
             const string componentLabel = "";
 
             var att = prop.Property.GetCustomAttribute<UmlRelationAttribute>();
             if (att != null)
             {
-                var relationTi = new TypeExInfo(att.RelatedType ?? prop.Property.PropertyType);
+                var relationTi = new TypeExInfo(att.RelatedType ?? prop.Property.PropertyType,
+                    att.DoNotResolveCollections);
                 arrow = UmlRelationArrow.MkArrow(att, GetMultiplicity(att.Multiple, relationTi.IsCollection));
                 if (att.ForceAddToDiagram)
                     yield return relationTi.ElementType;
+                arrowTargetType = relationTi.ElementType;
             }
 
             var rel = new UmlRelation
             {
                 Left  = new UmlRelationEnd(diagram.GetTypeName(owner), ownerLabel),
-                Right = new UmlRelationEnd(diagram.GetTypeName(component), componentLabel),
+                Right = new UmlRelationEnd(diagram.GetTypeName(arrowTargetType), componentLabel),
                 Arrow = arrow,
                 Label = string.IsNullOrEmpty(att?.Name) ? prop.Name : att.Name
             }.WithNote(att);

@@ -429,8 +429,9 @@ OrderItem4 o--> OrderItem4Related3:""DoSomething2()""
                 .WithAssembly(typeof(DiagramTests).Assembly)
                 .Build();
             Assert.NotNull(b);
-            Assert.True(b.Diagrams.ContainsKey("Generics"));
-            var diagram = b.Diagrams["Generics"];
+            const string diagramName = "Generics";
+            Assert.True(b.Diagrams.ContainsKey(diagramName));
+            var diagram = b.Diagrams[diagramName];
             Assert.NotNull(diagram);
 
             var file = diagram.CreateFile();
@@ -465,21 +466,18 @@ NonGeneric -up-|> ""Generic2<TModel,TElement>"":""TModel=int, TElement=string""
             Assert.Equal(expected, code);
         }
 
-
         [Fact]
         public void T12_Should_mark_static_method()
         {
             var b = new ReflectionProjectBuilder(true)
-                .UpdateVisitor<ClassMemberScannerVisitor>(a =>
-                {
-                    a.ScanFlags |= ReflectionFlags.StaticMethod;
-                })
+                .UpdateVisitor<ClassMemberScannerVisitor>(a => { a.ScanFlags |= ReflectionFlags.StaticMethod; })
                 .WithAssembly(typeof(DiagramTests).Assembly)
                 .Build();
-            
+
             Assert.NotNull(b);
-            Assert.True(b.Diagrams.ContainsKey("Test4"));
-            var diagram = b.Diagrams["Test4"];
+            const string diagramName = "Test4";
+            Assert.True(b.Diagrams.ContainsKey(diagramName));
+            var diagram = b.Diagrams[diagramName];
             Assert.NotNull(diagram);
 
             var file = diagram.CreateFile();
@@ -517,6 +515,97 @@ package Orders <<Cloud>> {
 Order4 --{ OrderItem4:Items
 OrderItem4 o--> OrderItem4Related1:""DoSomething1(a)""
 OrderItem4 o--> OrderItem4Related3:""DoSomething2()""
+@enduml
+";
+            Assert.Equal(expected, code);
+        }
+
+        [Fact]
+        public void T13_Should_do_not_convert_collections()
+        {
+            const string diagramName = "Test13";
+            var b = new ReflectionProjectBuilder(true)
+                .UpdateVisitor<ClassMemberScannerVisitor>(a => { a.ScanFlags |= ReflectionFlags.StaticMethod; })
+                .WithAssembly(typeof(DiagramTests).Assembly)
+                .Build();
+
+            Assert.NotNull(b);
+            Assert.True(b.Diagrams.ContainsKey(diagramName));
+            var diagram = b.Diagrams[diagramName];
+            Assert.NotNull(diagram);
+
+            var file = diagram.CreateFile();
+            Assert.NotNull(file);
+            var code = file.Code;
+            Save(code);
+
+            var expected = @"@startuml
+title
+ Diagram Test13
+end title
+
+class AttributesListOwner
+{
+}
+class AttributesList
+{
+    +int Capacity
+    +int Count
+    +void Add(AttributesListItem item)
+    +void AddRange(IEnumerable<AttributesListItem> collection)
+    +ReadOnlyCollection<AttributesListItem> AsReadOnly()
+    +int BinarySearch(int index,int count,AttributesListItem item,IComparer<AttributesListItem> comparer)
+    +int BinarySearch(AttributesListItem item)
+    +int BinarySearch(AttributesListItem item,IComparer<AttributesListItem> comparer)
+    +void Clear()
+    +bool Contains(AttributesListItem item)
+    +List<TOutput> ConvertAll(Converter<AttributesListItem,TOutput> converter)
+    +void CopyTo(AttributesListItem[] array)
+    +void CopyTo(int index,AttributesListItem[] array,int arrayIndex,int count)
+    +void CopyTo(AttributesListItem[] array,int arrayIndex)
+    +bool Exists(Predicate<AttributesListItem> match)
+    +AttributesListItem Find(Predicate<AttributesListItem> match)
+    +List<AttributesListItem> FindAll(Predicate<AttributesListItem> match)
+    +int FindIndex(Predicate<AttributesListItem> match)
+    +int FindIndex(int startIndex,Predicate<AttributesListItem> match)
+    +int FindIndex(int startIndex,int count,Predicate<AttributesListItem> match)
+    +AttributesListItem FindLast(Predicate<AttributesListItem> match)
+    +int FindLastIndex(Predicate<AttributesListItem> match)
+    +int FindLastIndex(int startIndex,Predicate<AttributesListItem> match)
+    +int FindLastIndex(int startIndex,int count,Predicate<AttributesListItem> match)
+    +void ForEach(Action<AttributesListItem> action)
+    +Enumerator<AttributesListItem> GetEnumerator()
+    +List<AttributesListItem> GetRange(int index,int count)
+    +int IndexOf(AttributesListItem item)
+    +int IndexOf(AttributesListItem item,int index)
+    +int IndexOf(AttributesListItem item,int index,int count)
+    +void Insert(int index,AttributesListItem item)
+    +void InsertRange(int index,IEnumerable<AttributesListItem> collection)
+    +int LastIndexOf(AttributesListItem item)
+    +int LastIndexOf(AttributesListItem item,int index)
+    +int LastIndexOf(AttributesListItem item,int index,int count)
+    +bool Remove(AttributesListItem item)
+    +int RemoveAll(Predicate<AttributesListItem> match)
+    +void RemoveAt(int index)
+    +void RemoveRange(int index,int count)
+    +void Reverse()
+    +void Reverse(int index,int count)
+    +void Sort()
+    +void Sort(IComparer<AttributesListItem> comparer)
+    +void Sort(int index,int count,IComparer<AttributesListItem> comparer)
+    +void Sort(Comparison<AttributesListItem> comparison)
+    +AttributesListItem[] ToArray()
+    +void TrimExcess()
+    +bool TrueForAll(Predicate<AttributesListItem> match)
+}
+class AttributesListItem
+{
+    +string Name
+}
+
+AttributesListOwner --{ AttributesListItem:Attributes
+AttributesListOwner o--> AttributesList:Attributes2
+AttributesList --> AttributesListItem:Item
 @enduml
 ";
             Assert.Equal(expected, code);

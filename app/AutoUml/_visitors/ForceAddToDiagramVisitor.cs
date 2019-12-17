@@ -9,20 +9,20 @@ namespace AutoUml
     {
         private static TypeExInfo GetTi(MemberInfo memberInfo)
         {
-            var att = memberInfo.GetCustomAttribute<UmlRelationAttribute>();
+            var att = memberInfo.GetCustomAttribute<BaseRelationAttribute>();
             if (att == null || !att.ForceAddToDiagram) return null;
             if (att.RelatedType != null)
-                return new TypeExInfo(att.RelatedType);
+                return new TypeExInfo(att.RelatedType, att.DoNotResolveCollections);
             switch (memberInfo)
             {
                 case FieldInfo fieldInfo:
-                    return new TypeExInfo(fieldInfo.FieldType);
+                    return new TypeExInfo(fieldInfo.FieldType, att.DoNotResolveCollections);
                 case MethodInfo mi:
                     if (mi == typeof(void))
                         return null;
-                    return new TypeExInfo(mi.ReturnType);
+                    return new TypeExInfo(mi.ReturnType, att.DoNotResolveCollections);
                 case PropertyInfo pi:
-                    return new TypeExInfo(pi.PropertyType);
+                    return new TypeExInfo(pi.PropertyType, att.DoNotResolveCollections);
             }
 
             return null;

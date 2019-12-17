@@ -5,7 +5,7 @@ namespace AutoUml
 {
     public class TypeExInfo
     {
-        public TypeExInfo(Type originalType)
+        public TypeExInfo(Type originalType, bool doNotResolveCollection)
         {
             ElementType = OriginalType = originalType;
 
@@ -20,12 +20,12 @@ namespace AutoUml
                 }
             }
 
+            if (doNotResolveCollection)
+                return;
             var t = GetListElement(originalType);
-            if (t != null)
-            {
-                ElementType  = t;
-                IsCollection = true;
-            }
+            if (t is null) return;
+            ElementType  = t;
+            IsCollection = true;
         }
 
         public static Type GetListElement(Type type)
