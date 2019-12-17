@@ -30,7 +30,7 @@ namespace AutoUml
                 i.Value.Save(file, i.Key);
             var alreadyProcessed = new HashSet<Type>();
 
-            bool isPackageOpen = false;
+            var isPackageOpen = false;
 
             void ClosePackage()
             {
@@ -49,11 +49,11 @@ namespace AutoUml
             }
 
             var usedPackages = new Dictionary<string, UmlPackage>(StringComparer.CurrentCultureIgnoreCase);
-            int typesToDo    = 0;
+            var typesToDo    = 0;
 
             void ProcessList(IEnumerable<Type> typesList, string currentPackageName, bool usePackageName)
             {
-                foreach (var t in typesList.Select(a=>a.MeOrGeneric()))
+                foreach (var t in typesList.Select(a => a.MeOrGeneric()))
                 {
                     if (!ContainsType(t))
                         continue;
@@ -86,10 +86,7 @@ namespace AutoUml
             var types = _entities.OrderBy(a => a.Value.OrderIndex).Select(a => a.Key)
                 .ToList();
             typesToDo = types.Count;
-            while (typesToDo > 0)
-            {
-                ProcessList(types, null, false);
-            }
+            while (typesToDo > 0) ProcessList(types, null, false);
             ClosePackage();
 
             file.Relations.AddRange(Relations);
@@ -120,7 +117,7 @@ namespace AutoUml
                 return null;
             return _entities.TryGetValue(type, out var ent) ? ent : null;
         }
-         
+
 
         public void UpdateTypeInfo(Type type, [CanBeNull] Action<UmlEntity, bool> modification)
         {
@@ -161,29 +158,41 @@ namespace AutoUml
             }
 
             cf.Close();
-            foreach (var i in info.Notes.OrderBy(a => a.Key))
+            var notes = info.Notes.OrderBy(a => a.Key);
+            foreach (var i in notes)
             {
+                var text = i.Value.Text;
+                if (string.IsNullOrEmpty(text))
+                    continue;
+                var lines = text
+                    .Replace("\r\n", "\n")
+                    .Split('\n')
+                    .Where(a => !string.IsNullOrEmpty(a?.Trim()))
+                    .ToArray();
+                if (lines.Length == 0)
+                    continue;
+
                 var bg = i.Value.Background?.GetCode();
                 if (!string.IsNullOrEmpty(bg))
                     bg = " " + bg;
-                cf.Writeln($"note {i.Key.ToString().ToLower()} of {info.Name.AddQuotesIfNecessary()}{bg}");
-                foreach (var j in i.Value.Text.Split('\n'))
-                    if (!string.IsNullOrEmpty(j))
-                        cf.Writeln(j);
+                var openNote = $"note {i.Key.ToString().ToLower()} of {info.Name.AddQuotesIfNecessary()}{bg}";
+                cf.Writeln(openNote);
+                foreach (var j in lines)
+                    cf.Writeln(j);
                 cf.Writeln("end note");
             }
 
             return result;
         }
 
-        public UmlDiagramScale               Scale     { get; set; }
-        public string                        Title     { get; set; }
-        public string                        Name      { get; set; }
-        public UmlSkinParams                 Skin      { get; set; } = new UmlSkinParams();
-        public List<UmlRelation>             Relations { get; set; } = new List<UmlRelation>();
-        public Dictionary<string, object>    Metadata  { get; }      = new Dictionary<string, object>();
-        public Dictionary<string, UmlSprite> Sprites   { get; }      = new Dictionary<string, UmlSprite>();
-        public bool IgnorePackages { get; set; }
+        public UmlDiagramScale               Scale          { get; set; }
+        public string                        Title          { get; set; }
+        public string                        Name           { get; set; }
+        public UmlSkinParams                 Skin           { get; set; } = new UmlSkinParams();
+        public List<UmlRelation>             Relations      { get; set; } = new List<UmlRelation>();
+        public Dictionary<string, object>    Metadata       { get; }      = new Dictionary<string, object>();
+        public Dictionary<string, UmlSprite> Sprites        { get; }      = new Dictionary<string, UmlSprite>();
+        public bool                          IgnorePackages { get; set; }
 
         public Dictionary<string, UmlPackage> Packages { get; } =
             new Dictionary<string, UmlPackage>(StringComparer.CurrentCultureIgnoreCase);
@@ -191,6 +200,5 @@ namespace AutoUml
         private readonly Dictionary<Type, UmlEntity> _entities = new Dictionary<Type, UmlEntity>();
 
         public event EventHandler<AddTypeToDiagramEventArgs> OnAddTypeToDiagram;
-
     }
 }

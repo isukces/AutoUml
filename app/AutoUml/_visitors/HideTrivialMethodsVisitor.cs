@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace AutoUml
 {
@@ -7,7 +8,8 @@ namespace AutoUml
     /// </summary>
     public class HideTrivialMethodsVisitor : IDiagramVisitor
     {
-        public void VisitBeforeEmit(UmlDiagram diagram)
+        [UsedImplicitly]
+        public static bool? DefaultHideMethod(UmlDiagram diagram, UmlMember umlMember, UmlEntity entity)
         {
             bool AlreadyOnDiagram(Type entityType, Type declaringType)
             {
@@ -24,22 +26,27 @@ namespace AutoUml
                 }
             }
 
+            if (!(umlMember is MethodUmlMember mum))
+                return null;
+            var mi = mum.Method;
+            if (mi.DeclaringType == typeof(object))
+                return true;
+            if (AlreadyOnDiagram(entity.Type, mi.DeclaringType))
+                return true;
+
+            return null;
+        }
+
+        public void VisitBeforeEmit(UmlDiagram diagram)
+        {
             foreach (var entity in diagram.GetEntities())
+            foreach (var me in entity.Members)
             {
-                foreach (var me in entity.Members)
-                {
-                    var hide = HideMember?.Invoke(me);
-                    if (hide != null)
-                        me.HideOnList = hide.Value;
-                    else if (me is MethodUmlMember m)
-                    {
-                        var mi = m.Method;
-                        if (mi.DeclaringType == typeof(object))
-                            m.HideOnList = true;
-                        else if (AlreadyOnDiagram(entity.Type, mi.DeclaringType))
-                            m.HideOnList = true;
-                    }
-                }
+                var hide = HideMember?.Invoke(diagram, me, entity);
+                if (hide is null)
+                    hide = DefaultHideMethod(diagram, me, entity);
+                if (hide != null)
+                    me.HideOnList = hide.Value;
             }
         }
 
@@ -47,6 +54,6 @@ namespace AutoUml
         {
         }
 
-        public Func<UmlMember, bool?> HideMember { get; set; }
+        public Func<UmlDiagram, UmlMember, UmlEntity, bool?> HideMember { get; set; }
     }
 }
