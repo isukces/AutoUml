@@ -14,84 +14,45 @@ namespace AutoUml
 
         public PlantUmlFile CreateFile()
         {
-            var file = new PlantUmlFile();
-            Skin?.WriteTo(file.Top);
+            _state = new CreationState();
+
+            Skin?.WriteTo(_state.File.Top);
             if (!Scale.IsEmpty)
-                file.Top.Writeln("scale " + Scale);
+                _state.File.Top.Writeln("scale " + Scale);
             if (!string.IsNullOrEmpty(Title))
             {
-                file.Top.Writeln("title");
-                file.Top.Writeln(' ' + Title);
-                file.Top.Writeln("end title");
+                _state.File.Top.Writeln("title");
+                _state.File.Top.Writeln(' ' + Title);
+                _state.File.Top.Writeln("end title");
             }
 
             // sprites
             foreach (var i in Sprites.OrderBy(a => a.Key))
-                i.Value.Save(file, i.Key);
-            var alreadyProcessed = new HashSet<Type>();
+                i.Value.Save(_state.File, i.Key);
 
-            var isPackageOpen = false;
-
-            void ClosePackage()
-            {
-                if (isPackageOpen)
-                    file.Classes.Close();
-                isPackageOpen = false;
-            }
-
-            void OpenPackage(string pn, string kind)
-            {
-                ClosePackage();
-                if (string.IsNullOrEmpty(pn))
-                    return;
-                file.Classes.OpenSameLine("package " + pn.AddQuotesIfNecessary() + " <<" + kind + ">>");
-                isPackageOpen = true;
-            }
-
-            var usedPackages = new Dictionary<string, UmlPackage>(StringComparer.CurrentCultureIgnoreCase);
-            var typesToDo    = 0;
-
-            void ProcessList(IEnumerable<Type> typesList, string currentPackageName, bool usePackageName)
-            {
-                foreach (var t in typesList.Select(a => a.MeOrGeneric()))
-                {
-                    if (!ContainsType(t))
-                        continue;
-                    if (alreadyProcessed.Contains(t))
-                        continue;
-                    if (!_entities.TryGetValue(t, out var entity))
-                        continue;
-                    var entityPackageName = entity.PackageName?.Trim() ?? string.Empty;
-                    if (IgnorePackages)
-                        entityPackageName = string.Empty;
-                    if (!usePackageName)
-                    {
-                        usePackageName     = true;
-                        currentPackageName = entityPackageName;
-                        if (!Packages.TryGetValue(currentPackageName, out var package))
-                            package = new UmlPackage();
-                        usedPackages[currentPackageName] = package;
-                        OpenPackage(currentPackageName, package.Kind.ToString());
-                    }
-
-                    if (!string.Equals(currentPackageName, entityPackageName, StringComparison.OrdinalIgnoreCase))
-                        continue;
-                    alreadyProcessed.Add(t);
-                    var list = AddToFile(file, t);
-                    typesToDo--;
-                    ProcessList(list, currentPackageName, true);
-                }
-            }
-
-            var types = _entities.OrderBy(a => a.Value.OrderIndex).Select(a => a.Key)
+            var types = _entities.OrderBy(a => a.Value.OrderIndex)
+                .Select(a => a.Key)
                 .ToList();
-            typesToDo = types.Count;
-            while (typesToDo > 0) ProcessList(types, null, false);
-            ClosePackage();
+            if (IgnorePackages)
+            {
+                ProcessList(types, UmlPackageName.Empty);
+            }
+            else
+            {
+                var pcks = _entities.Values.Select(GetPackageName)
+                    .Distinct()
+                    .OrderBy(a => a).ToArray();
+                foreach (var i in pcks) ProcessList(types, i);
+            }
 
-            file.Relations.AddRange(Relations);
-            return file;
+            PackageClose();
+
+            _state.File.Relations.AddRange(Relations);
+            var result = _state.File;
+            _state = null;
+            return result;
         }
+
 
         public IEnumerable<UmlEntity> GetEntities()
         {
@@ -141,20 +102,17 @@ namespace AutoUml
             handler.Invoke(this, args);
         }
 
-        private IEnumerable<Type> AddToFile(PlantUmlFile file, Type t)
+        private void AddToFile(Type type)
         {
-            var result = new List<Type>();
-            var cf     = file.Classes;
-            if (!_entities.TryGetValue(t, out var info))
-                info = new UmlEntity(t, GetTypeName);
+            var cf = _state.File.Classes;
+            if (!_entities.TryGetValue(type, out var info))
+                info = new UmlEntity(type, GetTypeName);
             cf.Open(info.GetOpenClassCode());
 
             foreach (var i in info.Members.OrderBy(q => q.Group))
             {
                 if (i.HideOnList) continue;
                 i.WriteTo(cf, this);
-                if (i is PropertyUmlMember propertyUmlMember)
-                    result.Add(propertyUmlMember.Property.PropertyType);
             }
 
             cf.Close();
@@ -181,8 +139,73 @@ namespace AutoUml
                     cf.Writeln(j);
                 cf.Writeln("end note");
             }
+        }
 
-            return result;
+        private UmlPackageName GetPackageName(UmlEntity entity)
+        {
+            return IgnorePackages ? UmlPackageName.Empty : new UmlPackageName(entity.PackageName);
+        }
+
+
+        private void PackageClose()
+        {
+            if (!_state.IsPackageOpen) return;
+            _state.File.Classes.Close();
+            _state.PackageName = UmlPackageName.Empty;
+        }
+
+
+        private void PackageOpen(UmlPackageName pn, string kind)
+        {
+            if (_state.PackageName == pn)
+                return;
+            PackageClose();
+            if (pn.IsEmpty)
+                return;
+
+            var text = $"package {pn.Name.AddQuotesIfNecessary()} <<{kind}>>";
+            _state.File.Classes.OpenSameLine(text);
+            _state.PackageName = pn;
+        }
+
+
+        private void ProcessList(IEnumerable<Type> types, UmlPackageName usePackageOnly)
+        {
+            foreach (var srcType in types)
+            {
+                var type = srcType.MeOrGeneric();
+                if (!ContainsType(type))
+                    continue;
+                if (_state.ProcessedTypes.Contains(type) || _state.ProcessedTypes.Contains(srcType))
+                    continue;
+                if (!_entities.TryGetValue(type, out var entity))
+                    continue;
+                var entityPackageName = GetPackageName(entity);
+                if (usePackageOnly != entityPackageName)
+                    continue;
+                if (entityPackageName.IsEmpty)
+                {
+                    PackageClose();
+                }
+                else
+                {
+                    if (_state.IsPackageOpen && _state.PackageName == entityPackageName)
+                    {
+                    }
+                    else
+                    {
+                        if (!Packages.TryGetValue(entityPackageName, out var package))
+                            package = new UmlPackage();
+                        _state.UsedPackages[entityPackageName] = package;
+                        PackageOpen(entityPackageName, package.Kind.ToString());
+                        // OpenPackage(entityPackageName, );
+                    }
+                }
+
+                _state.ProcessedTypes.Add(type);
+                _state.ProcessedTypes.Add(srcType);
+                AddToFile(type);
+            }
         }
 
         public UmlDiagramScale               Scale          { get; set; }
@@ -194,11 +217,31 @@ namespace AutoUml
         public Dictionary<string, UmlSprite> Sprites        { get; }      = new Dictionary<string, UmlSprite>();
         public bool                          IgnorePackages { get; set; }
 
-        public Dictionary<string, UmlPackage> Packages { get; } =
-            new Dictionary<string, UmlPackage>(StringComparer.CurrentCultureIgnoreCase);
+        public Dictionary<UmlPackageName, UmlPackage> Packages { get; } =
+            new Dictionary<UmlPackageName, UmlPackage>();
 
         private readonly Dictionary<Type, UmlEntity> _entities = new Dictionary<Type, UmlEntity>();
 
+        private CreationState _state;
+
         public event EventHandler<AddTypeToDiagramEventArgs> OnAddTypeToDiagram;
+
+        private sealed class CreationState
+        {
+            [NotNull]
+            public PlantUmlFile File { get; } = new PlantUmlFile();
+
+            public Dictionary<UmlPackageName, UmlPackage> UsedPackages { get; } =
+                new Dictionary<UmlPackageName, UmlPackage>();
+
+            public HashSet<Type> ProcessedTypes { get; } = new HashSet<Type>();
+
+            public bool IsPackageOpen
+            {
+                get { return !PackageName.IsEmpty; }
+            }
+
+            public UmlPackageName PackageName { get; set; }
+        }
     }
 }

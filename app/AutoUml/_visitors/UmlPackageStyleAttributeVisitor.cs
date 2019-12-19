@@ -12,8 +12,9 @@ namespace AutoUml
             {
                 if (!attribute.CanBeUsedFor(diagram))
                     continue;
-                if (!packages.TryGetValue(attribute.PackageName, out var x))
-                    packages[attribute.PackageName] = x = new UmlPackage();
+                var umlPackageName = new UmlPackageName(attribute.PackageName);
+                if (!packages.TryGetValue(umlPackageName, out var x))
+                    packages[umlPackageName] = x = new UmlPackage();
                 x.Kind = attribute.Kind;
             }
         }
