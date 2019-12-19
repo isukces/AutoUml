@@ -58,6 +58,7 @@ namespace AutoUml
                             return true;
                         if (clasType.GetInterfaces().Contains(interfaceType))
                             return false;
+                        clasType = clasType.BaseType;
                     }
 
                     return true;
