@@ -1,0 +1,15 @@
+@startuml
+title
+ Diagram Test16
+end title
+
+class Info16A
+{
+    Line 1
+    Line 2
+    ~~Line 3~~
+    ==
+    +DateTime Created
+}
+
+@enduml

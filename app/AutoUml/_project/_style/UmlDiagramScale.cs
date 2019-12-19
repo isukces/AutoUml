@@ -25,4 +25,13 @@
 
         private readonly bool _isSet;
     }
+
+    public enum ClassLineKind
+    {
+        None,
+        Dot,
+        Single,
+        SingleBold,
+        Double
+    }
 }

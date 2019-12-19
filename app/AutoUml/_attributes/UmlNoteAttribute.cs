@@ -2,7 +2,7 @@
 
 namespace AutoUml
 {
-    [AttributeUsage(AttributesConsts.Entities)]
+    [AttributeUsage(AttributesConsts.Entities, AllowMultiple = true)]
     public class UmlNoteAttribute : Attribute, INoteWithLocationProvider
     {
         public UmlNoteAttribute(string note)

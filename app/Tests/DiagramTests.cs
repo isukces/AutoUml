@@ -736,5 +736,47 @@ Class15 -up-|> Interface15D
 ";
             Assert.Equal(expected, code);
         }
+        
+        
+        [Fact]
+        public void T16_Should_add_starting_lines()
+        {
+            const string diagramName = "Test16";
+            var b = new ReflectionProjectBuilder(true)
+                .UpdateVisitor<ClassMemberScannerVisitor>(a =>
+                {
+                    a.ScanFlags |= ReflectionFlags.StaticMethod;
+                })
+                .WithAssembly(typeof(DiagramTests).Assembly)
+                .Build();
+
+            Assert.NotNull(b);
+            Assert.True(b.Diagrams.ContainsKey(diagramName));
+            var diagram = b.Diagrams[diagramName];
+            Assert.NotNull(diagram);
+
+            var file = diagram.CreateFile();
+            Assert.NotNull(file);
+            var code = file.Code;
+            Save(code);
+
+            var expected = @"@startuml
+title
+ Diagram Test16
+end title
+
+class Info16A
+{
+    Line 1
+    Line 2
+    ~~Line 3~~
+    ==
+    +DateTime Created
+}
+
+@enduml
+";
+            Assert.Equal(expected, code);
+        }
     }
 }

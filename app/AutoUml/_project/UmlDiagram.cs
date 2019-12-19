@@ -109,6 +109,15 @@ namespace AutoUml
                 info = new UmlEntity(type, GetTypeName);
             cf.Open(info.GetOpenClassCode());
 
+            {
+                var l = (info.StartingLines?.Trim()).SplitLines(true);
+                if (l != null)
+                {
+                    foreach (var i in l)
+                        cf.Writeln(i);
+                }
+
+            }
             foreach (var i in info.Members.OrderBy(q => q.Group))
             {
                 if (i.HideOnList) continue;
@@ -120,14 +129,8 @@ namespace AutoUml
             foreach (var i in notes)
             {
                 var text = i.Value.Text;
-                if (string.IsNullOrEmpty(text))
-                    continue;
-                var lines = text
-                    .Replace("\r\n", "\n")
-                    .Split('\n')
-                    .Where(a => !string.IsNullOrEmpty(a?.Trim()))
-                    .ToArray();
-                if (lines.Length == 0)
+                var lines = text.SplitLines(true);
+                if (lines is null)
                     continue;
 
                 var bg = i.Value.Background?.GetCode();

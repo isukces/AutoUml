@@ -84,6 +84,7 @@ namespace AutoUml
             NewTypeVisitors.Add(new StructSpotVisitor(UmlColor.Empty));
             NewTypeVisitors.Add(new UmlAddRelationAttributeVisitor());
             NewTypeVisitors.Add(new UmlNoteAttributeVisitor());
+            NewTypeVisitors.Add(new UmlStartingLinesAttributeVisitor());
             NewTypeVisitors.Add(new UmlPackageAttributeVisitor());
             NewTypeVisitors.Add(new ClassMemberScannerVisitor());
             NewTypeVisitors.Add(new ForceAddToDiagramVisitor());
