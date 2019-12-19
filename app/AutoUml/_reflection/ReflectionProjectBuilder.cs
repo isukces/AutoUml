@@ -87,6 +87,8 @@ namespace AutoUml
             NewTypeVisitors.Add(new UmlPackageAttributeVisitor());
             NewTypeVisitors.Add(new ClassMemberScannerVisitor());
             NewTypeVisitors.Add(new ForceAddToDiagramVisitor());
+            NewTypeVisitors.Add(new UmlAddImplementedInterfacesToDiagramAttributeVisitor());
+            NewTypeVisitors.Add(new AddTypesToDiagramVisitor());
 
             DiagramVisitors.Add(new MemberToRelationVisitor());
             DiagramVisitors.Add(new HideTrivialMethodsVisitor());
