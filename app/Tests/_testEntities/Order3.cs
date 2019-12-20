@@ -23,7 +23,8 @@ namespace Tests
             LeftSignDescription = "bla 1",
             RightSignDescription = "bla 2",
             ArrowDirection = UmlArrowDirections.Up,
-            Color = "yellow"
+            Color = "yellow",
+            Tag="MyId"
         )]
         public CompanyInfo Customer2 { get; set; }
 

@@ -286,6 +286,7 @@ note on link  #ffe0f0
 Note on relation
 from UmlRelationAtribute
 end note
+' MyId
 Order3 *-[#yellow]up-|> CompanyInfo:Customer2
 Order3 *-----{ OrderItem3:Items
 @enduml
@@ -345,6 +346,7 @@ note on link  #ffe0f0
 Note on relation
 from UmlRelationAtribute
 end note
+' MyId
 Order3 *-[#yellow]up-|> CompanyInfo:Customer2
 Order3 *-----{ OrderItem3:Items
 @enduml

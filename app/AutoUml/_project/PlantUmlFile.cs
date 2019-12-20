@@ -26,6 +26,8 @@ namespace AutoUml
                 cf.Add(Classes);
                 foreach (var t in Relations)
                 {
+                    if (!string.IsNullOrEmpty(t.Tag)) 
+                        cf.Writeln("' " + t.Tag);
                     cf.Writeln(t.ToString());
                     if (string.IsNullOrEmpty(t.Note)) continue;
                     cf.Writeln("note on link " + t.NoteBackground.GetCodeWithSpace(false));

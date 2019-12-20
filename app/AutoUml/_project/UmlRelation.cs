@@ -34,5 +34,7 @@ namespace AutoUml
         public string                     Note           { get; set; }
         public IUmlFill                   NoteBackground { get; set; }
         public Dictionary<string, object> Metadata       { get; } = new Dictionary<string, object>();
+
+        public string Tag { get; set; }
     }
 }

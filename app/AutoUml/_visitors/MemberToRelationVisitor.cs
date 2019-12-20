@@ -114,6 +114,7 @@ namespace AutoUml
                 Arrow = arrow,
                 Label = string.IsNullOrEmpty(att.Name) ? GetLabel(member) : att.Name
             }.WithNote(att);
+            rel.Tag = att.Tag;
             diagram.Relations.Add(rel);
         }
 
@@ -198,6 +199,7 @@ namespace AutoUml
                 Arrow = arrow,
                 Label = string.IsNullOrEmpty(att?.Name) ? prop.Name : att.Name
             }.WithNote(att);
+            rel.Tag = att?.Tag;
             diagram.Relations.Add(rel);
         }
 

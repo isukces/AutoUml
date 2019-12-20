@@ -51,5 +51,11 @@ namespace AutoUml
         public string RightSignDescription { get; set; }
         
         public string Color { get; set; }
+        
+        
+        /// <summary>
+        /// Some tag added to relation object to identify it
+        /// </summary>
+        public string Tag { get; set; }
     }
 }

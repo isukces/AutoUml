@@ -83,18 +83,16 @@ namespace AutoUml
 
             if (!string.IsNullOrEmpty(att.LeftSignDescription))
                 LeftSignDescription = att.LeftSignDescription;
-            
+
             if (!string.IsNullOrEmpty(att.RightSignDescription))
                 RightSignDescription = att.RightSignDescription;
 
             if (!string.IsNullOrEmpty(att.Color))
                 Color = new UmlColor(att.Color);
+
+          
             return this;
         }
-
-        public string LeftSignDescription { get; set; }
-
-        public string RightSignDescription { get; set; }
 
 
         public static UmlRelationArrow AggregationLeft
@@ -122,6 +120,11 @@ namespace AutoUml
         {
             get { return new UmlRelationArrow(ArrowEnd.Empty, ArrowEnd.ArrowWhite); }
         }
+
+
+        public string LeftSignDescription { get; set; }
+
+        public string RightSignDescription { get; set; }
 
 
         private string LeftSignText

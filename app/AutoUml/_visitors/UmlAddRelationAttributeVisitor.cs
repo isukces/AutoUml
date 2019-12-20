@@ -12,6 +12,7 @@
                     Label = att.Name
                 }
                 .WithNote(att);
+            rel.Tag = att.Tag;
             diagram.Relations.Add(rel);
             if (att.ForceAddToDiagram)
                 diagram.UpdateTypeInfo(att.RelatedType, null);
