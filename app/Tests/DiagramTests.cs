@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using AutoUml;
 using Xunit;
@@ -285,7 +286,8 @@ note on link  #ffe0f0
 Note on relation
 from UmlRelationAtribute
 end note
-Order3 *--{ OrderItem3:Items
+Order3 *-[#yellow]up-|> CompanyInfo:Customer2
+Order3 *-----{ OrderItem3:Items
 @enduml
 ";
             Assert.Equal(expected, code);
@@ -310,6 +312,44 @@ Order3 *--{ OrderItem3:Items
             x = diagram.TryGetEntityByType(typeof(OrderItem3));
             Assert.Null(x.TryGetStringMetadata("hello"));
             Assert.Null(x.TryGetStringMetadata("hello 2"));
+            
+            
+            var file = diagram.CreateFile();
+            Assert.NotNull(file);
+            var code = file.Code;
+            Save(code);
+            string expected=@"@startuml
+title
+ Diagram Test3
+end title
+
+class Order3
+{
+}
+note right of Order3
+Note from annotation
+end note
+class CompanyInfo
+{
+    +string Name
+}
+class OrderItem3
+{
+}
+note left of OrderItem3
+Note from UmlNote
+end note
+
+Order3 o-right-> CompanyInfo:Customer
+note on link  #ffe0f0
+Note on relation
+from UmlRelationAtribute
+end note
+Order3 *-[#yellow]up-|> CompanyInfo:Customer2
+Order3 *-----{ OrderItem3:Items
+@enduml
+";
+            Assert.Equal(expected, code);
         }
 
 

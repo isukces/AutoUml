@@ -11,6 +11,10 @@ namespace AutoUml
             IsDotted       = isDotted;
             ArrowDirection = UmlArrowDirections.Auto;
             Color          = UmlColor.Empty;
+            ArrowLength    = 2;
+
+            LeftSignDescription  = null;
+            RightSignDescription = null;
         }
 
         public static UmlRelationArrow GetRelationByKind(UmlRelationKind attKind, bool multiple)
@@ -44,13 +48,17 @@ namespace AutoUml
 
         public override string ToString()
         {
-            var line = IsDotted ? "." : "-";
+            var lineSign   = IsDotted ? '.' : '-';
+            var len        = Math.Max(2, ArrowLength);
+            var leftLength = len / 2;
+            var leftPart   = new string(lineSign, leftLength);
+            var rightPart  = new string(lineSign, len - leftLength);
             var sugg = ArrowDirection == UmlArrowDirections.Auto
                 ? ""
                 : ArrowDirection.ToString().ToLower();
             if (!Color.IsEmpty)
                 sugg = "[" + Color.PlantUmlCode + "]" + sugg;
-            return LeftSignText + line + sugg + line + RightSignText;
+            return LeftSignText + leftPart + sugg + rightPart + RightSignText;
         }
 
         public UmlRelationArrow With(UmlArrowDirections d)
@@ -61,11 +69,32 @@ namespace AutoUml
 
         public UmlRelationArrow WithAttribute(BaseRelationAttribute att)
         {
-            if (att is null || att.ArrowDirection == UmlArrowDirections.Auto)
+            if (att is null)
                 return this;
-            ArrowDirection = att.ArrowDirection;
+            if (att.ArrowDirection != UmlArrowDirections.Auto)
+                ArrowDirection = att.ArrowDirection;
+            ArrowLength = Math.Max(2, att.ArrowLength);
+            if (att.LeftSign != ForceArrowEnd.NotSet)
+                LeftSign = (ArrowEnd)att.LeftSign;
+            if (att.RightSign != ForceArrowEnd.NotSet)
+                RightSign = (ArrowEnd)att.RightSign;
+            if (att.IsDotted != ChangeDecision.Auto)
+                IsDotted = att.IsDotted == ChangeDecision.Yes;
+
+            if (!string.IsNullOrEmpty(att.LeftSignDescription))
+                LeftSignDescription = att.LeftSignDescription;
+            
+            if (!string.IsNullOrEmpty(att.RightSignDescription))
+                RightSignDescription = att.RightSignDescription;
+
+            if (!string.IsNullOrEmpty(att.Color))
+                Color = new UmlColor(att.Color);
             return this;
         }
+
+        public string LeftSignDescription { get; set; }
+
+        public string RightSignDescription { get; set; }
 
 
         public static UmlRelationArrow AggregationLeft
@@ -94,7 +123,6 @@ namespace AutoUml
             get { return new UmlRelationArrow(ArrowEnd.Empty, ArrowEnd.ArrowWhite); }
         }
 
-        public UmlColor Color { get; set; }
 
         private string LeftSignText
         {
@@ -146,5 +174,11 @@ namespace AutoUml
         public bool               IsDotted       { get; set; }
         public ArrowEnd           LeftSign       { get; set; }
         public ArrowEnd           RightSign      { get; set; }
+        public UmlColor           Color          { get; set; }
+
+        /// <summary>
+        ///     Minimun 2 is used
+        /// </summary>
+        public int ArrowLength { get; set; }
     }
 }

@@ -11,10 +11,23 @@ namespace Tests
             ForceAddToDiagram = true,
             Note              = "Note on relation\nfrom UmlRelationAtribute",
             NoteBackground    = "#ffe0f0",
-            ArrowDirection    = UmlArrowDirections.Right)]
+            // LeftSign  =  ForceArrowEnd.Multiple, RightSign = ForceArrowEnd.Multiple,
+            ArrowDirection    = UmlArrowDirections.Right
+            // IsDotted = ChangeDecision.Yes, LeftSignDescription="one"
+            )]
         public CompanyInfo Customer { get; set; }
+        
+        [UmlRelation(
+            ForceAddToDiagram = true,
+            LeftSign  =  ForceArrowEnd.DiamondBlack, RightSign = ForceArrowEnd.ArrowWhite,
+            LeftSignDescription = "bla 1",
+            RightSignDescription = "bla 2",
+            ArrowDirection = UmlArrowDirections.Up,
+            Color = "yellow"
+        )]
+        public CompanyInfo Customer2 { get; set; }
 
-        [UmlRelation(UmlRelationKind.Composition)]
+        [UmlRelation(UmlRelationKind.Composition, ArrowLength = 5)]
         public List<OrderItem3> Items { get; set; }
     }
 

@@ -12,9 +12,11 @@ namespace AutoUml
             return src.WithWrap("**");
         }
 
-        public static PlantUmlText WithFontColor(this PlantUmlText src, string color)
+        public static PlantUmlText WithFontColor(this PlantUmlText src, UmlColor color)
         {
-            return src.WithWrapHtml("color", color);
+            if (color.IsEmpty)
+                return src;
+            return src.WithWrapHtml("color", color.PlantUmlCode);
         }
 
         public static PlantUmlText WithFontSize(this PlantUmlText src, int size)

@@ -193,15 +193,27 @@
 
         public string WellKnownName { get; set; }
 
-        public string PlantUmlCode => string.IsNullOrEmpty(WellKnownName)
-            ? PlantUmlRgbCode
-            : "#" + WellKnownName.ToLower();
+        public string PlantUmlCode
+        {
+            get
+            {
+                return string.IsNullOrEmpty(WellKnownName)
+                    ? PlantUmlRgbCode
+                    : "#" + WellKnownName.ToLower();
+            }
+        }
 
-        public string PlantUmlRgbCode => IsEmpty ? "" : "#" + ColorCode.ToLower();
+        public string PlantUmlRgbCode
+        {
+            get { return IsEmpty ? "" : "#" + ColorCode.ToLower(); }
+        }
 
         public string ColorCode { get; }
 
-        public bool IsEmpty => !_isSet;
+        public bool IsEmpty
+        {
+            get { return !_isSet; }
+        }
 
         private readonly bool _isSet;
     }

@@ -145,15 +145,16 @@ namespace AutoUml
         private IEnumerable<Type> ProcessProperty(UmlDiagram diagram, UmlEntity diagClass,
             PropertyUmlMember prop)
         {
-            var decision = ConvertToRelation?.Invoke(prop) ?? ConversionDecision.Auto;
-            if (decision == ConversionDecision.Auto)
+            var decision = ConvertToRelation?.Invoke(prop) ?? ChangeDecision.Auto;
+            if (decision == ChangeDecision.Auto)
             {
                 if (prop.Property.GetCustomAttribute<DontConvertToRelationAttribute>() != null)
-                    decision = ConversionDecision.No;
+                    decision = ChangeDecision.No;
                 else
-                    decision = ConversionDecision.Yes;
+                    decision = ChangeDecision.Yes;
             }
-            if (decision==ConversionDecision.No)
+
+            if (decision == ChangeDecision.No)
                 yield break;
 
             if (diagClass.Type != prop.Property.DeclaringType)
@@ -203,9 +204,9 @@ namespace AutoUml
         public ConvertToRelationDelegate ConvertToRelation { get; set; }
     }
 
-    public delegate ConversionDecision ConvertToRelationDelegate(PropertyUmlMember property);
+    public delegate ChangeDecision ConvertToRelationDelegate(PropertyUmlMember property);
 
-    public enum ConversionDecision
+    public enum ChangeDecision
     {
         Auto,
         Yes,

@@ -15,5 +15,6 @@ namespace AutoUml
         }
 
         public Multiplicity       Multiple          { get; set; }
+
     }
 }
