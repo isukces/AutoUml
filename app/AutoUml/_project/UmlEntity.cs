@@ -39,6 +39,13 @@ namespace AutoUml
             return note;
         }
 
+        public void AppendStartingLines(string append)
+        {
+            if (string.IsNullOrEmpty(append))
+                return;
+            StartingLines = StartingLines.WithTextInNewLine(append);
+        }
+
         public string GetOpenClassCode()
         {
             var items = new List<string>();
@@ -76,10 +83,14 @@ namespace AutoUml
         public bool            IsAbstract    { get; set; }
         public List<UmlMember> Members       { get; set; } = new List<UmlMember>();
         public string          PackageName   { get; set; }
-        public string          StartingLines { get; set; }
+        public PlantUmlText    StartingLines { get; set; }
 
-        public IReadOnlyDictionary<NoteLocation, UmlNote> Notes    => _notes;
-        public Dictionary<string, object>                 Metadata { get; } = new Dictionary<string, object>();
+        public IReadOnlyDictionary<NoteLocation, UmlNote> Notes
+        {
+            get { return _notes; }
+        }
+
+        public Dictionary<string, object> Metadata { get; } = new Dictionary<string, object>();
 
         private readonly Dictionary<NoteLocation, UmlNote> _notes = new Dictionary<NoteLocation, UmlNote>();
     }

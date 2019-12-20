@@ -216,5 +216,10 @@ namespace AutoUml
             if (!string.IsNullOrEmpty(value))
                 code.Writeln(name + " " + value);
         }
+
+        public static PlantUmlText AsPlantUmlText (this OpenIconicKind kind)
+        {
+            return new PlantUmlText(kind);
+        } 
     }
 }

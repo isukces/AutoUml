@@ -23,12 +23,7 @@ namespace AutoUml
                     break;
             }
 
-            var existing = info.StartingLines;
-
-            if (string.IsNullOrEmpty(existing))
-                info.StartingLines = append;
-            else
-                info.StartingLines = string.Format("{0}\n{1}", existing, append);
+            info.AppendStartingLines(append);
         }
     }
 }

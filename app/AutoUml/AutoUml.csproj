@@ -23,4 +23,18 @@
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="_project\OpenIconicKind.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>OpenIconicKind.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="_project\OpenIconicKind.cs">
+      <DependentUpon>OpenIconicKind.tt</DependentUpon>
+    </Compile>
+    <Compile Update="_project\PlantUmlText.FluentApi.cs">
+      <DependentUpon>PlantUmlText.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

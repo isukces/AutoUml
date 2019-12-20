@@ -110,7 +110,7 @@ namespace AutoUml
             cf.Open(info.GetOpenClassCode());
 
             {
-                var l = (info.StartingLines?.Trim()).SplitLines(true);
+                var l = info.StartingLines?.SplitLines(true);
                 if (l != null)
                 {
                     foreach (var i in l)
