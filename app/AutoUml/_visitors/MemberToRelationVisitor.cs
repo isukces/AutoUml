@@ -114,7 +114,8 @@ namespace AutoUml
                 Arrow = arrow,
                 Label = string.IsNullOrEmpty(att.Name) ? GetLabel(member) : att.Name
             }.WithNote(att);
-            rel.Tag = att.Tag;
+            rel.Tag        = att.Tag;
+            rel.BaseMember = member;
             diagram.Relations.Add(rel);
         }
 
@@ -144,12 +145,12 @@ namespace AutoUml
         }
 
         private IEnumerable<Type> ProcessProperty(UmlDiagram diagram, UmlEntity diagClass,
-            PropertyUmlMember prop)
+            PropertyUmlMember property)
         {
-            var decision = ConvertToRelation?.Invoke(prop) ?? ChangeDecision.Auto;
+            var decision = ConvertToRelation?.Invoke(property) ?? ChangeDecision.Auto;
             if (decision == ChangeDecision.Auto)
             {
-                if (prop.Property.GetCustomAttribute<DontConvertToRelationAttribute>() != null)
+                if (property.Property.GetCustomAttribute<DontConvertToRelationAttribute>() != null)
                     decision = ChangeDecision.No;
                 else
                     decision = ChangeDecision.Yes;
@@ -158,21 +159,21 @@ namespace AutoUml
             if (decision == ChangeDecision.No)
                 yield break;
 
-            if (diagClass.Type != prop.Property.DeclaringType)
+            if (diagClass.Type != property.Property.DeclaringType)
                 if (diagram.ContainsType(diagClass.Type.BaseType))
                 {
-                    prop.HideOnList = true;
+                    property.HideOnList = true;
                     yield break;
                 }
 
             var doNotResolveCollections =
-                prop.Property.GetCustomAttribute<BaseRelationAttribute>()?.DoNotResolveCollections ?? false;
-            var ti = new TypeExInfo(prop.Property.PropertyType, doNotResolveCollections);
+                property.Property.GetCustomAttribute<BaseRelationAttribute>()?.DoNotResolveCollections ?? false;
+            var ti = new TypeExInfo(property.Property.PropertyType, doNotResolveCollections);
             if (!diagram.ContainsType(ti.ElementType)) yield break;
             // create relation
-            if (!CanAddRelation(diagram, prop))
+            if (!CanAddRelation(diagram, property))
                 yield break;
-            prop.HideOnList = true;
+            property.HideOnList = true;
             var arrow = new UmlRelationArrow(
                 ArrowEnd.Empty,
                 ti.IsCollection ? ArrowEnd.Multiple : ArrowEnd.ArrowOpen);
@@ -181,10 +182,10 @@ namespace AutoUml
             const string ownerLabel      = "";
             const string componentLabel  = "";
 
-            var att = prop.Property.GetCustomAttribute<UmlRelationAttribute>();
+            var att = property.Property.GetCustomAttribute<UmlRelationAttribute>();
             if (att != null)
             {
-                var relationTi = new TypeExInfo(att.RelatedType ?? prop.Property.PropertyType,
+                var relationTi = new TypeExInfo(att.RelatedType ?? property.Property.PropertyType,
                     att.DoNotResolveCollections);
                 arrow = UmlRelationArrow.MkArrow(att, GetMultiplicity(att.Multiple, relationTi.IsCollection));
                 if (att.ForceAddToDiagram)
@@ -197,13 +198,37 @@ namespace AutoUml
                 Left  = new UmlRelationEnd(diagram.GetTypeName(owner), ownerLabel),
                 Right = new UmlRelationEnd(diagram.GetTypeName(arrowTargetType), componentLabel),
                 Arrow = arrow,
-                Label = string.IsNullOrEmpty(att?.Name) ? prop.Name : att.Name
+                Label = string.IsNullOrEmpty(att?.Name) ? property.Name : att.Name
             }.WithNote(att);
-            rel.Tag = att?.Tag;
+            rel.Tag        = att?.Tag;
+            rel.BaseMember = property;
+            {
+                var eventHandler = AfterConversionProperty;
+                if (eventHandler != null)
+                {
+                    var args = new AfterConversionPropertyEventArgs
+                    {
+                        Diagram       = diagram,
+                        Entity        = diagClass,
+                        BaseUmlMember = property,
+                        Relation      = rel
+                    };
+                    eventHandler(this, args);
+                }
+            }
             diagram.Relations.Add(rel);
         }
 
-        public ConvertToRelationDelegate ConvertToRelation { get; set; }
+        public ConvertToRelationDelegate                            ConvertToRelation { get; set; }
+        public event EventHandler<AfterConversionPropertyEventArgs> AfterConversionProperty;
+
+        public class AfterConversionPropertyEventArgs
+        {
+            public UmlDiagram        Diagram       { get; set; }
+            public UmlEntity         Entity        { get; set; }
+            public PropertyUmlMember BaseUmlMember { get; set; }
+            public UmlRelation       Relation      { get; set; }
+        }
     }
 
     public delegate ChangeDecision ConvertToRelationDelegate(PropertyUmlMember property);
