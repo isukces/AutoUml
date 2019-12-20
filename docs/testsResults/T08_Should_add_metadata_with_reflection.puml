@@ -26,6 +26,6 @@ Note on relation
 from UmlRelationAtribute
 end note
 ' MyId
-Order3 *-[#yellow]up-|> CompanyInfo:Customer2
+Order3 "bla 1" *-[#yellow]up-|> "bla 2" CompanyInfo:Customer2
 Order3 *-----{ OrderItem3:Items
 @enduml

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace AutoUml
 {
@@ -58,7 +59,13 @@ namespace AutoUml
                 : ArrowDirection.ToString().ToLower();
             if (!Color.IsEmpty)
                 sugg = "[" + Color.PlantUmlCode + "]" + sugg;
-            return LeftSignText + leftPart + sugg + rightPart + RightSignText;
+            var sb = new StringBuilder();
+            if (!string.IsNullOrEmpty(LeftSignDescription))
+                sb.Append(LeftSignDescription.AddQuotes() + " ");
+            sb.Append(LeftSignText + leftPart + sugg + rightPart + RightSignText);
+            if (!string.IsNullOrEmpty(RightSignDescription))
+                sb.Append(" " + RightSignDescription.AddQuotes());
+            return sb.ToString();
         }
 
         public UmlRelationArrow With(UmlArrowDirections d)
