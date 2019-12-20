@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace AutoUml
 {
@@ -36,5 +37,8 @@ namespace AutoUml
         public Dictionary<string, object> Metadata       { get; } = new Dictionary<string, object>();
 
         public string Tag { get; set; }
+        
+        [CanBeNull]
+        public UmlMember BaseMember { get; set; }
     }
 }

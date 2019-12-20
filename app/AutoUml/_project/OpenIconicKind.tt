@@ -308,11 +308,5 @@ namespace AutoUml {
                 throw new ArgumentException(nameof(kind));
             return Names[idx];
         }
-        
-        public static PlantUmlText AsPlantUmlText (this OpenIconicKind kind)
-        {
-            return new PlantUmlText(kind);
-        } 
-
     }
 }
