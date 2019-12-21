@@ -48,6 +48,10 @@ namespace AutoUml
             PackageClose();
 
             _state.File.Relations.AddRange(Relations);
+
+            this.Legend.WriteTo(_state.File.Classes);
+
+            
             var result = _state.File;
             _state = null;
             return result;
@@ -112,11 +116,8 @@ namespace AutoUml
             {
                 var l = info.StartingLines?.SplitLines(true);
                 if (l != null)
-                {
                     foreach (var i in l)
                         cf.Writeln(i);
-                }
-
             }
             foreach (var i in info.Members.OrderBy(q => q.Group))
             {
@@ -128,7 +129,7 @@ namespace AutoUml
             var notes = info.Notes.OrderBy(a => a.Key);
             foreach (var i in notes)
             {
-                var text = i.Value.Text;
+                var text  = i.Value.Text;
                 var lines = text.SplitLines(true);
                 if (lines is null)
                     continue;
@@ -210,6 +211,8 @@ namespace AutoUml
                 AddToFile(type);
             }
         }
+
+        public UmlDiagramLegend Legend { get; } = new UmlDiagramLegend();
 
         public UmlDiagramScale               Scale          { get; set; }
         public string                        Title          { get; set; }
