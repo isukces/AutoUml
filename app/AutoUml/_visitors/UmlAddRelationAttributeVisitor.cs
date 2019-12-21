@@ -11,6 +11,7 @@
                     Arrow = UmlRelationArrow.MkArrow(att, att.Multiple),
                     Label = att.Name
                 }
+                .WitCreatorMeta<UmlAddRelationAttributeVisitor>(info.Type, att.RelatedType)
                 .WithNote(att);
             rel.Tag = att.Tag;
             diagram.Relations.Add(rel);

@@ -113,9 +113,12 @@ namespace AutoUml
                 Right = new UmlRelationEnd(diagram.GetTypeName(component), componentLabel),
                 Arrow = arrow,
                 Label = string.IsNullOrEmpty(att.Name) ? GetLabel(member) : att.Name
-            }.WithNote(att);
+            }
+                .WithNote(att)
+                .WitCreatorMeta<MemberToRelationVisitor>(owner, component);
             rel.Tag        = att.Tag;
             rel.BaseMember = member;
+            
             diagram.Relations.Add(rel);
         }
 
@@ -194,12 +197,14 @@ namespace AutoUml
             }
 
             var rel = new UmlRelation
-            {
-                Left  = new UmlRelationEnd(diagram.GetTypeName(owner), ownerLabel),
-                Right = new UmlRelationEnd(diagram.GetTypeName(arrowTargetType), componentLabel),
-                Arrow = arrow,
-                Label = string.IsNullOrEmpty(att?.Name) ? property.Name : att.Name
-            }.WithNote(att);
+                {
+                    Left  = new UmlRelationEnd(diagram.GetTypeName(owner), ownerLabel),
+                    Right = new UmlRelationEnd(diagram.GetTypeName(arrowTargetType), componentLabel),
+                    Arrow = arrow,
+                    Label = string.IsNullOrEmpty(att?.Name) ? property.Name : att.Name
+                }
+                .WithNote(att)
+                .WitCreatorMeta<MemberToRelationVisitor>(owner, arrowTargetType);
             rel.Tag        = att?.Tag;
             rel.BaseMember = property;
             {

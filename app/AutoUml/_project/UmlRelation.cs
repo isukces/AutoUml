@@ -1,10 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 
 namespace AutoUml
 {
     public class UmlRelation : IMetadataContainer
     {
+        public UmlRelation WitCreatorMeta<T>(Type leftType, Type rightType)
+        {
+            Metadata["creator"]   = typeof(T);
+            Metadata["leftType"]  = leftType;
+            Metadata["rightType"] = rightType;
+            return this;
+        }
+
         public override string ToString()
         {
             var a = Left.Left + " " + Arrow + " " + Right.Right;
@@ -37,7 +46,7 @@ namespace AutoUml
         public Dictionary<string, object> Metadata       { get; } = new Dictionary<string, object>();
 
         public string Tag { get; set; }
-        
+
         [CanBeNull]
         public UmlMember BaseMember { get; set; }
     }

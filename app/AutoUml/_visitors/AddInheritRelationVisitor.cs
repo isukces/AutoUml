@@ -10,11 +10,12 @@ namespace AutoUml
         private static UmlRelation Inherits(Type baseClass, Type subClass, UmlDiagram diagram)
         {
             var rel = new UmlRelation
-            {
-                Left  = new UmlRelationEnd(diagram.GetTypeName(subClass)),
-                Right = new UmlRelationEnd(diagram.GetTypeName(baseClass)),
-                Arrow = UmlRelationArrow.InheritRight
-            };
+                {
+                    Left  = new UmlRelationEnd(diagram.GetTypeName(subClass)),
+                    Right = new UmlRelationEnd(diagram.GetTypeName(baseClass)),
+                    Arrow = UmlRelationArrow.InheritRight
+                }
+                .WitCreatorMeta<AddInheritRelationVisitor>(subClass, baseClass);
             return rel;
         }
 
