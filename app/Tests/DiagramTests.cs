@@ -820,5 +820,49 @@ class Info16A
 ";
             Assert.Equal(expected, code);
         }
+        
+        
+        [Fact]
+        public void T17_Should_add_symbols_legend()
+        {
+            const string diagramName = "Test17";
+            var b = new ReflectionProjectBuilder(true)
+                .UpdateVisitor<ClassMemberScannerVisitor>(a =>
+                {
+                    a.ScanFlags |= ReflectionFlags.StaticMethod;
+                })
+                .WithAssembly(typeof(DiagramTests).Assembly)
+                .Build();
+
+            Assert.NotNull(b);
+            Assert.True(b.Diagrams.ContainsKey(diagramName));
+            var diagram = b.Diagrams[diagramName];
+            Assert.NotNull(diagram);
+
+            var file = diagram.CreateFile();
+            Assert.NotNull(file);
+            var code = file.Code;
+            Save(code);
+
+            var expected = @"@startuml
+title
+ Diagram Test17
+end title
+
+class Test17A
+{
+    <size:14><color:#mediumblue><&paperclip></color></size>
+    ==
+    +DateTime Created
+}
+legend
+|  <size:14><color:#mediumblue><&paperclip></color></size>  |  Sealed class  |
+endlegend
+
+@enduml
+";
+            Assert.Equal(expected, code);
+        }
     }
+    
 }

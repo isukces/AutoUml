@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
 
@@ -12,7 +13,7 @@ namespace AutoUml
                 return;
             var opening = GetOpening();
             cf.Writeln(opening);
-            foreach (var legendItem in Items)
+            foreach (var legendItem in Items.OrderBy(a => a.SortOrder))
                 legendItem.WriteTo(cf);
             cf.Writeln("endlegend");
         }
@@ -41,41 +42,5 @@ namespace AutoUml
 
         public UmlDiagramLegendHorizontalAlignment HorizontalAlignment { get; set; }
         public UmlDiagramLegendVerticalAlignment   VerticalAlignment   { get; set; }
-    }
-
-    public abstract class UmlDiagramLegendItem
-    {
-        public abstract void WriteTo(CodeWriter cf);
-        public string Tag       { get; set; }
-        public int    SortOrder { get; set; }
-    }
-
-    public class TextUmlDiagramLegendItem : UmlDiagramLegendItem
-    {
-        public override void WriteTo(CodeWriter cf)
-        {
-            if (Text.IsEmpty)
-                return;
-            var lines = Text.SplitLines(true);
-            foreach (var line in lines)
-                cf.Writeln(line);
-        }
-
-        public PlantUmlText Text { get; set; }
-    }
-
-    public enum UmlDiagramLegendHorizontalAlignment
-    {
-        Auto,
-        Left,
-        Center,
-        Right
-    }
-
-    public enum UmlDiagramLegendVerticalAlignment
-    {
-        Auto,
-        Top,
-        Bottom
     }
 }

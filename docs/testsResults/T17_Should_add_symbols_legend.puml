@@ -1,0 +1,16 @@
+@startuml
+title
+ Diagram Test17
+end title
+
+class Test17A
+{
+    <size:14><color:#mediumblue><&paperclip></color></size>
+    ==
+    +DateTime Created
+}
+legend
+|  <size:14><color:#mediumblue><&paperclip></color></size>  |  Sealed class  |
+endlegend
+
+@enduml

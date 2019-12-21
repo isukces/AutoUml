@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using AutoUml.Symbols;
 
 namespace AutoUml
 {
@@ -90,6 +91,7 @@ namespace AutoUml
             NewTypeVisitors.Add(new ForceAddToDiagramVisitor());
             NewTypeVisitors.Add(new UmlAddImplementedInterfacesToDiagramAttributeVisitor());
             NewTypeVisitors.Add(new AddTypesToDiagramVisitor());
+            NewTypeVisitors.Add(new SealedClassVisitor());
 
             DiagramVisitors.Add(new MemberToRelationVisitor());
             DiagramVisitors.Add(new HideTrivialMethodsVisitor());
@@ -97,7 +99,7 @@ namespace AutoUml
             DiagramVisitors.Add(new UmlAddMetaAttributeVisitor());
 
             AssemblyVisitors.Add(new UmlPackageStyleAttributeVisitor());
-
+ 
             return this;
         }
 
