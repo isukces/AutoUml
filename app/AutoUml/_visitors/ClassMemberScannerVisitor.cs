@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace AutoUml
 {
@@ -90,6 +91,15 @@ namespace AutoUml
             return p1.Concat(p2).ToArray();
         }
 
+        private static bool CheckSkipDefault(MethodInfo mi)
+        {
+            if (mi.IsSpecialName)
+                return false;
+            if (mi.GetCustomAttribute<CompilerGeneratedAttribute>() != null)
+                return false;
+            return mi.DeclaringType != typeof(object);
+        }
+
         private static ReflectionFlags GetGetterFlag(MethodInfo m)
         {
             return GetMFlag(m,
@@ -147,18 +157,29 @@ namespace AutoUml
             if (ScanFlags.HasFlag(ReflectionFlags.StaticMethod))
                 r |= BindingFlags.Static;
 
-            foreach (var mi in type.GetMethods(r))
+            var methodInfos = type.GetMethods(r);
             {
-                if (mi.IsSpecialName)
-                    continue;
-                if (mi.GetCustomAttribute<System.Runtime.CompilerServices.CompilerGeneratedAttribute>() != null)
-                    continue;
-                if (mi.DeclaringType == typeof(object))
-                    continue;
+                var h = SortAndPrepareMethods;
+                if (h != null)
+                {
+                    var args = new SortAndPrepareMethodsEventArgs {Methods = methodInfos};
+                    h.Invoke(this, args);
+                    methodInfos = args.Methods;
+                }
+            }
+            foreach (var mi in methodInfos)
+            {
+                var add = CheckSkipDefault(mi);
                 var flag = GetMFlag(mi, ReflectionFlags.PublicMethod, ReflectionFlags.ProtectedMethod,
                     ReflectionFlags.PrivateMethod);
-                if (!H(flag, ScanFlags))
+                if (add)
+                    if (!H(flag, ScanFlags))
+                        add = false;
+
+                var h = AddTypeToDiagram;
+                if (h is null && !add)
                     continue;
+
                 var member = new MethodUmlMember
                 {
                     Group      = 20,
@@ -170,10 +191,50 @@ namespace AutoUml
                     member.Kind = UmlMemberKind.Abstract;
                 if (mi.IsStatic)
                     member.Kind = UmlMemberKind.Static;
+
+                if (h != null)
+                {
+                    var args = new AddTypeToDiagramEventArgs
+                    {
+                        Decision  = add ? AddDecision.Add : AddDecision.Skip,
+                        Member    = mi,
+                        UmlMember = member
+                    };
+                    h(this, args);
+                    if (args.Decision != AddDecision.Default)
+                        add = args.Decision == AddDecision.Add;
+                }
+
+                if (!add)
+                    continue;
+
                 info.Members.Add(member);
             }
         }
 
         public ReflectionFlags ScanFlags { get; set; } = ReflectionFlags.AllNonPrivate;
+
+        public event EventHandler<AddTypeToDiagramEventArgs> AddTypeToDiagram;
+
+        public event EventHandler<SortAndPrepareMethodsEventArgs> SortAndPrepareMethods;
+
+        public sealed class AddTypeToDiagramEventArgs : EventArgs
+        {
+            public AddDecision     Decision  { get; set; }
+            public MethodInfo      Member    { get; set; }
+            public MethodUmlMember UmlMember { get; set; }
+        }
+
+        public sealed class SortAndPrepareMethodsEventArgs : EventArgs
+        {
+            public MethodInfo[] Methods { get; set; }
+        }
+    }
+
+    public enum AddDecision
+    {
+        Default,
+        Add,
+        Skip
     }
 }

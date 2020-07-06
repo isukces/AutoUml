@@ -5,7 +5,7 @@ namespace AutoUml.Symbols
 {
     public abstract class SymbolBaseVisitor : INewTypeInDiagramVisitor
     {
-        protected static void AddIcon(UmlDiagram diagram, SymbolInfo symbol)
+        public static void AddIcon(UmlDiagram diagram, SymbolInfo symbol)
         {
             var list = diagram.Legend.Items;
             var existing = list
@@ -21,7 +21,7 @@ namespace AutoUml.Symbols
             //=============
         }
 
-        protected static void AddIcon(UmlEntity info, SymbolInfo symbolInfo)
+        public static void AddIcon(UmlEntity info, SymbolInfo symbolInfo)
         {
             var list = info.Members;
             var existing = list
