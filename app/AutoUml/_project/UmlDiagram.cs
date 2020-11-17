@@ -19,6 +19,12 @@ namespace AutoUml
             Skin?.WriteTo(_state.File.Top);
             if (!Scale.IsEmpty)
                 _state.File.Top.Writeln("scale " + Scale);
+            
+            if (HideEmptyAttributes)
+                _state.File.Top.Writeln("hide empty attributes");
+            if (HideEmptyMethods)
+                _state.File.Top.Writeln("hide empty methods");
+
             if (!string.IsNullOrEmpty(Title))
             {
                 _state.File.Top.Writeln("title");
@@ -49,9 +55,8 @@ namespace AutoUml
 
             _state.File.Relations.AddRange(Relations);
 
-            this.Legend.WriteTo(_state.File.Classes);
+            Legend.WriteTo(_state.File.Classes);
 
-            
             var result = _state.File;
             _state = null;
             return result;
@@ -222,6 +227,10 @@ namespace AutoUml
         public Dictionary<string, object>    Metadata       { get; }      = new Dictionary<string, object>();
         public Dictionary<string, UmlSprite> Sprites        { get; }      = new Dictionary<string, UmlSprite>();
         public bool                          IgnorePackages { get; set; }
+        
+        public bool HideEmptyMethods { get; set; }
+
+        public bool HideEmptyAttributes { get; set; }
 
         public Dictionary<UmlPackageName, UmlPackage> Packages { get; } =
             new Dictionary<UmlPackageName, UmlPackage>();
@@ -231,6 +240,7 @@ namespace AutoUml
         private CreationState _state;
 
         public event EventHandler<AddTypeToDiagramEventArgs> OnAddTypeToDiagram;
+
 
         private sealed class CreationState
         {

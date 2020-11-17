@@ -863,6 +863,98 @@ endlegend
 ";
             Assert.Equal(expected, code);
         }
+        
+        
+           
+        [Fact]
+        public void T17a_Should_hide_empty_methods()
+        {
+            const string diagramName = "Test17";
+            var b = new ReflectionProjectBuilder(true)
+                .UpdateVisitor<ClassMemberScannerVisitor>(a =>
+                {
+                    a.ScanFlags |= ReflectionFlags.StaticMethod;
+                })
+                .WithAssembly(typeof(DiagramTests).Assembly)
+                .Build();
+
+            Assert.NotNull(b);
+            Assert.True(b.Diagrams.ContainsKey(diagramName));
+            var diagram = b.Diagrams[diagramName];
+            Assert.NotNull(diagram);
+            diagram.HideEmptyMethods = true;
+
+            var file = diagram.CreateFile();
+            Assert.NotNull(file);
+            var code = file.Code;
+            Save(code);
+
+            var expected = @"@startuml
+hide empty methods
+title
+ Diagram Test17
+end title
+
+class Test17A
+{
+    <size:14><color:#mediumblue><&paperclip></color></size>
+    ==
+    +DateTime Created
+}
+legend
+|  <size:14><color:#mediumblue><&paperclip></color></size>  |  Sealed class  |
+endlegend
+
+@enduml
+";
+            Assert.Equal(expected, code);
+        }
+     
+           
+        [Fact]
+        public void T17b_Should_hide_empty_attributes()
+        {
+            const string diagramName = "Test17";
+            var b = new ReflectionProjectBuilder(true)
+                .UpdateVisitor<ClassMemberScannerVisitor>(a =>
+                {
+                    a.ScanFlags |= ReflectionFlags.StaticMethod;
+                })
+                .WithAssembly(typeof(DiagramTests).Assembly)
+                .Build();
+
+            Assert.NotNull(b);
+            Assert.True(b.Diagrams.ContainsKey(diagramName));
+            var diagram = b.Diagrams[diagramName];
+            Assert.NotNull(diagram);
+            diagram.HideEmptyAttributes = true;
+
+            var file = diagram.CreateFile();
+            Assert.NotNull(file);
+            var code = file.Code;
+            Save(code);
+
+            var expected = @"@startuml
+hide empty attributes
+title
+ Diagram Test17
+end title
+
+class Test17A
+{
+    <size:14><color:#mediumblue><&paperclip></color></size>
+    ==
+    +DateTime Created
+}
+legend
+|  <size:14><color:#mediumblue><&paperclip></color></size>  |  Sealed class  |
+endlegend
+
+@enduml
+";
+            Assert.Equal(expected, code);
+        }
+
     }
     
 }
