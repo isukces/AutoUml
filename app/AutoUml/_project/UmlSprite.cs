@@ -54,7 +54,7 @@ namespace AutoUml
             w.Writeln("}");
         }
 
-        private string GrayLevelToString(SpriteGrayLevels level)
+        private static string GrayLevelToString(SpriteGrayLevels level)
         {
             switch (level)
             {

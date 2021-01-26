@@ -21,7 +21,7 @@
     <Description>Create UML diagrams directly from .NET code using annotation</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" />
+    <PackageReference Include="JetBrains.Annotations" Version="2020.3.0" />
   </ItemGroup>
   <ItemGroup>
     <None Update="_project\OpenIconicKind.tt">

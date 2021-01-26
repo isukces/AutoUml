@@ -16,10 +16,19 @@ namespace AutoUml
 
         public override void WriteTo(CodeWriter cf, UmlDiagram diagram)
         {
-            var code = Method.MethodToUml(diagram.GetTypeName);          
-            cf.Writeln(GetCodePrefix()+code);
+            var code = Method.MethodToUml(diagram.GetTypeName);
+            code = GetCodePrefix() + code;
+            var lines = code.MakeAction(MaxLineLength, (lineIndex, text) =>
+            {
+                if (lineIndex == 1)
+                    cf.IncIndent();
+                cf.Writeln(text);
+            });
+            if (lines > 1)
+                cf.DecIndent();
         }
-        
+
+        public static int MaxLineLength { get; set; } = 120;
 
         public MethodInfo Method { get; set; }
     }

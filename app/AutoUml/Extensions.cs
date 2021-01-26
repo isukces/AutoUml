@@ -20,12 +20,15 @@ namespace AutoUml
         public static string AddQuotesIfNecessary(this string name)
         {
             foreach (var c in name)
-            {
                 if (!char.IsLetterOrDigit(c))
                     return name.AddQuotes();
-            }
 
             return name;
+        }
+
+        public static PlantUmlText AsPlantUmlText(this OpenIconicKind kind)
+        {
+            return new PlantUmlText(kind);
         }
 
         public static string CamelToNormal(this string n, bool onlyFirstUpper)
@@ -61,15 +64,6 @@ namespace AutoUml
             }
         }
 
-        public static Type[] GetGenericTypeArgumentsIfPossible(this Type type)
-        {
-            if (type == null)
-                return new Type[0];
-            if (type.IsGenericType)
-                return type.GenericTypeArguments;
-            return new Type[0];
-        }
-
         public static string GetDiagramName(this Type type, Func<Type, string> tryGetAlias)
         {
             if (type.IsGenericType)
@@ -85,7 +79,7 @@ namespace AutoUml
 
             if (type.IsArray)
             {
-                string qqq = "";
+                var qqq = "";
                 while (type.IsArray)
                 {
                     var rank = type.GetArrayRank();
@@ -126,6 +120,15 @@ namespace AutoUml
             return string.IsNullOrEmpty(name) ? type.Name : name;
         }
 
+        public static Type[] GetGenericTypeArgumentsIfPossible(this Type type)
+        {
+            if (type == null)
+                return new Type[0];
+            if (type.IsGenericType)
+                return type.GenericTypeArguments;
+            return new Type[0];
+        }
+
         public static PropertyInfo[] GetPropertiesInstancePublic(this Type type)
         {
             return type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
@@ -145,12 +148,37 @@ namespace AutoUml
             return type;
         }
 
-        public static string MethodToUml(this MethodInfo methodInfo, Func<Type, string> retTypeName)
+        public static SplittableString MethodToUml(this MethodInfo methodInfo, Func<Type, string> retTypeName)
         {
-            var args = from parameter in methodInfo.GetParameters()
-                select retTypeName(parameter.ParameterType) + " " + parameter.Name;
-            var args2 = string.Join(",", args);
-            return $"{retTypeName(methodInfo.ReturnType)} {methodInfo.Name}({args2})";
+            var parameters = methodInfo.GetParameters();
+            var returnType = retTypeName(methodInfo.ReturnType)+" ";
+
+            if (parameters.Length == 0)
+            {
+                var i = new[]
+                {
+                    returnType,
+                    methodInfo.Name + "()"
+                };
+                return SplittableString.Make(i);
+            }
+            var sink = new Sink<string>(parameters.Length + 2);
+            sink.Add(returnType);
+            sink.Add(methodInfo.Name + "(");
+
+            var parametersLength = parameters.Length - 1;
+            for (var index = 0; index <= parametersLength; index++)
+            {
+                var parameter = parameters[index];
+                var tmp       = retTypeName(parameter.ParameterType) + " " + parameter.Name;
+                if (index != parametersLength)
+                    tmp += ",";
+                else
+                    tmp += ")";
+                sink.Add(tmp);
+            }
+
+            return SplittableString.Make(sink.ToArray());
         }
 
         public static bool SaveContentIfDifferent(this FileInfo file, string txt)
@@ -216,10 +244,5 @@ namespace AutoUml
             if (!string.IsNullOrEmpty(value))
                 code.Writeln(name + " " + value);
         }
-
-        public static PlantUmlText AsPlantUmlText (this OpenIconicKind kind)
-        {
-            return new PlantUmlText(kind);
-        } 
     }
 }
