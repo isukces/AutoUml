@@ -1,28 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net452;net461;netstandard2.0</TargetFrameworks>
+    <!-- SIGNED -->
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+    <TargetFrameworks>net452;net461;net47;netcoreapp3.1</TargetFrameworks>
     <PackageId>isukces.AutoUml</PackageId>
     <Authors>Piotr Stęclik</Authors>
     <Company>Internet Sukces Piotr Stęclik</Company>
     <Product>AutoUml</Product>
-    <Copyright>Internet Sukces Piotr Stęclik 2018</Copyright>
-    <AssemblyVersion>1.0.21026.35</AssemblyVersion>
-    <Version>1.0.21026.35</Version>
-    <FileVersion>1.0.21026.35</FileVersion>
+    <Copyright>Internet Sukces Piotr Stęclik 2018-2021</Copyright>
+    <AssemblyVersion>1.0.21077.36</AssemblyVersion>
+    <Version>1.0.21077.36</Version>
+    <FileVersion>1.0.21077.36</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
-    <DocumentationFile>bin\Debug\net452\AutoUml.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\AutoUml.xml</DocumentationFile>
     <AssemblyName>AutoUml</AssemblyName>
     <PackageProjectUrl>https://github.com/isukces/AutoUml</PackageProjectUrl>
-    <PackageIconUrl>https://github.com/isukces/AutoUml/blob/master/LICENSE</PackageIconUrl>
-    <PackageReleaseNotes>Fix bugs</PackageReleaseNotes>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageReleaseNotes>Introduces MembersToHide</PackageReleaseNotes>
     <Description>Create UML diagrams directly from .NET code using annotation</Description>
+    <RootNamespace>AutoUml</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2020.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="_project\OpenIconicKind.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>OpenIconicKind.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="_project\OpenIconicKind.cs">
+      <DependentUpon>OpenIconicKind.tt</DependentUpon>
+    </Compile>
+    <Compile Update="_project\PlantUmlText.FluentApi.cs">
+      <DependentUpon>PlantUmlText.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>
