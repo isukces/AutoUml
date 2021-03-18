@@ -11,11 +11,8 @@
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/AutoDetectedNamingRules/=LocalFunctions/@EntryIndexedValue">&lt;Policy Inspect="True" Prefix="" Suffix="" Style="AaBb" /&gt;</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/AutoDetectedNamingRules/=TypeParameters/@EntryIndexedValue">&lt;Policy Inspect="True" Prefix="" Suffix="" Style="AaBb" /&gt;</s:String>
 	<s:Boolean x:Key="/Default/CodeStyle/Naming/CSharpAutoNaming/IsNamingAutoDetectionCompleted/@EntryValue">True</s:Boolean>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4629807d_002D867b_002D4868_002D958f_002D3b433d836c20/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="DiagramTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::200885D2-9F35-4F67-B64A-7F191AD0D9F1::.NETCoreApp,Version=v2.0::Tests.DiagramTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::200885D2-9F35-4F67-B64A-7F191AD0D9F1::.NETCoreApp,Version=v2.0::Tests.SplittableStringTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::200885D2-9F35-4F67-B64A-7F191AD0D9F1::.NETCoreApp,Version=v2.0::Tests.UmlMethodTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7486026a_002D0bcd_002D48e9_002Daeae_002Dce990f7cedf1/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;Tests&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Project Location="C:\programs\isukces\dotnetLib\AutoUml\app\Tests" Presentation="&amp;lt;Tests&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	
 	</wpf:ResourceDictionary>

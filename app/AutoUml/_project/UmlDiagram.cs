@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
 namespace AutoUml
@@ -19,11 +20,10 @@ namespace AutoUml
             Skin?.WriteTo(_state.File.Top);
             if (!Scale.IsEmpty)
                 _state.File.Top.Writeln("scale " + Scale);
-            
-            if (HideEmptyAttributes)
-                _state.File.Top.Writeln("hide empty attributes");
-            if (HideEmptyMethods)
-                _state.File.Top.Writeln("hide empty methods");
+
+            var hm = HideMembers.GetPumlCommands("hide");
+            foreach(var i in hm)
+                _state.File.Top.Writeln(i);
 
             if (!string.IsNullOrEmpty(Title))
             {
@@ -150,6 +150,15 @@ namespace AutoUml
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void SetOrClearHideMembers(MembersToHide flag, bool set)
+        {
+            if (set)
+                HideMembers |= flag;
+            else
+                HideMembers &= ~flag;
+        }
+
         private UmlPackageName GetPackageName(UmlEntity entity)
         {
             return IgnorePackages ? UmlPackageName.Empty : new UmlPackageName(entity.PackageName);
@@ -227,10 +236,23 @@ namespace AutoUml
         public Dictionary<string, object>    Metadata       { get; }      = new Dictionary<string, object>();
         public Dictionary<string, UmlSprite> Sprites        { get; }      = new Dictionary<string, UmlSprite>();
         public bool                          IgnorePackages { get; set; }
-        
-        public bool HideEmptyMethods { get; set; }
 
-        public bool HideEmptyAttributes { get; set; }
+        [Obsolete("use " + nameof(HideMembers) + " instead")]
+        public bool HideEmptyMethods
+        {
+            get => (HideMembers & MembersToHide.EmptyMethods) == MembersToHide.EmptyMethods;
+            set => SetOrClearHideMembers(MembersToHide.EmptyMethods, value);
+        }
+
+        [Obsolete("use " + nameof(HideMembers) + " instead")]
+        public bool HideEmptyAttributes
+        {
+            get => (HideMembers & MembersToHide.EmptyAttributes) == MembersToHide.EmptyAttributes;
+            set => SetOrClearHideMembers(MembersToHide.EmptyAttributes, value);
+        }
+
+
+        public MembersToHide HideMembers { get; set; }
 
         public Dictionary<UmlPackageName, UmlPackage> Packages { get; } =
             new Dictionary<UmlPackageName, UmlPackage>();
@@ -252,10 +274,7 @@ namespace AutoUml
 
             public HashSet<Type> ProcessedTypes { get; } = new HashSet<Type>();
 
-            public bool IsPackageOpen
-            {
-                get { return !PackageName.IsEmpty; }
-            }
+            public bool IsPackageOpen => !PackageName.IsEmpty;
 
             public UmlPackageName PackageName { get; set; }
         }
