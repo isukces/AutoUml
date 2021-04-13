@@ -16,7 +16,9 @@ namespace AutoUml
                 diagram.UpdateTypeInfo(type,
                     (info, created) =>
                     {
-                        info.Background = (att as IEntityBackgroundProvider).GetEntityBackground();
+                        var background = (att as IEntityBackgroundProvider).GetEntityBackground();
+                        if (background != null)
+                            info.Background = background;
                         info.AddNote(att);
                     });
             }
