@@ -1,24 +1,79 @@
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using JetBrains.Annotations;
 
 namespace AutoUml
 {
     public class PlantUmlRunner
     {
-        public static FileInfo GetPngFileInfo(FileInfo puml)
+        public static string GetFileExtension(AutoUmlOutputFormat format)
         {
-            var png = new FileInfo(puml.FullName.Substring(0, puml.FullName.Length - 5) + ".png");
+            if (format == AutoUmlOutputFormat.Utxt)
+                format = AutoUmlOutputFormat.Txt;
+            if (format == AutoUmlOutputFormat.EpsText)
+                format = AutoUmlOutputFormat.Eps;
+            if (format == AutoUmlOutputFormat.Braille)
+                format = AutoUmlOutputFormat.Png;
+            if (format == AutoUmlOutputFormat.LatexNoPreamble)
+                format = AutoUmlOutputFormat.Latex;
+            return $".{format}".ToLower();
+        }
+
+        public static FileInfo GetImageFileInfo(FileInfo puml, AutoUmlOutputFormat format)
+        {
+            var ext = GetFileExtension(format);
+            return GetImageFileInfo(puml, ext);
+        }
+
+
+        private static FileInfo GetImageFileInfo(FileInfo puml, string extension)
+        {
+            var png = new FileInfo(puml.FullName.Substring(0, puml.FullName.Length - 5) + extension);
             return png;
         }
 
-        public static bool IsPngUpToDate(FileInfo puml)
+        [NotNull]
+        public static string GetOutputFormatOption(AutoUmlOutputFormat format)
         {
-            var png = GetPngFileInfo(puml);
+            switch (format)
+            {
+                case AutoUmlOutputFormat.Png:
+                case AutoUmlOutputFormat.Svg:
+                case AutoUmlOutputFormat.Eps:
+                case AutoUmlOutputFormat.Xmi:
+                case AutoUmlOutputFormat.Pdf:
+                case AutoUmlOutputFormat.Vdx:
+                case AutoUmlOutputFormat.Scxml:
+                case AutoUmlOutputFormat.Latex:
+                case AutoUmlOutputFormat.Braille:
+                case AutoUmlOutputFormat.Html:
+                case AutoUmlOutputFormat.Txt:
+                    return format.ToString().ToLower();
+
+                case AutoUmlOutputFormat.EpsText:
+                    return "eps:text";
+                case AutoUmlOutputFormat.LatexNoPreamble:
+                    return "latex:nopreamble";
+
+                case AutoUmlOutputFormat.Utxt:
+                    return "txt";
+
+                default: throw new ArgumentOutOfRangeException(nameof(format), format, null);
+            }
+        }
+
+
+        public static bool IsImageUpToDate(FileInfo puml, AutoUmlOutputFormat format)
+        {
+            var png = GetImageFileInfo(puml, format);
             if (!png.Exists) return false;
             if (png.Length == 0) return false;
             return png.LastWriteTime >= puml.LastWriteTime;
         }
+
 
         private static string Quote(string x)
         {
@@ -29,7 +84,7 @@ namespace AutoUml
             return x;
         }
 
-        public string GetBatch(FileInfo puml)
+        public string GetBatch(FileInfo puml, AutoUmlOutputFormat format = AutoUmlOutputFormat.Png)
         {
             var lines = new StringBuilder();
             if (puml.Directory != null)
@@ -38,13 +93,19 @@ namespace AutoUml
                 lines.AppendLine(string.Format("cd {0}", Quote(puml.Directory.FullName)));
             }
 
+            var items = new List<string>();
+            items.Add(Quote(JavaExe));
+            items.Add("-jar");
+            items.Add(Quote(PlantUmlJar));
+            items.Add("-charset UTF-8");
+            if (format != AutoUmlOutputFormat.Png)
+                items.Add("-t" + GetOutputFormatOption(format));
+            items.Add(Quote(puml.Name));
+
             if (!string.IsNullOrEmpty(GraphVizDot))
                 lines.AppendLine(string.Format("set GRAPHVIZ_DOT={0}", Quote(GraphVizDot)));
 
-            lines.AppendLine(string.Format("{0} -jar {1} -charset UTF-8 {2}",
-                Quote(JavaExe),
-                Quote(PlantUmlJar),
-                Quote(puml.Name)));
+            lines.AppendLine(string.Join(" ", items));
             return lines.ToString();
         }
 
@@ -62,7 +123,7 @@ namespace AutoUml
             startInfo.UseShellExecute        = false;
             startInfo.RedirectStandardOutput = true;
             startInfo.CreateNoWindow         = true;
-            var p = new Process {StartInfo = startInfo};
+            var p = new Process { StartInfo = startInfo };
             p.Start();
             return p;
         }
@@ -78,5 +139,23 @@ namespace AutoUml
         public string PlantUmlJar { get; set; }
 
         public string JavaExe { get; set; } = "java.exe";
+    }
+
+    public enum AutoUmlOutputFormat
+    {
+        Png,
+        Svg,
+        Eps,
+        EpsText,
+        Pdf,
+        Vdx,
+        Xmi,
+        Scxml,
+        Html,
+        Txt,
+        Utxt,
+        Latex,
+        LatexNoPreamble,
+        Braille
     }
 }
