@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net452;net461;net47;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net452;net461;net47;net48;netcoreapp2.0;netcoreapp3.1</TargetFrameworks>
     <PackageId>isukces.AutoUml</PackageId>
     <Authors>Piotr Stęclik</Authors>
     <Company>Internet Sukces Piotr Stęclik</Company>
@@ -21,7 +21,7 @@
     <RootNamespace>AutoUml</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2020.3.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="2021.2.0" />
   </ItemGroup>
   <ItemGroup>
     <None Update="_project\OpenIconicKind.tt">
