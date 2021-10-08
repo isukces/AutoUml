@@ -5,15 +5,15 @@
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
-    <TargetFrameworks>net452;net461;net47;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net452;net461;net47;net48;netcoreapp3.1;netstandard2.0</TargetFrameworks>
     <PackageId>isukces.AutoUml</PackageId>
     <Authors>Piotr Stęclik</Authors>
     <Company>Internet Sukces Piotr Stęclik</Company>
     <Product>AutoUml</Product>
     <Copyright>Internet Sukces Piotr Stęclik 2018-2021</Copyright>
-    <AssemblyVersion>1.0.21281.38</AssemblyVersion>
-    <Version>1.0.21281.38</Version>
-    <FileVersion>1.0.21281.38</FileVersion>
+    <AssemblyVersion>1.0.21281.40</AssemblyVersion>
+    <Version>1.0.21281.40</Version>
+    <FileVersion>1.0.21281.40</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\AutoUml.xml</DocumentationFile>
@@ -25,7 +25,7 @@
     <RootNamespace>AutoUml</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2020.3.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="2021.2.0" />
   </ItemGroup>
   <ItemGroup>
     <None Update="_project\OpenIconicKind.tt">
