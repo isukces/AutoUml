@@ -11,9 +11,9 @@
     <Company>Internet Sukces Piotr Stęclik</Company>
     <Product>AutoUml</Product>
     <Copyright>Internet Sukces Piotr Stęclik 2018-2021</Copyright>
-    <AssemblyVersion>1.0.21240.37</AssemblyVersion>
-    <Version>1.0.21240.37</Version>
-    <FileVersion>1.0.21240.37</FileVersion>
+    <AssemblyVersion>1.0.21281.38</AssemblyVersion>
+    <Version>1.0.21281.38</Version>
+    <FileVersion>1.0.21281.38</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\AutoUml.xml</DocumentationFile>
