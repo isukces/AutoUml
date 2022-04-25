@@ -93,23 +93,22 @@ namespace AutoUml
                 lines.AppendLine(puml.Directory.FullName.Substring(0, 2));
                 lines.AppendLine(string.Format("cd {0}", Quote(puml.Directory.FullName)));
             }
-            var arguments = GetArguments(puml, format);
+            var arguments = GetArguments(puml, format, true);
             if (!string.IsNullOrEmpty(GraphVizDot))
                 lines.AppendLine(string.Format("set GRAPHVIZ_DOT={0}", Quote(GraphVizDot)));
             lines.AppendLine(arguments);
             return lines.ToString();
         }
 
-        private string GetArguments(FileInfo puml, AutoUmlOutputFormat format)
+        private string GetArguments(FileInfo puml, AutoUmlOutputFormat format, bool addJavaExe)
         {
-            var items = new List<string>
-            {
-                JavaExe,
-                "-jar",
-                PlantUmlJar,
-                "-charset",
-                "UTF-8"
-            };
+            var items = new List<string>();
+            if (addJavaExe)
+                items.Add(JavaExe);
+            items.Add("-jar");
+            items.Add(PlantUmlJar);
+            items.Add("-charset");
+            items.Add("UTF-8");
             if (format != AutoUmlOutputFormat.Png)
                 items.Add("-t" + GetOutputFormatOption(format));
             items.Add(puml.Name);
@@ -124,7 +123,7 @@ namespace AutoUml
             startInfo.UseShellExecute = false;
             startInfo.FileName        = JavaExe;
             
-            startInfo.Arguments = GetArguments(puml, format);
+            startInfo.Arguments = GetArguments(puml, format, false);
             if (puml.Directory != null)
                 startInfo.WorkingDirectory = puml.Directory.FullName;
             startInfo.UseShellExecute        = false;
