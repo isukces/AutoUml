@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
 
@@ -92,32 +93,38 @@ namespace AutoUml
                 lines.AppendLine(puml.Directory.FullName.Substring(0, 2));
                 lines.AppendLine(string.Format("cd {0}", Quote(puml.Directory.FullName)));
             }
-
-            var items = new List<string>();
-            items.Add(Quote(JavaExe));
-            items.Add("-jar");
-            items.Add(Quote(PlantUmlJar));
-            items.Add("-charset UTF-8");
-            if (format != AutoUmlOutputFormat.Png)
-                items.Add("-t" + GetOutputFormatOption(format));
-            items.Add(Quote(puml.Name));
-
+            var arguments = GetArguments(puml, format);
             if (!string.IsNullOrEmpty(GraphVizDot))
                 lines.AppendLine(string.Format("set GRAPHVIZ_DOT={0}", Quote(GraphVizDot)));
-
-            lines.AppendLine(string.Join(" ", items));
+            lines.AppendLine(arguments);
             return lines.ToString();
         }
 
-        public Process Run(FileInfo puml)
+        private string GetArguments(FileInfo puml, AutoUmlOutputFormat format)
+        {
+            var items = new List<string>
+            {
+                JavaExe,
+                "-jar",
+                PlantUmlJar,
+                "-charset",
+                "UTF-8"
+            };
+            if (format != AutoUmlOutputFormat.Png)
+                items.Add("-t" + GetOutputFormatOption(format));
+            items.Add(puml.Name);
+            return string.Join(" ", items.Select(Quote));
+        }
+
+        public Process Run(FileInfo puml, AutoUmlOutputFormat format = AutoUmlOutputFormat.Png)
         {
             var startInfo = new ProcessStartInfo();
             if (!string.IsNullOrEmpty(GraphVizDot))
                 startInfo.EnvironmentVariables["GRAPHVIZ_DOT"] = GraphVizDot;
             startInfo.UseShellExecute = false;
             startInfo.FileName        = JavaExe;
-            startInfo.Arguments =
-                string.Format("-jar {0} -charset UTF-8 {1}", Quote(PlantUmlJar), Quote(puml.Name));
+            
+            startInfo.Arguments = GetArguments(puml, format);
             if (puml.Directory != null)
                 startInfo.WorkingDirectory = puml.Directory.FullName;
             startInfo.UseShellExecute        = false;
