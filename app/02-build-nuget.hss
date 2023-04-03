@@ -1,0 +1,44 @@
+// using System.IO;
+var builder = new ProjectBuilder(){
+	VisualStudioExe = GlobalVar["MsBuild 2022"],
+	Nuget = {
+		Exe = GlobalVar["Nuget"],
+		RepositoryDir =  GlobalVar["Private Nuget Repository"],
+		ForceNugetName = "isukces.AutoUml"
+	},
+
+	ProjectName = "AutoUml.Signed",
+	SolutionName = "AutoUml.Signed",
+	SolutionDir = ConfigDir,
+	ProjectDirTemplate =  "{SolutionDir}\\AutoUml",
+
+	
+};
+
+// task: Clean
+builder.DeleteBinObj();
+
+
+// task: Nuget restore
+builder.Nuget.Restore();
+
+
+// task: Get version
+var csProject =  CsProjectCore.FromFile(builder.CsProjFileName);
+var version = csProject.Version;
+
+// task: Build
+builder.MsBuild();
+
+
+// task: Copy nuget
+var srcNupkg = builder.GetNupkgFile(version, false).FullName;
+var nugetOut = CombinePath(builder.Nuget.RepositoryDir, builder.Nuget.GetNupkgFileName(version, false));
+for(int i=0;i<2;i++) {
+	Console.WriteLine("Copy {0} to {1}", srcNupkg, nugetOut);
+	File.Copy(srcNupkg, nugetOut, true);
+	srcNupkg=srcNupkg.Replace(".nupkg", ".snupkg");
+	nugetOut=nugetOut.Replace(".nupkg", ".snupkg");
+}
+
+Console.WriteLine("--FINISHED--");

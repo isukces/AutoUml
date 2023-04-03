@@ -2,30 +2,36 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <!-- SIGNED -->
+    <TargetFrameworks>net48;netstandard2.0;net7.0</TargetFrameworks>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
-    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
-    <TargetFrameworks>net452;net461;net47;net48;netcoreapp3.1;netstandard2.0</TargetFrameworks>
     <PackageId>isukces.AutoUml</PackageId>
     <Authors>Piotr Stęclik</Authors>
     <Company>Internet Sukces Piotr Stęclik</Company>
     <Product>AutoUml</Product>
-    <Copyright>Internet Sukces Piotr Stęclik 2018-2021</Copyright>
-    <AssemblyVersion>1.0.22115.42</AssemblyVersion>
-    <Version>1.0.22115.42</Version>
-    <FileVersion>1.0.22115.42</FileVersion>
+    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2018-2023</Copyright>
+    <AssemblyVersion>1.0.23093.43</AssemblyVersion>
+    <Version>1.0.23093.43</Version>
+    <FileVersion>1.0.23093.43</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\AutoUml.xml</DocumentationFile>
     <AssemblyName>AutoUml</AssemblyName>
     <PackageProjectUrl>https://github.com/isukces/AutoUml</PackageProjectUrl>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageReleaseNotes>Introduces MembersToHide</PackageReleaseNotes>
+    <PackageReleaseNotes>Adds net 7.0 platform</PackageReleaseNotes>
     <Description>Create UML diagrams directly from .NET code using annotation</Description>
     <RootNamespace>AutoUml</RootNamespace>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <PackageProjectUrl>https://github.com/isukces/AutoUml</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/isukces/AutoUml</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+    <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" />
   </ItemGroup>
   <ItemGroup>
     <None Update="_project\OpenIconicKind.tt">
