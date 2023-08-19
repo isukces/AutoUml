@@ -25,6 +25,11 @@ namespace AutoUml
 
             return name;
         }
+        
+        public static PlantUmlText AsPlantUmlText (this string kind)
+        {
+            return new PlantUmlText(kind);
+        }
 
         public static PlantUmlText AsPlantUmlText(this OpenIconicKind kind)
         {

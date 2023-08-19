@@ -22,6 +22,7 @@ class AttributesList
     +void CopyTo(AttributesListItem[] array)
     +void CopyTo(int index,AttributesListItem[] array,int arrayIndex,int count)
     +void CopyTo(AttributesListItem[] array,int arrayIndex)
+    +int EnsureCapacity(int capacity)
     +bool Exists(Predicate<AttributesListItem> match)
     +AttributesListItem Find(Predicate<AttributesListItem> match)
     +List<AttributesListItem> FindAll(Predicate<AttributesListItem> match)

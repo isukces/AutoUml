@@ -1,43 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <!-- SIGNED -->
-    <TargetFrameworks>net48;netstandard2.0;net7.0</TargetFrameworks>
-    <SignAssembly>true</SignAssembly>
-    <DelaySign>false</DelaySign>
-    <PackageId>isukces.AutoUml</PackageId>
-    <Authors>Piotr Stęclik</Authors>
+    <AssemblyName>AutoUml</AssemblyName>
     <Company>Internet Sukces Piotr Stęclik</Company>
-    <Product>AutoUml</Product>
     <Copyright>Copyright © Internet Sukces Piotr Stęclik 2018-2023</Copyright>
-    <AssemblyVersion>1.0.23093.43</AssemblyVersion>
-    <Version>1.0.23093.43</Version>
-    <FileVersion>1.0.23093.43</FileVersion>
+    <Product>AutoUml</Product>
+    <TargetFrameworks>net4.8;netcoreapp3.1;net7.0</TargetFrameworks>
+    <RootNamespace>AutoUml</RootNamespace>
+    <AssemblyVersion>1.23.819.44</AssemblyVersion>
+    <FileVersion>1.23.819.44</FileVersion>
+    <Version>1.23.819.44</Version>
+    <SignAssembly>true</SignAssembly>
+    <Authors>Piotr Stęclik</Authors>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <DelaySign>false</DelaySign>
+    <Description>Create UML diagrams directly from .NET code using annotation</Description>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\AutoUml.xml</DocumentationFile>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\AutoUml.xml</DocumentationFile>
-    <AssemblyName>AutoUml</AssemblyName>
-    <PackageProjectUrl>https://github.com/isukces/AutoUml</PackageProjectUrl>
-    <PackageReleaseNotes>Adds net 7.0 platform</PackageReleaseNotes>
-    <Description>Create UML diagrams directly from .NET code using annotation</Description>
-    <RootNamespace>AutoUml</RootNamespace>
+    <PackageId>isukces.AutoUml</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <PackageProjectUrl>https://github.com/isukces/AutoUml</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/isukces/AutoUml</PackageProjectUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryUrl>https://github.com/isukces/AutoUml</RepositoryUrl>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2023.2.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-    <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="_project\OpenIconicKind.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>OpenIconicKind.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Update="_project\OpenIconicKind.cs">
@@ -46,5 +38,11 @@
     <Compile Update="_project\PlantUmlText.FluentApi.cs">
       <DependentUpon>PlantUmlText.cs</DependentUpon>
     </Compile>
+    <None Update="_project\OpenIconicKind.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>OpenIconicKind.cs</LastGenOutput>
+    </None>
+    <None Remove="AutoUml.csproj.DotSettings" />
+    <None Remove="AutoUml.Signed.csproj.dotSettings" />
   </ItemGroup>
 </Project>
