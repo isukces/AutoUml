@@ -3,6 +3,7 @@
   <PropertyGroup>
     <Copyright>Copyright © Internet Sukces Piotr Stęclik 2023</Copyright>
     <TargetFrameworks>netcoreapp3.1;net7.0</TargetFrameworks>
+    <Authors>Internet Sukces Piotr Stęclik</Authors>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>

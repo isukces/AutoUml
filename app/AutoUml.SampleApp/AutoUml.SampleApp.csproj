@@ -4,6 +4,7 @@
     <Copyright>Copyright © Internet Sukces Piotr Stęclik 2023</Copyright>
     <TargetFrameworks>net7.0</TargetFrameworks>
     <OutputType>Exe</OutputType>
+    <Authors>Internet Sukces Piotr Stęclik</Authors>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\AutoUml\AutoUml.csproj" />

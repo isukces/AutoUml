@@ -10,7 +10,7 @@
     <AssemblyVersion>1.23.819.44</AssemblyVersion>
     <FileVersion>1.23.819.44</FileVersion>
     <Version>1.23.819.44</Version>
-    <Authors>Piotr Stęclik</Authors>
+    <Authors>Internet Sukces Piotr Stęclik</Authors>
     <Description>Create UML diagrams directly from .NET code using annotation</Description>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\AutoUml.xml</DocumentationFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>

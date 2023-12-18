@@ -5,13 +5,13 @@
     <Company>Internet Sukces Piotr Stęclik</Company>
     <Copyright>Copyright © Internet Sukces Piotr Stęclik 2018-2023</Copyright>
     <Product>AutoUml</Product>
-    <TargetFrameworks>net4.8;netcoreapp3.1;net7.0</TargetFrameworks>
+    <TargetFrameworks>net4.8;netcoreapp3.1;net7.0;net8.0</TargetFrameworks>
     <RootNamespace>AutoUml</RootNamespace>
-    <AssemblyVersion>1.23.819.44</AssemblyVersion>
-    <FileVersion>1.23.819.44</FileVersion>
-    <Version>1.23.819.44</Version>
+    <AssemblyVersion>1.23.1218.45</AssemblyVersion>
+    <FileVersion>1.23.1218.45</FileVersion>
+    <Version>1.23.1218.45</Version>
     <SignAssembly>true</SignAssembly>
-    <Authors>Piotr Stęclik</Authors>
+    <Authors>Internet Sukces Piotr Stęclik</Authors>
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <DelaySign>false</DelaySign>
     <Description>Create UML diagrams directly from .NET code using annotation</Description>
@@ -19,7 +19,7 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
-    <PackageId>isukces.AutoUml</PackageId>
+    <PackageId>iSukces.AutoUml</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/isukces/AutoUml</PackageProjectUrl>
     <PackageProjectUrl>https://github.com/isukces/AutoUml</PackageProjectUrl>
@@ -28,8 +28,8 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2023.2.0" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+    <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="_project\OpenIconicKind.cs">
