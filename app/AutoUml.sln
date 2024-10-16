@@ -6,8 +6,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoUml.SampleApp", "AutoUm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{200885D2-9F35-4F67-B64A-7F191AD0D9F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoUml.Signed", "AutoUml\AutoUml.Signed.csproj", "{7C5C49D4-388E-4839-909E-AFB51AD42D6E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,9 +24,5 @@ Global
 		{200885D2-9F35-4F67-B64A-7F191AD0D9F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{200885D2-9F35-4F67-B64A-7F191AD0D9F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{200885D2-9F35-4F67-B64A-7F191AD0D9F1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7C5C49D4-388E-4839-909E-AFB51AD42D6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C5C49D4-388E-4839-909E-AFB51AD42D6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C5C49D4-388E-4839-909E-AFB51AD42D6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C5C49D4-388E-4839-909E-AFB51AD42D6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

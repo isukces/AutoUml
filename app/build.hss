@@ -1,0 +1,42 @@
+// using System.IO;
+var builder = new ProjectBuilder(){
+	VisualStudioExe = GlobalVar["VisualStudio 2017"],
+	Nuget = {
+		Exe = GlobalVar["Nuget"],
+		RepositoryDir =  GlobalVar["Private Nuget Repository"],
+		ForceNugetName = "isukces.AutoUml"
+	},
+
+	ProjectName = "AutoUml.Signed",
+	SolutionName = "AutoUml.Signed",
+	SolutionDir = ConfigDir,
+	ProjectDirTemplate =  "{SolutionDir}\\AutoUml",
+
+	
+};
+
+// task: Clean
+DeleteDir(builder.ProjectDir+"\\bin", builder.ProjectDir+"\\obj");
+
+// task: Nuget restore
+Execute(builder.Nuget.Exe , "restore "+builder.SolutionName +".sln");
+
+
+// task: Update version
+var version = builder.UpdateVersionCore();
+
+// task: Build
+builder.Build("deploy");
+
+var nugetPackageFileName = string.Format(@"{0}\{1}.{2}.symbols.nupkg", 
+	builder.ProjectDir+@"\bin\Release", 
+	builder.Nuget.GetNugetName(), 
+	version);
+
+// task: Copy nuget
+var nugetOut = builder.Nuget.RepositoryDir + "\\" + builder.Nuget.GetNugetName() + "." + version + ".nupkg";
+
+Console.WriteLine("Copy {0} to {1}", nugetPackageFileName, nugetOut);
+File.Copy(nugetPackageFileName, nugetOut, true);
+
+Console.WriteLine("--FINISHED--");
