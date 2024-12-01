@@ -7,9 +7,9 @@
     <Product>AutoUml</Product>
     <TargetFrameworks>net4.8;netcoreapp3.1;net8.0</TargetFrameworks>
     <RootNamespace>AutoUml</RootNamespace>
-    <AssemblyVersion>1.24.1016.46</AssemblyVersion>
-    <FileVersion>1.24.1016.46</FileVersion>
-    <Version>1.24.1016.46</Version>
+    <AssemblyVersion>1.24.1201.47</AssemblyVersion>
+    <FileVersion>1.24.1201.47</FileVersion>
+    <Version>1.24.1201.47</Version>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(SignKey)</AssemblyOriginatorKeyFile>
     <Authors>Internet Sukces Piotr Stęclik</Authors>

@@ -7,24 +7,12 @@ var builder = new ProjectBuilder(){
 		ForceNugetName = "isukces.AutoUml"
 	},
 
-	ProjectName = "AutoUml.Signed",
-	SolutionName = "AutoUml.Signed",
+	ProjectName = "AutoUml",
+	SolutionName = "AutoUml",
 	SolutionDir = ConfigDir,
 	ProjectDirTemplate =  "{SolutionDir}\\AutoUml",
 
-	
 };
 
-// task: Clean
-builder.DeleteBinObj();
-
-
-// task: Nuget restore
-builder.Nuget.Restore();
-
-
-// task: Update version
-var version = builder.UpdateCoreProjectVersion();
-
-
+var version = builder.UpdateVersionCore();
 Console.WriteLine("--FINISHED--");

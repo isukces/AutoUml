@@ -4,41 +4,26 @@ var builder = new ProjectBuilder(){
 	Nuget = {
 		Exe = GlobalVar["Nuget"],
 		RepositoryDir =  GlobalVar["Private Nuget Repository"],
-		ForceNugetName = "isukces.AutoUml"
+		ForceNugetName = "iSukces.AutoUml"
 	},
 
-	ProjectName = "AutoUml.Signed",
-	SolutionName = "AutoUml.Signed",
+	ProjectName = "AutoUml",
+	SolutionName = "AutoUml",
 	SolutionDir = ConfigDir,
 	ProjectDirTemplate =  "{SolutionDir}\\AutoUml",
-
-	
 };
 
-// task: Clean
-builder.DeleteBinObj();
-
-
-// task: Nuget restore
-builder.Nuget.Restore();
-
-
-// task: Get version
-var csProject =  CsProjectCore.FromFile(builder.CsProjFileName);
-var version = csProject.Version;
-
-// task: Build
-builder.MsBuild();
-
-
-// task: Copy nuget
-var srcNupkg = builder.GetNupkgFile(version, false).FullName;
-var nugetOut = CombinePath(builder.Nuget.RepositoryDir, builder.Nuget.GetNupkgFileName(version, false));
-for(int i=0;i<2;i++) {
-	Console.WriteLine("Copy {0} to {1}", srcNupkg, nugetOut);
-	File.Copy(srcNupkg, nugetOut, true);
-	srcNupkg=srcNupkg.Replace(".nupkg", ".snupkg");
-	nugetOut=nugetOut.Replace(".nupkg", ".snupkg");
-}
-
+builder.DeleteBinObj();  
+builder.Nuget.Restore();  
+var version = builder.UpdateVersionCore(VersionNumberStyles.DoNotChange);  
+builder.MsBuild();  
+foreach (var options in new[] { PackageNameOptions.Normal, PackageNameOptions.SNupkg })  
+{  
+    var srcNupkg      = builder.Nuget.GetNugetPackageShortFile(version, options);  
+    var nugetCopyFrom = CombinePath(builder.Nuget.CompiledNugetOutputDir, srcNupkg);  
+    var nugetCopyTo   = CombinePath(builder.Nuget.RepositoryDir, srcNupkg);  
+    Console.WriteLine("Copy {0} to {1}", srcNupkg, nugetCopyTo);  
+    File.Copy(nugetCopyFrom, nugetCopyTo, true);  
+}  
+  
 Console.WriteLine("--FINISHED--");
