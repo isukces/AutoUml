@@ -3,13 +3,15 @@
   <PropertyGroup>
     <AssemblyName>AutoUml</AssemblyName>
     <Company>Internet Sukces Piotr Stęclik</Company>
-    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2018-2024</Copyright>
+    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2018-2025</Copyright>
     <Product>AutoUml</Product>
-    <TargetFrameworks>net4.8;netcoreapp3.1;net8.0</TargetFrameworks>
+    <ProjectGuid>{3F3A2A17-30C4-45D9-833D-1F1470E7509B}</ProjectGuid>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     <RootNamespace>AutoUml</RootNamespace>
-    <AssemblyVersion>1.24.1201.47</AssemblyVersion>
-    <FileVersion>1.24.1201.47</FileVersion>
-    <Version>1.24.1201.47</Version>
+    <AssemblyVersion>1.25.102.48</AssemblyVersion>
+    <FileVersion>1.25.102.48</FileVersion>
+    <Version>1.25.102.48</Version>
+    <LangVersion>13</LangVersion>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(SignKey)</AssemblyOriginatorKeyFile>
     <Authors>Internet Sukces Piotr Stęclik</Authors>
@@ -27,7 +29,7 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2024.2.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="_project\OpenIconicKind.cs">
