@@ -2,8 +2,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>AutoUml</AssemblyName>
-    <Company>Internet Sukces Piotr Stęclik</Company>
     <Copyright>Copyright © Internet Sukces Piotr Stęclik 2018-2025</Copyright>
+    <Authors>Internet Sukces Piotr Stęclik</Authors>
+    <Company>Internet Sukces Piotr Stęclik</Company>
     <Product>AutoUml</Product>
     <ProjectGuid>{3F3A2A17-30C4-45D9-833D-1F1470E7509B}</ProjectGuid>
     <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
@@ -14,7 +15,6 @@
     <LangVersion>13</LangVersion>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(SignKey)</AssemblyOriginatorKeyFile>
-    <Authors>Internet Sukces Piotr Stęclik</Authors>
     <Description>Create UML diagrams directly from .NET code using annotation</Description>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\AutoUml.xml</DocumentationFile>
     <PackageId>iSukces.AutoUml</PackageId>
