@@ -1,7 +1,9 @@
 using System;
+using System.Diagnostics;
 
 namespace AutoUml;
 
+[Conditional("AUTOUML_ANNOTATIONS")]
 public abstract class BaseRelationAttribute : Attribute, INoteProvider
 {
     protected BaseRelationAttribute(UmlRelationKind kind)

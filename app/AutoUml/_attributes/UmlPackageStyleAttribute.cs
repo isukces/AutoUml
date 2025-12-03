@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace AutoUml;
 
 [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
+[Conditional("AUTOUML_ANNOTATIONS")]
 public class UmlPackageStyleAttribute : Attribute
 {
     public UmlPackageStyleAttribute(string packageName, UmlPackageKind kind, string? diagramName = null)

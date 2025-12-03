@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace AutoUml;
 
 [AttributeUsage(AttributesConsts.Entities, AllowMultiple = true)]
+[Conditional("AUTOUML_ANNOTATIONS")]
 public class UmlNoteAttribute : Attribute, INoteWithLocationProvider
 {
     public UmlNoteAttribute(string note)
