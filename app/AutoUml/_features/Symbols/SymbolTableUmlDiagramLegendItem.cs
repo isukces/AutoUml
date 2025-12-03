@@ -32,7 +32,7 @@ public class SymbolTableUmlDiagramLegendItem : UmlDiagramLegendItem
         }
     }
 
-    public PlantUmlText Title { get; set; }
+    public PlantUmlText? Title { get; set; }
 
     public Dictionary<string, SymbolInfo> Symbols { get; } = new Dictionary<string, SymbolInfo>();
 }

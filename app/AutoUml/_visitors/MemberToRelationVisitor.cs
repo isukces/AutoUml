@@ -226,7 +226,7 @@ public class MemberToRelationVisitor : IDiagramVisitor
 
     public ConvertToRelationDelegate ConvertToRelation { get; set; }
 
-    public event EventHandler<AfterConversionPropertyEventArgs> AfterConversionProperty;
+    public event EventHandler<AfterConversionPropertyEventArgs>? AfterConversionProperty;
 
     public class AfterConversionPropertyEventArgs
     {

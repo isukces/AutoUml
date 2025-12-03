@@ -39,11 +39,11 @@ public class UmlRelation : IMetadataContainer
     public UmlRelationEnd Right { get; set; }
 
     public UmlRelationArrow Arrow          { get; set; }
-    public string           Label          { get; set; }
-    public string           Note           { get; set; }
-    public IUmlFill         NoteBackground { get; set; }
+    public string?          Label          { get; set; }
+    public string?          Note           { get; set; }
+    public IUmlFill?        NoteBackground { get; set; }
 
-    public string Tag { get; set; }
+    public string? Tag { get; set; }
 
     public UmlMember? BaseMember { get; set; }
 

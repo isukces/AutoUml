@@ -53,9 +53,9 @@ public class UmlProject
     public Dictionary<string, UmlDiagram> Diagrams { get; } =
         new Dictionary<string, UmlDiagram>();
 
-    public event EventHandler<AddDiagramEventArgs> OnAddDiagram;
+    public event EventHandler<AddDiagramEventArgs>? OnAddDiagram;
 
-    public event EventHandler<AddTypeToDiagramEventArgs> OnAddTypeToDiagram;
+    public event EventHandler<AddTypeToDiagramEventArgs>? OnAddTypeToDiagram;
 
     public struct SavedFileInfo
     {

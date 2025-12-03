@@ -29,6 +29,14 @@
     <PackageProjectUrl>https://github.com/isukces/AutoUml</PackageProjectUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <NoWarn>1701;1702;CS1592</NoWarn>
+    <WarningsAsErrors>NU1605</WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <NoWarn>1701;1702;CS1592</NoWarn>
+    <WarningsAsErrors>NU1605</WarningsAsErrors>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
   </ItemGroup>

@@ -61,7 +61,7 @@ public abstract class SymbolBaseVisitor : INewTypeInDiagramVisitor
     public UmlColor?    SymbolColor { get; set; }
     public int?         FontSize    { get; set; }
 
-    public event EventHandler<AddStyleToSymbolEventArgs> AddStyleToSymbol;
+    public event EventHandler<AddStyleToSymbolEventArgs>? AddStyleToSymbol;
 
     public class AddStyleToSymbolEventArgs : EventArgs
     {

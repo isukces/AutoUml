@@ -256,7 +256,7 @@ public class UmlDiagram : IMetadataContainer
 
     public Dictionary<string, object> Metadata { get; } = new Dictionary<string, object>();
 
-    public event EventHandler<AddTypeToDiagramEventArgs> OnAddTypeToDiagram;
+    public event EventHandler<AddTypeToDiagramEventArgs>? OnAddTypeToDiagram;
 
     private readonly Dictionary<Type, UmlEntity> _entities = new Dictionary<Type, UmlEntity>();
 

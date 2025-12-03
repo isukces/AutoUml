@@ -44,7 +44,7 @@ public struct UmlPackageName : IEquatable<UmlPackageName>, IComparable<UmlPackag
         return string.Compare(Name, other.Name, StringComparison.OrdinalIgnoreCase);
     }
 
-    public int CompareTo(object obj)
+    public int CompareTo(object? obj)
     {
         if (ReferenceEquals(null, obj)) return 1;
         return obj is UmlPackageName other

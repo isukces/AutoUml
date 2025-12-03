@@ -214,9 +214,9 @@ public class ClassMemberScannerVisitor : INewTypeInDiagramVisitor
 
     public ReflectionFlags ScanFlags { get; set; } = ReflectionFlags.AllNonPrivate;
 
-    public event EventHandler<AddTypeToDiagramEventArgs> AddTypeToDiagram;
+    public event EventHandler<AddTypeToDiagramEventArgs>? AddTypeToDiagram;
 
-    public event EventHandler<SortAndPrepareMethodsEventArgs> SortAndPrepareMethods;
+    public event EventHandler<SortAndPrepareMethodsEventArgs>? SortAndPrepareMethods;
 
     public sealed class AddTypeToDiagramEventArgs : EventArgs
     {
