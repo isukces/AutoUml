@@ -19,11 +19,11 @@ public class RemoveDeepPropertiesVisitor : INewTypeInDiagramVisitor
 
     public void AddTypeAndParents(Type? type)
     {
-        type = type.MeOrGeneric();
+        type = type?.MeOrGeneric();
         while (type != null)
         {
             _types.Add(type);
-            type = type.BaseType.MeOrGeneric();
+            type = type?.BaseType.MeOrGeneric();
         }
     }
 

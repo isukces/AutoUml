@@ -34,25 +34,14 @@ public static class Extensions
         {
             return new PlantUmlText(x);
         }
-    }
-
-    extension(OpenIconicKind kind)
-    {
-        public PlantUmlText AsPlantUmlText()
-        {
-            return new PlantUmlText(kind);
-        }
-    }
-
-    extension(string? n)
-    {
+    
         public string CamelToNormal(bool onlyFirstUpper)
         {
-            n = n?.Trim();
-            if (string.IsNullOrEmpty(n))
+            x = x?.Trim();
+            if (string.IsNullOrEmpty(x))
                 return string.Empty;
             var sb = new StringBuilder();
-            foreach (var i in n)
+            foreach (var i in x)
             {
                 var isUpper    = char.ToUpper(i) == i;
                 var isNotFirst = sb.Length > 0;
@@ -67,6 +56,16 @@ public static class Extensions
             return sb.ToString();
         }
     }
+
+    extension(OpenIconicKind kind)
+    {
+        public PlantUmlText AsPlantUmlText()
+        {
+            return new PlantUmlText(kind);
+        }
+    }
+
+
 
     extension<T>(List<T>? list)
     {
@@ -85,16 +84,6 @@ public static class Extensions
 
     extension(Type type)
     {
-        public PropertyInfo[] GetPropertiesInstancePublic()
-        {
-            return type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
-        }
-
-        public bool IsStruct()
-        {
-            return type.IsValueType && !type.IsEnum && !type.IsPrimitive;
-        }
-
         public string GetDiagramName(Func<Type, string> tryGetAlias)
         {
             if (type.IsGenericType)
@@ -151,15 +140,6 @@ public static class Extensions
             return string.IsNullOrEmpty(name) ? type.Name : name;
         }
 
-        public Type? MeOrGeneric()
-        {
-            if (type == null)
-                return null;
-            if (type.IsGenericType)
-                return type.GetGenericTypeDefinition();
-            return type;
-        }
-
         public Type[] GetGenericTypeArgumentsIfPossible()
         {
             if (type == null)
@@ -167,6 +147,25 @@ public static class Extensions
             if (type.IsGenericType)
                 return type.GenericTypeArguments;
             return [];
+        }
+
+        public PropertyInfo[] GetPropertiesInstancePublic()
+        {
+            return type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+        }
+
+        public bool IsStruct()
+        {
+            return type.IsValueType && !type.IsEnum && !type.IsPrimitive;
+        }
+
+        public Type? MeOrGeneric()
+        {
+            if (type == null)
+                return null;
+            if (type.IsGenericType)
+                return type.GetGenericTypeDefinition();
+            return type;
         }
     }
 

@@ -264,8 +264,8 @@ zoom-out";
 using System;
 
 
-namespace AutoUml {
-    public enum OpenIconicKind {
+namespace AutoUml;
+public enum OpenIconicKind {
 <#
     for (var i = 0; i < items.Length; i++)
     {
@@ -275,15 +275,15 @@ namespace AutoUml {
         if (appendComma)
             enumValue += ',';
 #>
-        /// <summary>OpenIconic <#= value #></summary>
-        <#= enumValue #>
+    /// <summary>OpenIconic <#= value #></summary>
+    <#= enumValue #>
 <#
     }
 #>
-    }
+}
 
-    public static class OpenIconicKindUtils {
-        static readonly string[] Names = {
+public static class OpenIconicKindUtils {
+    static readonly string[] Names = {
 <#
     for (var i = 0; i < items.Length; i++)
     {
@@ -297,9 +297,11 @@ namespace AutoUml {
 <#
     }
 #>
-       };
+    };
  
-       public static string ToCode(this OpenIconicKind kind)
+    extension(OpenIconicKind kind)
+    {
+        public string ToCode()
         {
             var idx = (int)kind;
             if (idx < 0 || idx >= Names.Length)

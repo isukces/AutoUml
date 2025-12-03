@@ -2,7 +2,7 @@ namespace AutoUml;
 
 public static class PlantUmlTextFluent
 {
-    extension(PlantUmlText src)
+    extension(PlantUmlText? src)
     {
         public PlantUmlText? WithBackground(string color)
         {
@@ -40,10 +40,7 @@ public static class PlantUmlTextFluent
         {
             return src.WithWrap("--");
         }
-    }
-
-    extension(PlantUmlText? src)
-    {
+    
         public PlantUmlText WithTextInNewLine(string? x)
         {
             if (string.IsNullOrEmpty(x))
@@ -61,18 +58,12 @@ public static class PlantUmlTextFluent
                 return src.WithWrap("__");
             return src.WithWrapHtml("u", color);
         }
-    }
-
-    extension(PlantUmlText src)
-    {
+ 
         public PlantUmlText? WithWaved()
         {
             return src.WithWrap("~~");
         }
-    }
-
-    extension(PlantUmlText? src)
-    {
+ 
         public PlantUmlText? WithWrap(string prefixAndSuffix)
         {
             if (src is null || src.IsEmpty)
