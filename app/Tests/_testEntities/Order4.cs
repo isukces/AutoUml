@@ -37,13 +37,13 @@ public class OrderItem4Related1
 {
     public int SomeMethodWithNestedMethods()
     {
+        var a = Sq(1) + Sq(2);
+        return a;
+
         int Sq(int x)
         {
             return x * x;
         }
-
-        var a = Sq(1) + Sq(2);
-        return a;
     }
 }
 

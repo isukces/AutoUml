@@ -19,6 +19,20 @@ public class HideTrivialMethodsVisitor : IDiagramVisitor
     // UsedImplicitly
     public SetFlagResult DefaultHideMethod(UmlDiagram diagram, UmlMember umlMember, UmlEntity entity)
     {
+        if (!(umlMember is MethodUmlMember mum))
+            return SetFlagResult.LeaveUnchanged;
+        var mi = mum.Method;
+        if (mi.DeclaringType == typeof(object))
+            return SetFlagResult.SetToTrue;
+        if (AlreadyOnDiagram(entity.Type, mi.DeclaringType))
+            return SetFlagResult.SetToTrue;
+
+        if (HideShouldSerializeMethods)
+            if (IsShouldSerializeMethod(mi))
+                return SetFlagResult.SetToTrue;
+
+        return SetFlagResult.LeaveUnchanged;
+
         bool AlreadyOnDiagram(Type entityType, Type declaringType)
         {
             if (entityType == null || entityType == declaringType)
@@ -33,20 +47,6 @@ public class HideTrivialMethodsVisitor : IDiagramVisitor
                 entityType = bt;
             }
         }
-
-        if (!(umlMember is MethodUmlMember mum))
-            return SetFlagResult.LeaveUnchanged;
-        var mi = mum.Method;
-        if (mi.DeclaringType == typeof(object))
-            return SetFlagResult.SetToTrue;
-        if (AlreadyOnDiagram(entity.Type, mi.DeclaringType))
-            return SetFlagResult.SetToTrue;
-
-        if (HideShouldSerializeMethods)
-            if (IsShouldSerializeMethod(mi))
-                return SetFlagResult.SetToTrue;
-
-        return SetFlagResult.LeaveUnchanged;
     }
 
     public void VisitBeforeEmit(UmlDiagram diagram)

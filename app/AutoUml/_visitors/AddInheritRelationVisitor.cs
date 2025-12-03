@@ -50,21 +50,6 @@ public class AddInheritRelationVisitor : IDiagramVisitor
                 diagram.Relations.Add(rel);
             }
 
-            bool CanAddR(Type clasType, Type interfaceType)
-            {
-                clasType = clasType.BaseType;
-                while (clasType != null)
-                {
-                    if (!diagram.ContainsType(clasType))
-                        return true;
-                    if (clasType.GetInterfaces().Contains(interfaceType))
-                        return false;
-                    clasType = clasType.BaseType;
-                }
-
-                return true;
-            }
-
             var entityInterfaces = entityType
                 .GetInterfaces()
                 .Select(a => a.MeOrGeneric())
@@ -87,6 +72,23 @@ public class AddInheritRelationVisitor : IDiagramVisitor
                 var umlRelation = Inherits(interfaceType, entityType, diagram)
                     .With(UmlArrowDirections.Up);
                 diagram.Relations.Add(umlRelation);
+            }
+
+            continue;
+
+            bool CanAddR(Type clasType, Type interfaceType)
+            {
+                clasType = clasType.BaseType;
+                while (clasType != null)
+                {
+                    if (!diagram.ContainsType(clasType))
+                        return true;
+                    if (clasType.GetInterfaces().Contains(interfaceType))
+                        return false;
+                    clasType = clasType.BaseType;
+                }
+
+                return true;
             }
         }
     }

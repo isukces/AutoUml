@@ -8,6 +8,8 @@ public abstract class UmlMember : IMetadataContainer
 {
     protected string GetCodePrefix()
     {
+        return GetCodePrefixA() + GetCodePrefixB();
+
         string GetCodePrefixA()
         {
             switch (Visibility)
@@ -36,8 +38,6 @@ public abstract class UmlMember : IMetadataContainer
                     throw new ArgumentOutOfRangeException();
             }
         }
-
-        return GetCodePrefixA() + GetCodePrefixB();
     }
 
     public abstract MemberInfo? GetMemberInfo();
