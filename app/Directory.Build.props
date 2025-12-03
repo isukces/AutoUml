@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <PropertyGroup>
-        <Copyright>Copyright © Internet Sukces Piotr Stęclik 2018-2025</Copyright>
-        <Authors>Internet Sukces Piotr Stęclik</Authors>
-        <Company>Internet Sukces Piotr Stęclik</Company>
-        <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
-        <LangVersion>13</LangVersion>
-        <SignAssembly>true</SignAssembly>
-        <AssemblyOriginatorKeyFile>$(SignKey)</AssemblyOriginatorKeyFile>
-    </PropertyGroup>
+  <PropertyGroup>
+    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2018-2025</Copyright>
+    <Authors>Internet Sukces Piotr Stęclik</Authors>
+    <Company>Internet Sukces Piotr Stęclik</Company>
+    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+    <LangVersion>14</LangVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(SignKey)</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
 </Project>

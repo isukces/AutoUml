@@ -17,10 +17,10 @@ interface INestedInterface14
 }
 class Class14
 {
+    +ExInfo14 ExInfo
     +int Count
     +string Name
     +Info14 CreationInfo
-    +ExInfo14 ExInfo
 }
 class DerivedClass14
 {
