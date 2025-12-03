@@ -1,22 +1,23 @@
-# What is AutoUML
+# AutoUML
 
-Need UML diagrams directly from .NET source code? AutoUML is for you.
-AutoUML uses internally [PlantUML](https://plantuml.com/).
+AutoUML generates PlantUML diagrams straight from your .NET code. Mark the members you want to show, run the generator, and get ready‑to‑use PUML, PNG, or SVG outputs.
 
-# Features
-- create UML diagrams from any .NET code annotation
-- export to PNG o SVG files
+## Highlights
+- turn annotated .NET code into UML quickly
+- exports PUML, PNG, and SVG
+- works with any PlantUML toolchain
+- annotations stay out of release builds by default (see below)
 
-# Example
+## Annotations and conditional compilation
+Every attribute provided by this library is declared with `Conditional("AUTOUML_ANNOTATIONS")`. Add the `AUTOUML_ANNOTATIONS` compilation symbol when you want the attributes emitted; without it, the attributes are skipped, so your production assemblies remain clean while keeping the source markup intact.
+
+## Example
 ![alt text](https://raw.githubusercontent.com/isukces/AutoUml/master/docs/testsResults/T12_Should_mark_static_method.png "Sample diagram created during AutoUML testing")
 
-Some other examples containing both source PUML files and images can be found here: https://github.com/isukces/AutoUml/tree/master/docs/testsResults .
+More examples (PUML + generated images): https://github.com/isukces/AutoUml/tree/master/docs/testsResults
 
-
-# How it works?
-
-UML diagram creation process consists of few steps:
-- preparing UML project with prefered settings (some default settings are provided)
-- scanning source code for annotations
-- preparing PUML files (see [PlantUML](https://plantuml.com/))
-- converting PUML files into images
+## How it works
+1. Configure an AutoUML project (defaults are provided).
+2. Scan source code for the annotations.
+3. Produce PUML files via [PlantUML](https://plantuml.com/).
+4. Render PUML to images.
