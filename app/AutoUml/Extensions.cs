@@ -128,10 +128,10 @@ public static class Extensions
     public static Type[] GetGenericTypeArgumentsIfPossible(this Type? type)
     {
         if (type == null)
-            return new Type[0];
+            return [];
         if (type.IsGenericType)
             return type.GenericTypeArguments;
-        return new Type[0];
+        return [];
     }
 
     public static PropertyInfo[] GetPropertiesInstancePublic(this Type type)

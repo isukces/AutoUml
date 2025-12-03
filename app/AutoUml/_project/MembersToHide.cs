@@ -27,8 +27,8 @@ public static class MembersToHideExt
 {
     static MembersToHideExt()
     {
-        testItems = new[]
-        {
+        testItems =
+        [
             new Test(MembersToHide.EmptyMembers, "empty members"),
             new Test(MembersToHide.EmptyFields, "empty fields"),
             new Test(MembersToHide.EmptyMethods, "empty methods"),
@@ -38,8 +38,8 @@ public static class MembersToHideExt
             new Test(MembersToHide.Methods, "methods"),
 
             new Test(MembersToHide.Circle, "circle"),
-            new Test(MembersToHide.Stereotype, "stereotype"),
-        };
+            new Test(MembersToHide.Stereotype, "stereotype")
+        ];
     }
 
     public static IReadOnlyList<string> GetPumlCommands(this MembersToHide src, string prefix)

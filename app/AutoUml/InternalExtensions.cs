@@ -24,9 +24,9 @@ internal static class InternalExtensions
         return ptext?.Text.SplitLines(cutEmpty);
     }
 
-    public static HashSet<Type> ToHashSet<Type>(this IEnumerable<Type> src)
+    public static HashSet<TArgument> ToHashSet<TArgument>(this IEnumerable<TArgument> src)
     {
-        var result = new HashSet<Type>();
+        var result = new HashSet<TArgument>();
         foreach (var i in src)
             result.Add(i);
         return result;
