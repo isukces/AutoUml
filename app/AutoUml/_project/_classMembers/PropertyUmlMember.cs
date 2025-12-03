@@ -17,7 +17,7 @@ public class PropertyUmlMember : UmlMember
     public override void WriteTo(CodeWriter cf, UmlDiagram diagram)
     {
         var code = diagram.GetTypeName(Property.PropertyType) + " " + Property.Name;
-        cf.Writeln(GetCodePrefix()+code);
+        cf.Writeln(GetCodePrefix() + code);
     }
 
     public PropertyInfo Property { get; set; }

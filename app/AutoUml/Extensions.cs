@@ -25,8 +25,8 @@ public static class Extensions
 
         return name;
     }
-        
-    public static PlantUmlText AsPlantUmlText (this string kind)
+
+    public static PlantUmlText AsPlantUmlText(this string kind)
     {
         return new PlantUmlText(kind);
     }
@@ -156,7 +156,7 @@ public static class Extensions
     public static SplittableString? MethodToUml(this MethodInfo methodInfo, Func<Type, string> retTypeName)
     {
         var parameters = methodInfo.GetParameters();
-        var returnType = retTypeName(methodInfo.ReturnType)+" ";
+        var returnType = retTypeName(methodInfo.ReturnType) + " ";
 
         if (parameters.Length == 0)
         {
@@ -167,6 +167,7 @@ public static class Extensions
             };
             return SplittableString.Make(i);
         }
+
         var sink = new Sink<string>(parameters.Length + 2);
         sink.Add(returnType);
         sink.Add(methodInfo.Name + "(");

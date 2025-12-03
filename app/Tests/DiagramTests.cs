@@ -312,13 +312,12 @@ Order3 *-----{ OrderItem3:Items
         x = diagram.TryGetEntityByType(typeof(OrderItem3));
         Assert.Null(x.TryGetStringMetadata("hello"));
         Assert.Null(x.TryGetStringMetadata("hello 2"));
-            
-            
+
         var file = diagram.CreateFile();
         Assert.NotNull(file);
         var code = file.Code;
         Save(code);
-        string expected=@"@startuml
+        string expected = @"@startuml
 title
  Diagram Test3
 end title
@@ -654,8 +653,8 @@ AttributesList --> AttributesListItem:Item
 ";
         Assert.Equal(expected, code);
     }
-        
-        
+
+
     [Fact]
     public void T14_Should_do_not_add_relation_to_base_interface()
     {
@@ -714,8 +713,8 @@ DerivedClass14 -up-|> Class14
 ";
         Assert.Equal(expected, code);
     }
-        
-            
+
+
     [Fact]
     public void T15_Should_do_not_add_relation_property_if_declaring_interface_is_on_diagram()
     {
@@ -780,8 +779,8 @@ Class15 -up-|> Interface15D
 ";
         Assert.Equal(expected, code);
     }
-        
-        
+
+
     [Fact]
     public void T16_Should_add_starting_lines()
     {
@@ -822,8 +821,8 @@ class Info16A
 ";
         Assert.Equal(expected, code);
     }
-        
-        
+
+
     [Fact]
     public void T17_Should_add_symbols_legend()
     {
@@ -865,9 +864,8 @@ endlegend
 ";
         Assert.Equal(expected, code);
     }
-        
-        
-           
+
+
     [Fact]
     public void T17a_Should_hide_empty_methods()
     {
@@ -911,8 +909,8 @@ endlegend
 ";
         Assert.Equal(expected, code);
     }
-     
-           
+
+
     [Fact]
     public void T17b_Should_hide_empty_attributes()
     {
@@ -956,5 +954,4 @@ endlegend
 ";
         Assert.Equal(expected, code);
     }
-
 }

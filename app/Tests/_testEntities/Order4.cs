@@ -16,6 +16,10 @@ public class Order4
 [UmlDiagram("Test4")]
 public class OrderItem4
 {
+    public static void SomeStaticMethod()
+    {
+    }
+
     [UmlRelation(ForceAddToDiagram = true)]
     public OrderItem4Related1 DoSomething1(int a)
     {
@@ -26,11 +30,6 @@ public class OrderItem4
     public OrderItem4Related2 DoSomething2()
     {
         return null;
-    }
-
-    public static void SomeStaticMethod()
-    {
-            
     }
 }
 
@@ -47,10 +46,11 @@ public class OrderItem4Related1
         return a;
     }
 }
+
 public class OrderItem4Related2
 {
-        
 }
+
 public abstract class OrderItem4Related3
 {
     public abstract int CalculateSum(int a, int b);

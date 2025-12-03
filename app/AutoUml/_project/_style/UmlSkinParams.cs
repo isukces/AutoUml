@@ -54,5 +54,6 @@ public class UmlSkinParams
     public UmlSkinParam   Class       { get; set; }
     public UmlCircleStyle Circle      { get; set; }
     public UmlSkinFont    NoteFont    { get; set; }
+
     public static string HandWrittenFont = "Buxton Sketch";
 }

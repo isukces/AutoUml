@@ -118,33 +118,8 @@ public class MemberToRelationVisitor : IDiagramVisitor
             .WitCreatorMeta<MemberToRelationVisitor>(owner, component);
         rel.Tag        = att.Tag;
         rel.BaseMember = member;
-            
+
         diagram.Relations.Add(rel);
-    }
-
-    public void VisitBeforeEmit(UmlDiagram diagram)
-    {
-        var typesToAdd = new List<Type>();
-        foreach (var diagClass in diagram.GetEntities())
-        foreach (var mem in diagClass.Members)
-            switch (mem)
-            {
-                case MethodUmlMember methodUmlMember:
-                    var types1 = ProcessMethod(diagram, diagClass, methodUmlMember);
-                    typesToAdd.AddRange(types1);
-                    break;
-                case PropertyUmlMember propertyUmlMember:
-                    var types2 = ProcessProperty(diagram, diagClass, propertyUmlMember);
-                    typesToAdd.AddRange(types2);
-                    break;
-            }
-
-        foreach (var i in typesToAdd)
-            diagram.UpdateTypeInfo(i, null);
-    }
-
-    public void VisitDiagramCreated(UmlDiagram diagram)
-    {
     }
 
     private IEnumerable<Type> ProcessProperty(UmlDiagram diagram, UmlEntity diagClass,
@@ -224,7 +199,33 @@ public class MemberToRelationVisitor : IDiagramVisitor
         diagram.Relations.Add(rel);
     }
 
-    public ConvertToRelationDelegate                            ConvertToRelation { get; set; }
+    public void VisitBeforeEmit(UmlDiagram diagram)
+    {
+        var typesToAdd = new List<Type>();
+        foreach (var diagClass in diagram.GetEntities())
+        foreach (var mem in diagClass.Members)
+            switch (mem)
+            {
+                case MethodUmlMember methodUmlMember:
+                    var types1 = ProcessMethod(diagram, diagClass, methodUmlMember);
+                    typesToAdd.AddRange(types1);
+                    break;
+                case PropertyUmlMember propertyUmlMember:
+                    var types2 = ProcessProperty(diagram, diagClass, propertyUmlMember);
+                    typesToAdd.AddRange(types2);
+                    break;
+            }
+
+        foreach (var i in typesToAdd)
+            diagram.UpdateTypeInfo(i, null);
+    }
+
+    public void VisitDiagramCreated(UmlDiagram diagram)
+    {
+    }
+
+    public ConvertToRelationDelegate ConvertToRelation { get; set; }
+
     public event EventHandler<AfterConversionPropertyEventArgs> AfterConversionProperty;
 
     public class AfterConversionPropertyEventArgs

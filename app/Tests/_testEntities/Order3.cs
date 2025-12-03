@@ -4,27 +4,26 @@ using AutoUml;
 namespace Tests;
 
 [UmlDiagram("Test3", Note = "Note from annotation", NoteLocation = NoteLocation.Right)]
-[UmlAddMeta("hello","world")]
+[UmlAddMeta("hello", "world")]
 public class Order3
 {
-    [UmlRelation(UmlRelationKind.Aggregation,
-        ForceAddToDiagram = true,
-        Note              = "Note on relation\nfrom UmlRelationAtribute",
-        NoteBackground    = "#ffe0f0",
+    [UmlRelation(ForceAddToDiagram = true,
+        Note = "Note on relation\nfrom UmlRelationAtribute",
+        NoteBackground = "#ffe0f0",
         // LeftSign  =  ForceArrowEnd.Multiple, RightSign = ForceArrowEnd.Multiple,
-        ArrowDirection    = UmlArrowDirections.Right
+        ArrowDirection = UmlArrowDirections.Right
         // IsDotted = ChangeDecision.Yes, LeftSignDescription="one"
     )]
     public CompanyInfo Customer { get; set; }
-        
+
     [UmlRelation(
         ForceAddToDiagram = true,
-        LeftSign  =  ForceArrowEnd.DiamondBlack, RightSign = ForceArrowEnd.ArrowWhite,
+        LeftSign = ForceArrowEnd.DiamondBlack, RightSign = ForceArrowEnd.ArrowWhite,
         LeftSignDescription = "bla 1",
         RightSignDescription = "bla 2",
         ArrowDirection = UmlArrowDirections.Up,
         Color = "yellow",
-        Tag="MyId"
+        Tag = "MyId"
     )]
     public CompanyInfo Customer2 { get; set; }
 

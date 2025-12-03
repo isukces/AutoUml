@@ -15,7 +15,7 @@ public class PlantUmlRunnerTests
             GraphVizDot = @"c:\Program Files (x86)\Graphviz2.38\bin\dot.exe",
             PlantUmlJar = @"c:\Program Files (x86)\plantuml-jar-mit-1.2018.8\plantuml.jar"
         };
-        var batch         = r.GetBatch(new FileInfo(@"c:\temp\diagram.puml"));
+        var batch = r.GetBatch(new FileInfo(@"c:\temp\diagram.puml"));
         var expectedBatch = @"c:
 cd c:\temp
 set GRAPHVIZ_DOT=""c:\Program Files (x86)\Graphviz2.38\bin\dot.exe""
@@ -23,8 +23,8 @@ java.exe -jar ""c:\Program Files (x86)\plantuml-jar-mit-1.2018.8\plantuml.jar"" 
 ";
         Assert.Equal(expectedBatch, batch);
     }
-        
-        
+
+
     [Fact]
     public void T02_Should_create_batch_for_svg()
     {

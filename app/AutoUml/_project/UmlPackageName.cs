@@ -72,20 +72,11 @@ public struct UmlPackageName : IEquatable<UmlPackageName>, IComparable<UmlPackag
         return Name;
     }
 
-    public static UmlPackageName Empty
-    {
-        get { return new UmlPackageName(null); }
-    }
+    public static UmlPackageName Empty => new(null);
 
-    public string Name
-    {
-        get { return _name ?? string.Empty; }
-    }
+    public string Name => _name ?? string.Empty;
 
-    public bool IsEmpty
-    {
-        get { return string.IsNullOrEmpty(_name); }
-    }
+    public bool IsEmpty => string.IsNullOrEmpty(_name);
 
     private readonly string _name;
 }

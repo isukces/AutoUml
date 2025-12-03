@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Tests;
 
-static class TestUtils
+internal static class TestUtils
 {
     public static string ToCompareJson(this object obj)
     {

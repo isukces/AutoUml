@@ -49,12 +49,12 @@ public abstract class BaseRelationAttribute : Attribute, INoteProvider
 
     public string LeftSignDescription  { get; set; }
     public string RightSignDescription { get; set; }
-        
+
     public string Color { get; set; }
-        
-        
+
+
     /// <summary>
-    /// Some tag added to relation object to identify it
+    ///     Some tag added to relation object to identify it
     /// </summary>
     public string Tag { get; set; }
 }

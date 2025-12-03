@@ -7,6 +7,45 @@ namespace AutoUml;
 
 public class UmlDiagram : IMetadataContainer
 {
+    private void AddToFile(Type type)
+    {
+        var cf = _state.File.Classes;
+        if (!_entities.TryGetValue(type, out var info))
+            info = new UmlEntity(type, GetTypeName);
+        cf.Open(info.GetOpenClassCode());
+
+        {
+            var l = info.StartingLines?.SplitLines(true);
+            if (l != null)
+                foreach (var i in l)
+                    cf.Writeln(i);
+        }
+        foreach (var i in info.Members.OrderBy(q => q.Group))
+        {
+            if (i.HideOnList) continue;
+            i.WriteTo(cf, this);
+        }
+
+        cf.Close();
+        var notes = info.Notes.OrderBy(a => a.Key);
+        foreach (var i in notes)
+        {
+            var text  = i.Value.Text;
+            var lines = text.SplitLines(true);
+            if (lines is null)
+                continue;
+
+            var bg = i.Value.Background?.GetCode();
+            if (!string.IsNullOrEmpty(bg))
+                bg = " " + bg;
+            var openNote = $"note {i.Key.ToString().ToLower()} of {info.Name.AddQuotesIfNecessary()}{bg}";
+            cf.Writeln(openNote);
+            foreach (var j in lines)
+                cf.Writeln(j);
+            cf.Writeln("end note");
+        }
+    }
+
     public bool ContainsType(Type? type)
     {
         return type != null && _entities.ContainsKey(type);
@@ -21,7 +60,7 @@ public class UmlDiagram : IMetadataContainer
             _state.File.Top.Writeln("scale " + Scale);
 
         var hm = HideMembers.GetPumlCommands("hide");
-        foreach(var i in hm)
+        foreach (var i in hm)
             _state.File.Top.Writeln(i);
 
         if (!string.IsNullOrEmpty(Title))
@@ -67,99 +106,15 @@ public class UmlDiagram : IMetadataContainer
         return _entities.Values;
     }
 
+    private UmlPackageName GetPackageName(UmlEntity entity)
+    {
+        return IgnorePackages ? UmlPackageName.Empty : new UmlPackageName(entity.PackageName);
+    }
+
 
     public string GetTypeName(Type type)
     {
         return type.GetDiagramName(t => TryGetEntityByType(t)?.Name);
-    }
-
-    public bool SaveToFile(string filename)
-    {
-        var file = CreateFile();
-        return file.SaveIfDifferent(filename);
-    }
-
-    public UmlEntity? TryGetEntityByType(Type? type)
-    {
-        if (type == null)
-            return null;
-        return _entities.TryGetValue(type, out var ent) ? ent : null;
-    }
-
-
-    public void UpdateTypeInfo(Type type, Action<UmlEntity, bool>? modification)
-    {
-        var created = false;
-        if (!_entities.TryGetValue(type, out var info))
-        {
-            created         = true;
-            _entities[type] = info = new UmlEntity(type, GetTypeName);
-        }
-
-        if (modification != null)
-            modification(info, created);
-        if (!created) return;
-        var handler = OnAddTypeToDiagram;
-        if (handler == null) return;
-        var args = new AddTypeToDiagramEventArgs
-        {
-            Info    = info,
-            Diagram = this
-        };
-        handler.Invoke(this, args);
-    }
-
-    private void AddToFile(Type type)
-    {
-        var cf = _state.File.Classes;
-        if (!_entities.TryGetValue(type, out var info))
-            info = new UmlEntity(type, GetTypeName);
-        cf.Open(info.GetOpenClassCode());
-
-        {
-            var l = info.StartingLines?.SplitLines(true);
-            if (l != null)
-                foreach (var i in l)
-                    cf.Writeln(i);
-        }
-        foreach (var i in info.Members.OrderBy(q => q.Group))
-        {
-            if (i.HideOnList) continue;
-            i.WriteTo(cf, this);
-        }
-
-        cf.Close();
-        var notes = info.Notes.OrderBy(a => a.Key);
-        foreach (var i in notes)
-        {
-            var text  = i.Value.Text;
-            var lines = text.SplitLines(true);
-            if (lines is null)
-                continue;
-
-            var bg = i.Value.Background?.GetCode();
-            if (!string.IsNullOrEmpty(bg))
-                bg = " " + bg;
-            var openNote = $"note {i.Key.ToString().ToLower()} of {info.Name.AddQuotesIfNecessary()}{bg}";
-            cf.Writeln(openNote);
-            foreach (var j in lines)
-                cf.Writeln(j);
-            cf.Writeln("end note");
-        }
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void SetOrClearHideMembers(MembersToHide flag, bool set)
-    {
-        if (set)
-            HideMembers |= flag;
-        else
-            HideMembers &= ~flag;
-    }
-
-    private UmlPackageName GetPackageName(UmlEntity entity)
-    {
-        return IgnorePackages ? UmlPackageName.Empty : new UmlPackageName(entity.PackageName);
     }
 
 
@@ -224,6 +179,51 @@ public class UmlDiagram : IMetadataContainer
         }
     }
 
+    public bool SaveToFile(string filename)
+    {
+        var file = CreateFile();
+        return file.SaveIfDifferent(filename);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void SetOrClearHideMembers(MembersToHide flag, bool set)
+    {
+        if (set)
+            HideMembers |= flag;
+        else
+            HideMembers &= ~flag;
+    }
+
+    public UmlEntity? TryGetEntityByType(Type? type)
+    {
+        if (type == null)
+            return null;
+        return _entities.TryGetValue(type, out var ent) ? ent : null;
+    }
+
+
+    public void UpdateTypeInfo(Type type, Action<UmlEntity, bool>? modification)
+    {
+        var created = false;
+        if (!_entities.TryGetValue(type, out var info))
+        {
+            created         = true;
+            _entities[type] = info = new UmlEntity(type, GetTypeName);
+        }
+
+        if (modification != null)
+            modification(info, created);
+        if (!created) return;
+        var handler = OnAddTypeToDiagram;
+        if (handler == null) return;
+        var args = new AddTypeToDiagramEventArgs
+        {
+            Info    = info,
+            Diagram = this
+        };
+        handler.Invoke(this, args);
+    }
+
     public UmlDiagramLegend Legend { get; } = new UmlDiagramLegend();
 
     public UmlDiagramScale               Scale          { get; set; }
@@ -231,7 +231,6 @@ public class UmlDiagram : IMetadataContainer
     public string                        Name           { get; set; }
     public UmlSkinParams                 Skin           { get; set; } = new UmlSkinParams();
     public List<UmlRelation>             Relations      { get; set; } = new List<UmlRelation>();
-    public Dictionary<string, object>    Metadata       { get; }      = new Dictionary<string, object>();
     public Dictionary<string, UmlSprite> Sprites        { get; }      = new Dictionary<string, UmlSprite>();
     public bool                          IgnorePackages { get; set; }
 
@@ -255,11 +254,13 @@ public class UmlDiagram : IMetadataContainer
     public Dictionary<UmlPackageName, UmlPackage> Packages { get; } =
         new Dictionary<UmlPackageName, UmlPackage>();
 
+    public Dictionary<string, object> Metadata { get; } = new Dictionary<string, object>();
+
+    public event EventHandler<AddTypeToDiagramEventArgs> OnAddTypeToDiagram;
+
     private readonly Dictionary<Type, UmlEntity> _entities = new Dictionary<Type, UmlEntity>();
 
     private CreationState _state;
-
-    public event EventHandler<AddTypeToDiagramEventArgs> OnAddTypeToDiagram;
 
 
     private sealed class CreationState

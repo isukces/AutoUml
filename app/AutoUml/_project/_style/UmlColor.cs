@@ -23,7 +23,7 @@ public struct UmlColor : IPlantUmlCodeProvider
 
     public IUmlFill? ToFill()
     {
-        return IsEmpty ? (IUmlFill?)null : new SolidColorFill(this);
+        return IsEmpty ? null : new SolidColorFill(this);
     }
 
     public override string ToString()
@@ -193,27 +193,15 @@ public struct UmlColor : IPlantUmlCodeProvider
 
     public string WellKnownName { get; set; }
 
-    public string PlantUmlCode
-    {
-        get
-        {
-            return string.IsNullOrEmpty(WellKnownName)
-                ? PlantUmlRgbCode
-                : "#" + WellKnownName.ToLower();
-        }
-    }
-
-    public string PlantUmlRgbCode
-    {
-        get { return IsEmpty ? "" : "#" + ColorCode.ToLower(); }
-    }
+    public string PlantUmlRgbCode => IsEmpty ? "" : "#" + ColorCode.ToLower();
 
     public string ColorCode { get; }
 
-    public bool IsEmpty
-    {
-        get { return !_isSet; }
-    }
+    public bool IsEmpty => !_isSet;
+
+    public string PlantUmlCode => string.IsNullOrEmpty(WellKnownName)
+        ? PlantUmlRgbCode
+        : "#" + WellKnownName.ToLower();
 
     private readonly bool _isSet;
 }

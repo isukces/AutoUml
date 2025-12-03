@@ -28,7 +28,7 @@ public sealed class SplittableString : IEquatable<SplittableString>
         if (string.IsNullOrEmpty(text))
             return splittable;
         if (splittable is null)
-            return new SplittableString(new[] {text});
+            return new SplittableString(new[] { text });
         var q = new List<string>(splittable.Parts.Count + 1);
         q.AddRange(splittable.Parts);
         q.Add(text);
@@ -40,8 +40,8 @@ public sealed class SplittableString : IEquatable<SplittableString>
         if (string.IsNullOrEmpty(text))
             return splittable;
         if (splittable is null)
-            return new SplittableString(new[] {text});
-        var q = new List<string>(splittable.Parts.Count + 1) {text};
+            return new SplittableString(new[] { text });
+        var q = new List<string>(splittable.Parts.Count + 1) { text };
         q.AddRange(splittable.Parts);
         return new SplittableString(q.ToArray());
     }

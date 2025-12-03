@@ -83,21 +83,6 @@ public class PlantUmlRunner
         return x;
     }
 
-    public string GetBatch(FileInfo puml, AutoUmlOutputFormat format = AutoUmlOutputFormat.Png)
-    {
-        var lines = new StringBuilder();
-        if (puml.Directory != null)
-        {
-            lines.AppendLine(puml.Directory.FullName.Substring(0, 2));
-            lines.AppendLine(string.Format("cd {0}", Quote(puml.Directory.FullName)));
-        }
-        var arguments = GetArguments(puml, format, true);
-        if (!string.IsNullOrEmpty(GraphVizDot))
-            lines.AppendLine(string.Format("set GRAPHVIZ_DOT={0}", Quote(GraphVizDot)));
-        lines.AppendLine(arguments);
-        return lines.ToString();
-    }
-
     private string GetArguments(FileInfo puml, AutoUmlOutputFormat format, bool addJavaExe)
     {
         var items = new List<string>();
@@ -113,6 +98,22 @@ public class PlantUmlRunner
         return string.Join(" ", items.Select(Quote));
     }
 
+    public string GetBatch(FileInfo puml, AutoUmlOutputFormat format = AutoUmlOutputFormat.Png)
+    {
+        var lines = new StringBuilder();
+        if (puml.Directory != null)
+        {
+            lines.AppendLine(puml.Directory.FullName.Substring(0, 2));
+            lines.AppendLine(string.Format("cd {0}", Quote(puml.Directory.FullName)));
+        }
+
+        var arguments = GetArguments(puml, format, true);
+        if (!string.IsNullOrEmpty(GraphVizDot))
+            lines.AppendLine(string.Format("set GRAPHVIZ_DOT={0}", Quote(GraphVizDot)));
+        lines.AppendLine(arguments);
+        return lines.ToString();
+    }
+
     public Process Run(FileInfo puml, AutoUmlOutputFormat format = AutoUmlOutputFormat.Png)
     {
         var startInfo = new ProcessStartInfo();
@@ -120,7 +121,7 @@ public class PlantUmlRunner
             startInfo.EnvironmentVariables["GRAPHVIZ_DOT"] = GraphVizDot;
         startInfo.UseShellExecute = false;
         startInfo.FileName        = JavaExe;
-            
+
         startInfo.Arguments = GetArguments(puml, format, false);
         if (puml.Directory != null)
             startInfo.WorkingDirectory = puml.Directory.FullName;

@@ -4,5 +4,5 @@ namespace AutoUml;
 
 public interface IAssemblyVisitor
 {
-    void Visit(Assembly assembly, UmlDiagram diagram);        
+    void Visit(Assembly assembly, UmlDiagram diagram);
 }

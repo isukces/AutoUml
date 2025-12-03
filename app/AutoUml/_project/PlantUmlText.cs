@@ -12,7 +12,6 @@ public sealed class PlantUmlText : IEquatable<PlantUmlText>, IComparable<PlantUm
     public PlantUmlText(OpenIconicKind kind)
     {
         Text = "<&" + kind.ToCode() + ">";
-
     }
 
     public static bool operator ==(PlantUmlText left, PlantUmlText? right)
@@ -90,8 +89,5 @@ public sealed class PlantUmlText : IEquatable<PlantUmlText>, IComparable<PlantUm
 
     public string Text { get; }
 
-    public bool IsEmpty
-    {
-        get { return string.IsNullOrEmpty(Text); }
-    }
+    public bool IsEmpty => string.IsNullOrEmpty(Text);
 }

@@ -8,13 +8,14 @@ namespace AutoUml;
 [AttributeUsage(AttributesConsts.Entities, AllowMultiple = true)]
 public class UmlAddRelationAttribute : BaseRelationAttribute
 {
-    public UmlAddRelationAttribute(Type relatedType, 
+    public UmlAddRelationAttribute(Type relatedType,
         string name,
-        UmlRelationKind kind = UmlRelationKind.Aggregation) : base(kind)
+        UmlRelationKind kind = UmlRelationKind.Aggregation)
+        : base(kind)
     {
         RelatedType = relatedType;
         Name        = name;
     }
-        
-    public bool   Multiple    { get; set; }
+
+    public bool Multiple { get; set; }
 }

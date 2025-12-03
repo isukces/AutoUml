@@ -22,5 +22,6 @@ public class StructSpotVisitor : INewTypeInDiagramVisitor
     }
 
     public UmlColor CircleBackgroundColor { get; set; }
+
     public static UmlColor DefaultColor = UmlColor.FromString("FF7700");
 }

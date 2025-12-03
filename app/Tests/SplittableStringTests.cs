@@ -51,5 +51,4 @@ public class SplittableStringTests
         Assert.False(ReferenceEquals(q, sum));
         Assert.Equal("Bla blaOther", sum.ToString());
     }
-
 }

@@ -5,14 +5,29 @@ namespace AutoUml;
 
 public class UmlSprite
 {
-    public static string MakeCode(string spriteName)
+    private static string GrayLevelToString(SpriteGrayLevels level)
     {
-        return "<$" + spriteName + ">";
+        switch (level)
+        {
+            case SpriteGrayLevels.Level4:
+                return "4";
+            case SpriteGrayLevels.Level8:
+                return "8";
+            case SpriteGrayLevels.Level16:
+                return "16";
+            default:
+                throw new ArgumentOutOfRangeException(nameof(level), level, null);
+        }
     }
 
     private static bool IsValidChar(char c)
     {
         return char.IsLetterOrDigit(c) || c == '_' || c == '-';
+    }
+
+    public static string MakeCode(string spriteName)
+    {
+        return "<$" + spriteName + ">";
     }
 
     private static string RemoveWhiteSpaces(string data)
@@ -52,21 +67,6 @@ public class UmlSprite
         }
 
         w.Writeln("}");
-    }
-
-    private static string GrayLevelToString(SpriteGrayLevels level)
-    {
-        switch (level)
-        {
-            case SpriteGrayLevels.Level4:
-                return "4";
-            case SpriteGrayLevels.Level8:
-                return "8";
-            case SpriteGrayLevels.Level16:
-                return "16";
-            default:
-                throw new ArgumentOutOfRangeException(nameof(level), level, null);
-        }
     }
 
     public int              Width     { get; set; }

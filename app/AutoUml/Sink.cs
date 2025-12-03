@@ -24,6 +24,7 @@ public sealed class Sink<T>
     }
 
     public int Count { get; }
+
     private readonly T[] _items;
     private int _index;
 }

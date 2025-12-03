@@ -26,6 +26,24 @@ public class ReflectionProjectBuilder
         return result;
     }
 
+    private void ProjectOnOnAddDiagram(object sender, AddDiagramEventArgs e)
+    {
+        foreach (var a in _scannedAssemblies)
+        {
+            foreach (var v in AssemblyVisitors)
+                v.Visit(a, e.Diagram);
+        }
+
+        foreach (var i in DiagramVisitors)
+            i.VisitDiagramCreated(e.Diagram);
+    }
+
+    private void ProjectOnOnAddTypeToDiagram(object sender, AddTypeToDiagramEventArgs e)
+    {
+        foreach (var v in NewTypeVisitors)
+            v.Visit(e.Diagram, e.Info);
+    }
+
     public ReflectionProjectBuilder UpdateVisitor<T>(Action<T>? updateAction)
         where T : IUmlVisitor
     {
@@ -44,6 +62,25 @@ public class ReflectionProjectBuilder
     {
         VisitTypeInternal(type, true);
         return this;
+    }
+
+    private void VisitTypeInternal(Type type, bool addEvents)
+    {
+        if (!_scannedTypes.Add(type))
+            return;
+        if (addEvents)
+        {
+            _project.OnAddTypeToDiagram += ProjectOnOnAddTypeToDiagram;
+            _project.OnAddDiagram       += ProjectOnOnAddDiagram;
+        }
+
+        foreach (var visitor in ReflectionTypeVisitors)
+            visitor.Visit(type, _project);
+        if (addEvents)
+        {
+            _project.OnAddTypeToDiagram -= ProjectOnOnAddTypeToDiagram;
+            _project.OnAddDiagram       -= ProjectOnOnAddDiagram;
+        }
     }
 
     public ReflectionProjectBuilder WithAssembly(Assembly assembly)
@@ -99,7 +136,7 @@ public class ReflectionProjectBuilder
         DiagramVisitors.Add(new UmlAddMetaAttributeVisitor());
 
         AssemblyVisitors.Add(new UmlPackageStyleAttributeVisitor());
- 
+
         return this;
     }
 
@@ -121,44 +158,6 @@ public class ReflectionProjectBuilder
             DiagramVisitors.Add(v);
         return this;
     }
-
-    private void ProjectOnOnAddDiagram(object sender, AddDiagramEventArgs e)
-    {
-        foreach (var a in _scannedAssemblies)
-        {
-            foreach (var v in AssemblyVisitors)
-                v.Visit(a, e.Diagram);
-        }
-
-        foreach (var i in DiagramVisitors)
-            i.VisitDiagramCreated(e.Diagram);
-    }
-
-    private void ProjectOnOnAddTypeToDiagram(object sender, AddTypeToDiagramEventArgs e)
-    {
-        foreach (var v in NewTypeVisitors)
-            v.Visit(e.Diagram, e.Info);
-    }
-
-    private void VisitTypeInternal(Type type, bool addEvents)
-    {
-        if (!_scannedTypes.Add(type))
-            return;
-        if (addEvents)
-        {
-            _project.OnAddTypeToDiagram += ProjectOnOnAddTypeToDiagram;
-            _project.OnAddDiagram       += ProjectOnOnAddDiagram;
-        }
-
-        foreach (var visitor in ReflectionTypeVisitors)
-            visitor.Visit(type, _project);
-        if (addEvents)
-        {
-            _project.OnAddTypeToDiagram -= ProjectOnOnAddTypeToDiagram;
-            _project.OnAddDiagram       -= ProjectOnOnAddDiagram;
-        }
-    }
-
 
     public List<IReflectionTypeVisitor>   ReflectionTypeVisitors { get; } = new List<IReflectionTypeVisitor>();
     public List<INewTypeInDiagramVisitor> NewTypeVisitors        { get; } = new List<INewTypeInDiagramVisitor>();

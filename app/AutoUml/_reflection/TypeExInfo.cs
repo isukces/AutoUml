@@ -70,7 +70,6 @@ public class TypeExInfo
         }
     }
 
-
     public Type OriginalType   { get; }
     public Type ElementType    { get; }
     public Type GenericTypeDef { get; }

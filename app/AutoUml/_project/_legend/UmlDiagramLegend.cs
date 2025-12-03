@@ -6,17 +6,6 @@ namespace AutoUml;
 
 public sealed class UmlDiagramLegend
 {
-    public void WriteTo(CodeWriter cf)
-    {
-        if (Items.Count == 0)
-            return;
-        var opening = GetOpening();
-        cf.Writeln(opening);
-        foreach (var legendItem in Items.OrderBy(a => a.SortOrder))
-            legendItem.WriteTo(cf);
-        cf.Writeln("endlegend");
-    }
-
     private string GetOpening()
     {
         var q = new StringBuilder();
@@ -34,6 +23,17 @@ public sealed class UmlDiagramLegend
         }
 
         return q.ToString();
+    }
+
+    public void WriteTo(CodeWriter cf)
+    {
+        if (Items.Count == 0)
+            return;
+        var opening = GetOpening();
+        cf.Writeln(opening);
+        foreach (var legendItem in Items.OrderBy(a => a.SortOrder))
+            legendItem.WriteTo(cf);
+        cf.Writeln("endlegend");
     }
 
     public List<UmlDiagramLegendItem> Items { get; } = new List<UmlDiagramLegendItem>();

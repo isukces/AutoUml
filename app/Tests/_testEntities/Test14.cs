@@ -6,8 +6,9 @@ namespace Tests;
 [UmlDiagram("Test14")]
 public interface ITopInterface14
 {
-    string Name         { get; }
-    [UmlRelation(ForceAddToDiagram = true,ArrowDirection = UmlArrowDirections.Up)]
+    string Name { get; }
+
+    [UmlRelation(ForceAddToDiagram = true, ArrowDirection = UmlArrowDirections.Up)]
     Info14 CreationInfo { get; }
 }
 
@@ -20,26 +21,23 @@ public interface INestedInterface14 : ITopInterface14
 [UmlDiagram("Test14")]
 public class Class14 : INestedInterface14
 {
-    public int      Count        { get; }
-    public string   Name         { get; }
-    public Info14   CreationInfo { get; }
-    public ExInfo14 ExInfo       { get; set; }
-}
+    public ExInfo14 ExInfo { get; set; }
 
+    public int    Count        { get; }
+    public string Name         { get; }
+    public Info14 CreationInfo { get; }
+}
 
 [UmlDiagram("Test14")]
 public class DerivedClass14 : Class14
 {
 }
 
-
-    
 public class Info14
 {
     public DateTime Created { get; set; }
 }
- 
-    
+
 public class ExInfo14
 {
     public int SomeNumber { get; set; }

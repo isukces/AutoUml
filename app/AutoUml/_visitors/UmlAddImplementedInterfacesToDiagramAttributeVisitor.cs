@@ -3,7 +3,7 @@ namespace AutoUml;
 /// <summary>
 ///     Adds to diagram interfaces implemented by class
 /// </summary>
-public sealed   class  UmlAddImplementedInterfacesToDiagramAttributeVisitor : 
+public sealed class UmlAddImplementedInterfacesToDiagramAttributeVisitor :
     NewTypeSingleAttributeVisitor<UmlAddImplementedInterfacesToDiagramAttribute>
 {
     protected override void VisitInternal(UmlDiagram diagram, UmlEntity info,

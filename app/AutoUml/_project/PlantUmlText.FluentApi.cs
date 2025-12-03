@@ -34,6 +34,11 @@ public static class PlantUmlTextFluent
         return src.WithWrap("\"\"");
     }
 
+    public static PlantUmlText? WithStroked(this PlantUmlText src)
+    {
+        return src.WithWrap("--");
+    }
+
     public static PlantUmlText WithTextInNewLine(this PlantUmlText src, string? x)
     {
         if (string.IsNullOrEmpty(x))
@@ -41,11 +46,6 @@ public static class PlantUmlTextFluent
         if (src is null || src.IsEmpty)
             return x;
         return $"{src.Text}\n{x}";
-    }
-
-    public static PlantUmlText? WithStroked(this PlantUmlText src)
-    {
-        return src.WithWrap("--");
     }
 
     public static PlantUmlText? WithUnderline(this PlantUmlText? src, string? color = null)

@@ -43,13 +43,12 @@ InstanceAutoPropertyCC";
         public int InstanceAutoPropertyBA { protected get; set; }
         public int InstanceAutoPropertyCA { private get;   set; }
 
-            
+
         protected int InstanceAutoPropertyBB { get; set; }
         protected int InstanceAutoPropertyB  { get; }
         protected int InstanceAutoPropertyBC { get;         private set; }
         protected int InstanceAutoPropertyCB { private get; set; }
 
-             
 
         private int InstanceAutoPropertyCC { get; set; }
     }

@@ -25,11 +25,11 @@ public class PlantUmlFile
             cf.Add(Classes);
             foreach (var t in Relations)
             {
-                if (!string.IsNullOrEmpty(t.Tag)) 
+                if (!string.IsNullOrEmpty(t.Tag))
                     cf.Writeln("' " + t.Tag);
                 cf.Writeln(t.ToString());
                 if (string.IsNullOrEmpty(t.Note)) continue;
-                cf.Writeln("note on link " + t.NoteBackground.GetCodeWithSpace(false));
+                cf.Writeln("note on link " + t.NoteBackground.GetCodeWithSpace());
                 foreach (var line in t.Note.Split('\n', '\r'))
                     if (!string.IsNullOrEmpty(line))
                         cf.Writeln(line);

@@ -27,6 +27,14 @@ public class RemoveDeepPropertiesVisitor : INewTypeInDiagramVisitor
         }
     }
 
+    private bool ShouldBeHidden(MemberInfo? memberInfo)
+    {
+        if (memberInfo == null)
+            return false;
+        var type = memberInfo.DeclaringType.MeOrGeneric();
+        return _types.Contains(type);
+    }
+
     public void Visit(UmlDiagram diagram, UmlEntity info)
     {
         for (var index = 0; index < info.Members.Count; index++)
@@ -37,14 +45,6 @@ public class RemoveDeepPropertiesVisitor : INewTypeInDiagramVisitor
             if (hide)
                 umlMember.HideOnList = true;
         }
-    }
-
-    private bool ShouldBeHidden(MemberInfo? memberInfo)
-    {
-        if (memberInfo == null)
-            return false;
-        var type = memberInfo.DeclaringType.MeOrGeneric();
-        return _types.Contains(type);
     }
 
     private readonly HashSet<Type> _types = new HashSet<Type>();

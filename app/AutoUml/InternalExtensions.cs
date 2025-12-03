@@ -18,7 +18,7 @@ internal static class InternalExtensions
                 .ToArray();
         return lines.Length == 0 ? null : lines;
     }
-        
+
     public static IEnumerable<string>? SplitLines(this PlantUmlText? ptext, bool cutEmpty)
     {
         return ptext?.Text.SplitLines(cutEmpty);

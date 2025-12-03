@@ -82,10 +82,7 @@ public class UmlEntity : IMetadataContainer
     public string          PackageName   { get; set; }
     public PlantUmlText    StartingLines { get; set; }
 
-    public IReadOnlyDictionary<NoteLocation, UmlNote> Notes
-    {
-        get { return _notes; }
-    }
+    public IReadOnlyDictionary<NoteLocation, UmlNote> Notes => _notes;
 
     public Dictionary<string, object> Metadata { get; } = new Dictionary<string, object>();
 

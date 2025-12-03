@@ -36,8 +36,6 @@ public abstract class SymbolBaseVisitor : INewTypeInDiagramVisitor
         existing.AddSymbol(symbolInfo.SymbolText);
     }
 
-    public abstract void Visit(UmlDiagram diagram, UmlEntity info);
-
     protected PlantUmlText AddStyle(PlantUmlText text)
     {
         if (SymbolColor != null)
@@ -56,6 +54,8 @@ public abstract class SymbolBaseVisitor : INewTypeInDiagramVisitor
         h.Invoke(this, q);
         return q.Text;
     }
+
+    public abstract void Visit(UmlDiagram diagram, UmlEntity info);
 
     public PlantUmlText Symbol      { get; set; }
     public UmlColor?    SymbolColor { get; set; }

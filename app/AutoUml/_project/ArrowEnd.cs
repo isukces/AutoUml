@@ -13,7 +13,7 @@ public enum ArrowEnd
 public enum ForceArrowEnd
 {
     NotSet = -1,
-        
+
     Empty = 0,
     DiamondWhite = 1,
     DiamondBlack = 2,

@@ -54,43 +54,6 @@ public enum ReflectionFlags
 
 public class ClassMemberScannerVisitor : INewTypeInDiagramVisitor
 {
-    public static IReadOnlyList<PropertyUmlMember> ScanProperties(Type type, ReflectionFlags scanFlags)
-    {
-        IEnumerable<PropertyUmlMember> ScanProperties(ReflectionFlags additionalFlag, UmlMemberKind kind)
-        {
-            var flags = scanFlags & ReflectionFlags.AllPropertyVisibility;
-            if (flags == 0)
-                yield break;
-            if (!scanFlags.HasFlag(additionalFlag)) yield break;
-            var r = BindingFlags.Public | BindingFlags.NonPublic;
-            if (additionalFlag == ReflectionFlags.InstanceProperty)
-                r |= BindingFlags.Instance;
-            else if (additionalFlag == ReflectionFlags.StaticProperty)
-                r |= BindingFlags.Static;
-
-            foreach (var pi in type.GetProperties(r))
-            {
-                //var a_canRead = pi.CanRead;
-                //var a_canWrite = pi.CanWrite;
-                var getterFlag = GetGetterFlag(pi.GetMethod);
-                var setterFlag = GetSetterFlag(pi.SetMethod);
-                if (H(flags, getterFlag) || H(flags, setterFlag))
-                    yield return new PropertyUmlMember
-                    {
-                        Group      = 10,
-                        Name       = pi.Name,
-                        Property   = pi,
-                        Kind       = kind,
-                        Visibility = GetVisibilityFromFlags(getterFlag | setterFlag),
-                    };
-            }
-        }
-
-        var p1 = ScanProperties(ReflectionFlags.InstanceProperty, UmlMemberKind.Normal);
-        var p2 = ScanProperties(ReflectionFlags.StaticProperty, UmlMemberKind.Static);
-        return p1.Concat(p2).ToArray();
-    }
-
     private static bool CheckSkipDefault(MethodInfo mi)
     {
         if (mi.IsSpecialName)
@@ -144,6 +107,43 @@ public class ClassMemberScannerVisitor : INewTypeInDiagramVisitor
         return (a & b) > 0;
     }
 
+    public static IReadOnlyList<PropertyUmlMember> ScanProperties(Type type, ReflectionFlags scanFlags)
+    {
+        IEnumerable<PropertyUmlMember> ScanProperties(ReflectionFlags additionalFlag, UmlMemberKind kind)
+        {
+            var flags = scanFlags & ReflectionFlags.AllPropertyVisibility;
+            if (flags == 0)
+                yield break;
+            if (!scanFlags.HasFlag(additionalFlag)) yield break;
+            var r = BindingFlags.Public | BindingFlags.NonPublic;
+            if (additionalFlag == ReflectionFlags.InstanceProperty)
+                r |= BindingFlags.Instance;
+            else if (additionalFlag == ReflectionFlags.StaticProperty)
+                r |= BindingFlags.Static;
+
+            foreach (var pi in type.GetProperties(r))
+            {
+                //var a_canRead = pi.CanRead;
+                //var a_canWrite = pi.CanWrite;
+                var getterFlag = GetGetterFlag(pi.GetMethod);
+                var setterFlag = GetSetterFlag(pi.SetMethod);
+                if (H(flags, getterFlag) || H(flags, setterFlag))
+                    yield return new PropertyUmlMember
+                    {
+                        Group      = 10,
+                        Name       = pi.Name,
+                        Property   = pi,
+                        Kind       = kind,
+                        Visibility = GetVisibilityFromFlags(getterFlag | setterFlag),
+                    };
+            }
+        }
+
+        var p1 = ScanProperties(ReflectionFlags.InstanceProperty, UmlMemberKind.Normal);
+        var p2 = ScanProperties(ReflectionFlags.StaticProperty, UmlMemberKind.Static);
+        return p1.Concat(p2).ToArray();
+    }
+
     public void Visit(UmlDiagram diagram, UmlEntity info)
     {
         var type = info.Type;
@@ -162,7 +162,7 @@ public class ClassMemberScannerVisitor : INewTypeInDiagramVisitor
             var h = SortAndPrepareMethods;
             if (h != null)
             {
-                var args = new SortAndPrepareMethodsEventArgs {Methods = methodInfos};
+                var args = new SortAndPrepareMethodsEventArgs { Methods = methodInfos };
                 h.Invoke(this, args);
                 methodInfos = args.Methods;
             }
