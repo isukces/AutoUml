@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using JetBrains.Annotations;
 
 namespace AutoUml
 {
@@ -36,7 +35,6 @@ namespace AutoUml
             return png;
         }
 
-        [NotNull]
         public static string GetOutputFormatOption(AutoUmlOutputFormat format)
         {
             switch (format)
@@ -76,7 +74,7 @@ namespace AutoUml
         }
 
 
-        private static string Quote(string x)
+        private static string? Quote(string? x)
         {
             if (string.IsNullOrEmpty(x))
                 return x;

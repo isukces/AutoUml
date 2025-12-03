@@ -12,7 +12,7 @@ namespace AutoUml.Symbols
             SortOrder = 50;
         }
 
-        public void AddSymbol([NotNull] SymbolInfo si)
+        public void AddSymbol(SymbolInfo si)
         {
             if (si == null) throw new ArgumentNullException(nameof(si));
             Symbols[si.SymbolName] = si;

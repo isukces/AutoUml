@@ -7,6 +7,7 @@
     <ProjectGuid>{A75C286E-AB80-4094-B17E-B6923353286A}</ProjectGuid>
     <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     <LangVersion>13</LangVersion>
+    <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>

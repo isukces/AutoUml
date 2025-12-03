@@ -4,7 +4,7 @@ namespace AutoUml
 {
     public class PropertyUmlMember : UmlMember
     {
-        public override MemberInfo GetMemberInfo()
+        public override MemberInfo? GetMemberInfo()
         {
             return Property;
         }

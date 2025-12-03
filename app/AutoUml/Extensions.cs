@@ -10,14 +10,14 @@ namespace AutoUml
 {
     public static class Extensions
     {
-        public static string AddQuotes(this string x)
+        public static string? AddQuotes(this string? x)
         {
             if (x == null)
                 return null;
             return "\"" + x + "\"";
         }
 
-        public static string AddQuotesIfNecessary(this string name)
+        public static string? AddQuotesIfNecessary(this string name)
         {
             foreach (var c in name)
                 if (!char.IsLetterOrDigit(c))
@@ -57,7 +57,7 @@ namespace AutoUml
             return sb.ToString();
         }
 
-        public static void DeleteFromListIf<T>(this List<T> list, Func<T, bool> predicate)
+        public static void DeleteFromListIf<T>(this List<T>? list, Func<T, bool> predicate)
         {
             if (list == null)
                 return;
@@ -125,7 +125,7 @@ namespace AutoUml
             return string.IsNullOrEmpty(name) ? type.Name : name;
         }
 
-        public static Type[] GetGenericTypeArgumentsIfPossible(this Type type)
+        public static Type[] GetGenericTypeArgumentsIfPossible(this Type? type)
         {
             if (type == null)
                 return new Type[0];
@@ -144,7 +144,7 @@ namespace AutoUml
             return type.IsValueType && !type.IsEnum && !type.IsPrimitive;
         }
 
-        public static Type MeOrGeneric(this Type type)
+        public static Type? MeOrGeneric(this Type? type)
         {
             if (type == null)
                 return null;
@@ -153,7 +153,7 @@ namespace AutoUml
             return type;
         }
 
-        public static SplittableString MethodToUml(this MethodInfo methodInfo, Func<Type, string> retTypeName)
+        public static SplittableString? MethodToUml(this MethodInfo methodInfo, Func<Type, string> retTypeName)
         {
             var parameters = methodInfo.GetParameters();
             var returnType = retTypeName(methodInfo.ReturnType)+" ";
@@ -202,14 +202,14 @@ namespace AutoUml
         }
 
 
-        public static DirectoryInfo SearchFoldersUntilFileExists(this Assembly a, string fileName)
+        public static DirectoryInfo? SearchFoldersUntilFileExists(this Assembly a, string fileName)
         {
             var di = new FileInfo(a.Location).Directory;
             di = di.SearchFoldersUntilFileExists(fileName);
             return di;
         }
 
-        public static DirectoryInfo SearchFoldersUntilFileExists(this DirectoryInfo di, string fileName)
+        public static DirectoryInfo? SearchFoldersUntilFileExists(this DirectoryInfo di, string fileName)
         {
             while (di != null)
             {

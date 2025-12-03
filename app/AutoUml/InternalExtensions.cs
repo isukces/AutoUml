@@ -5,7 +5,7 @@ namespace AutoUml
 {
     internal static class InternalExtensions
     {
-        public static IEnumerable<string> SplitLines(this string text, bool cutEmpty)
+        public static IEnumerable<string>? SplitLines(this string? text, bool cutEmpty)
         {
             if (string.IsNullOrEmpty(text))
                 return null;
@@ -19,7 +19,7 @@ namespace AutoUml
             return lines.Length == 0 ? null : lines;
         }
         
-        public static IEnumerable<string> SplitLines(this PlantUmlText ptext, bool cutEmpty)
+        public static IEnumerable<string>? SplitLines(this PlantUmlText? ptext, bool cutEmpty)
         {
             return ptext?.Text.SplitLines(cutEmpty);
         }

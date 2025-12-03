@@ -10,7 +10,7 @@ namespace AutoUml.Symbols
             Symbols.Add(symbol);
         }
 
-        public override MemberInfo GetMemberInfo()
+        public override MemberInfo? GetMemberInfo()
         {
             return null;
         }

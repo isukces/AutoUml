@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 namespace AutoUml
 {
@@ -28,7 +27,7 @@ namespace AutoUml
             return this;
         }
 
-        public UmlRelation WithNote(INoteProvider np)
+        public UmlRelation WithNote(INoteProvider? np)
         {
             if (np == null) return this;
             Note           = np.GetNoteText();
@@ -47,7 +46,6 @@ namespace AutoUml
 
         public string Tag { get; set; }
 
-        [CanBeNull]
-        public UmlMember BaseMember { get; set; }
+        public UmlMember? BaseMember { get; set; }
     }
 }

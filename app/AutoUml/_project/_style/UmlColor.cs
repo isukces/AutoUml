@@ -7,7 +7,7 @@
         {
         }
 
-        private UmlColor(string wellKnownName, string color)
+        private UmlColor(string wellKnownName, string? color)
         {
             _isSet        = true;
             ColorCode     = color?.TrimStart('#', ' ').TrimEnd() ?? string.Empty;
@@ -21,9 +21,9 @@
             return string.IsNullOrEmpty(color) ? Empty : new UmlColor(color);
         }
 
-        public IUmlFill ToFill()
+        public IUmlFill? ToFill()
         {
-            return IsEmpty ? (IUmlFill)null : new SolidColorFill(this);
+            return IsEmpty ? (IUmlFill?)null : new SolidColorFill(this);
         }
 
         public override string ToString()

@@ -12,13 +12,13 @@ namespace AutoUml
 
     public static class UmlFillExt
     {
-        public static string GetCodeWithSpace(this IUmlFill fill, bool convertToRgb = false)
+        public static string GetCodeWithSpace(this IUmlFill? fill, bool convertToRgb = false)
         {
             var code = fill?.GetCode(convertToRgb);
             return string.IsNullOrEmpty(code) ? string.Empty : " " + code;
         }
 
-        public static bool IsEmpty(this IUmlFill fill)
+        public static bool IsEmpty(this IUmlFill? fill)
         {
             return string.IsNullOrEmpty(fill?.GetCode());
         }

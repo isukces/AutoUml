@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using JetBrains.Annotations;
 
 namespace AutoUml
 {
@@ -12,21 +11,19 @@ namespace AutoUml
             Parts = parts;
         }
 
-        [CanBeNull]
-        public static SplittableString Make(IReadOnlyList<string> parts)
+        public static SplittableString? Make(IReadOnlyList<string>? parts)
         {
             if (parts is null || parts.Count == 0)
                 return null;
             return new SplittableString(parts);
         }
 
-        [CanBeNull]
-        public static SplittableString Make(params string[] parts)
+        public static SplittableString? Make(params string[] parts)
         {
             return Make((IReadOnlyList<string>)parts);
         }
 
-        public static SplittableString operator +(SplittableString splittable, string text)
+        public static SplittableString operator +(SplittableString splittable, string? text)
         {
             if (string.IsNullOrEmpty(text))
                 return splittable;
@@ -38,7 +35,7 @@ namespace AutoUml
             return new SplittableString(q.ToArray());
         }
 
-        public static SplittableString operator +(string text, SplittableString splittable)
+        public static SplittableString operator +(string? text, SplittableString splittable)
         {
             if (string.IsNullOrEmpty(text))
                 return splittable;
@@ -49,22 +46,22 @@ namespace AutoUml
             return new SplittableString(q.ToArray());
         }
 
-        public static bool operator ==(SplittableString left, SplittableString right)
+        public static bool operator ==(SplittableString? left, SplittableString? right)
         {
             return Equals(left, right);
         }
 
-        public static implicit operator string(SplittableString x)
+        public static implicit operator string(SplittableString? x)
         {
             return x?.ToString();
         }
 
-        public static bool operator !=(SplittableString left, SplittableString right)
+        public static bool operator !=(SplittableString? left, SplittableString? right)
         {
             return !Equals(left, right);
         }
 
-        public bool Equals(SplittableString other)
+        public bool Equals(SplittableString? other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -77,7 +74,7 @@ namespace AutoUml
             return true;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return ReferenceEquals(this, obj) || obj is SplittableString other && Equals(other);
         }
@@ -114,7 +111,6 @@ namespace AutoUml
             return string.Join("", Parts);
         }
 
-        [NotNull]
         public IReadOnlyList<string> Parts { get; }
     }
 }

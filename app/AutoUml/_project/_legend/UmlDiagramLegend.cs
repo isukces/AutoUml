@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JetBrains.Annotations;
 
 namespace AutoUml
 {
@@ -37,7 +36,6 @@ namespace AutoUml
             return q.ToString();
         }
 
-        [NotNull]
         public List<UmlDiagramLegendItem> Items { get; } = new List<UmlDiagramLegendItem>();
 
         public UmlDiagramLegendHorizontalAlignment HorizontalAlignment { get; set; }

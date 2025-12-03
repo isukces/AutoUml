@@ -1,12 +1,11 @@
 using System.Linq;
 using System.Reflection;
-using JetBrains.Annotations;
 
 namespace AutoUml
 {
     public class UmlAddMetaAttributeVisitor : IDiagramVisitor
     {
-        private static void UpdateContainerFromAttributes(IMetadataContainer target, [CanBeNull]MemberInfo mi)
+        private static void UpdateContainerFromAttributes(IMetadataContainer target, MemberInfo? mi)
         {
             if (mi == null)
                 return;

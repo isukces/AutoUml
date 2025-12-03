@@ -21,7 +21,7 @@ namespace Tests
             const string expected = "Bla bla";
             Assert.Equal(expected, q.ToString());
             {
-                var w = q + (string)null;
+                var w = q + (string?)null;
                 Assert.True(ReferenceEquals(q, w));
                 Assert.Equal(expected, q.ToString());
             }
@@ -31,7 +31,7 @@ namespace Tests
                 Assert.Equal(expected, q.ToString());
             }
             {
-                var w = (string)null + q;
+                var w = (string?)null + q;
                 Assert.True(ReferenceEquals(q, w));
                 Assert.Equal(expected, q.ToString());
             }

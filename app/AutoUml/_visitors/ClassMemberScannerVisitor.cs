@@ -108,7 +108,7 @@ namespace AutoUml
                 ReflectionFlags.PrivateGetterProperty);
         }
 
-        private static ReflectionFlags GetMFlag(MethodInfo m, ReflectionFlags publicFlag,
+        private static ReflectionFlags GetMFlag(MethodInfo? m, ReflectionFlags publicFlag,
             ReflectionFlags protectedFlag, ReflectionFlags privateFlag)
         {
             if (m == null)

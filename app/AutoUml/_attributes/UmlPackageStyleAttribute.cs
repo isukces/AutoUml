@@ -5,14 +5,14 @@ namespace AutoUml
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public class UmlPackageStyleAttribute : Attribute
     {
-        public UmlPackageStyleAttribute(string packageName, UmlPackageKind kind, string diagramName = null)
+        public UmlPackageStyleAttribute(string packageName, UmlPackageKind kind, string? diagramName = null)
         {
             PackageName = packageName;
             Kind        = kind;
             DiagramName = diagramName;
         }
 
-        public bool CanBeUsedFor(UmlDiagram diagram)
+        public bool CanBeUsedFor(UmlDiagram? diagram)
         {
             return string.IsNullOrEmpty(DiagramName)
                    || string.Equals(DiagramName, diagram?.Name.Trim(), StringComparison.OrdinalIgnoreCase);

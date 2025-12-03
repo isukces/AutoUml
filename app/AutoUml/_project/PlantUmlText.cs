@@ -15,7 +15,7 @@ namespace AutoUml
 
         }
 
-        public static bool operator ==(PlantUmlText left, PlantUmlText right)
+        public static bool operator ==(PlantUmlText left, PlantUmlText? right)
         {
             return left.Equals(right);
         }
@@ -40,7 +40,7 @@ namespace AutoUml
             return new PlantUmlText(x);
         }
 
-        public static bool operator !=(PlantUmlText left, PlantUmlText right)
+        public static bool operator !=(PlantUmlText left, PlantUmlText? right)
         {
             return !left.Equals(right);
         }
@@ -60,7 +60,7 @@ namespace AutoUml
             return string.Compare(Text, other.Text, StringComparison.Ordinal);
         }
 
-        public int CompareTo(object obj)
+        public int CompareTo(object? obj)
         {
             if (ReferenceEquals(null, obj)) return 1;
             return obj is PlantUmlText other
@@ -68,12 +68,12 @@ namespace AutoUml
                 : throw new ArgumentException($"Object must be of type {nameof(PlantUmlText)}");
         }
 
-        public bool Equals(PlantUmlText other)
+        public bool Equals(PlantUmlText? other)
         {
             return Text == other.Text;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return obj is PlantUmlText other && Equals(other);
         }

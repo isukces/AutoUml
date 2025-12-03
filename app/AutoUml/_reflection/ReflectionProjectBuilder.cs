@@ -26,7 +26,7 @@ namespace AutoUml
             return result;
         }
 
-        public ReflectionProjectBuilder UpdateVisitor<T>(Action<T> updateAction)
+        public ReflectionProjectBuilder UpdateVisitor<T>(Action<T>? updateAction)
             where T : IUmlVisitor
         {
             if (updateAction == null)
@@ -59,7 +59,7 @@ namespace AutoUml
             return this;
         }
 
-        public ReflectionProjectBuilder WithNewDiagramSettings(Action<UmlDiagram> diagramUpdateAction)
+        public ReflectionProjectBuilder WithNewDiagramSettings(Action<UmlDiagram>? diagramUpdateAction)
         {
             if (diagramUpdateAction != null)
             {

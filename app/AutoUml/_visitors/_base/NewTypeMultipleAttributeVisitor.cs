@@ -14,6 +14,6 @@ namespace AutoUml
                 VisitInternal(diagram, info, att);
         }
 
-        protected abstract void VisitInternal(UmlDiagram diagram, UmlEntity info, [NotNull] T att);
+        protected abstract void VisitInternal(UmlDiagram diagram, UmlEntity info, T att);
     }
 }

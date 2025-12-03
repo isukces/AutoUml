@@ -9,7 +9,7 @@ namespace AutoUml
     [AttributeUsage(AttributesConsts.Entities, AllowMultiple = true)]
     public class UmlAddRelationAttribute : BaseRelationAttribute
     {
-        public UmlAddRelationAttribute([NotNull] Type relatedType, 
+        public UmlAddRelationAttribute(Type relatedType, 
             string name,
             UmlRelationKind kind = UmlRelationKind.Aggregation) : base(kind)
         {

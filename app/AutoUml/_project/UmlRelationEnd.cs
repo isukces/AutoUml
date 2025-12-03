@@ -2,13 +2,13 @@
 {
     public struct UmlRelationEnd
     {
-        public UmlRelationEnd(string name, string label = null)
+        public UmlRelationEnd(string name, string? label = null)
         {
             Name  = name;
             Label = label;
         }
 
-        public string Left
+        public string? Left
         {
             get
             {
@@ -18,7 +18,7 @@
             }
         }
 
-        public string Right
+        public string? Right
         {
             get
             {
@@ -28,7 +28,7 @@
             }
         }
 
-        private string QuotedName => Name.AddQuotesIfNecessary();
+        private string? QuotedName => Name.AddQuotesIfNecessary();
 
         public string Name  { get; }
         public string Label { get; }

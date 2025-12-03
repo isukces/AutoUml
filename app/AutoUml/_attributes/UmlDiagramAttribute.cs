@@ -10,12 +10,12 @@ namespace AutoUml
             DiagramName = diagramName;
         }
 
-        IUmlFill IEntityBackgroundProvider.GetEntityBackground()
+        IUmlFill? IEntityBackgroundProvider.GetEntityBackground()
         {
             return UmlColor.FromString(BackgroundColor).ToFill();
         }
 
-        IUmlFill INoteProvider.GetNoteBackground()
+        IUmlFill? INoteProvider.GetNoteBackground()
         {
             return UmlColor.FromString(NoteBackground).ToFill();
         }

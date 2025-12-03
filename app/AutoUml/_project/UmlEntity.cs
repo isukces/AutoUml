@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 namespace AutoUml
 {
     public class UmlEntity : IMetadataContainer
     {
-        public UmlEntity([NotNull] Type type, Func<Type, string> tryGetAlias)
+        public UmlEntity(Type type, Func<Type, string> tryGetAlias)
         {
             Type = type ?? throw new ArgumentNullException(nameof(type));
             Name = type.GetDiagramName(tryGetAlias);
@@ -20,14 +19,14 @@ namespace AutoUml
                 IsAbstract = true;
         }
 
-        public void AddNote(INoteWithLocationProvider np)
+        public void AddNote(INoteWithLocationProvider? np)
         {
             if (np == null)
                 return;
             AddNote(np.GetNoteLocation(), np.GetNoteText(), np.GetNoteBackground());
         }
 
-        public UmlNote AddNote(NoteLocation location, string noteText, IUmlFill background = null)
+        public UmlNote? AddNote(NoteLocation location, string noteText, IUmlFill? background = null)
         {
             noteText = noteText?.Trim();
             if (string.IsNullOrEmpty(noteText))
@@ -39,7 +38,7 @@ namespace AutoUml
             return note;
         }
 
-        public void AppendStartingLines(string append)
+        public void AppendStartingLines(string? append)
         {
             if (string.IsNullOrEmpty(append))
                 return;
@@ -64,7 +63,6 @@ namespace AutoUml
             return string.Join(" ", items);
         }
 
-        [NotNull]
         public UmlNote GetOrCreateNote(NoteLocation location)
         {
             if (!_notes.TryGetValue(location, out var note))
@@ -72,7 +70,6 @@ namespace AutoUml
             return note;
         }
 
-        [NotNull]
         public Type Type { get; }
 
         public string          Name          { get; set; }

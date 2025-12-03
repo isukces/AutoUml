@@ -7,7 +7,7 @@ namespace AutoUml
     /// </summary>
     public class ForceAddToDiagramVisitor : INewTypeInDiagramVisitor
     {
-        private static TypeExInfo GetTi(MemberInfo memberInfo)
+        private static TypeExInfo? GetTi(MemberInfo memberInfo)
         {
             var att = memberInfo.GetCustomAttribute<BaseRelationAttribute>();
             if (att == null || !att.ForceAddToDiagram) return null;

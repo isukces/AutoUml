@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
 
 namespace AutoUml
 {
     public class UmlDiagram : IMetadataContainer
     {
-        public bool ContainsType(Type type)
+        public bool ContainsType(Type? type)
         {
             return type != null && _entities.ContainsKey(type);
         }
@@ -80,8 +79,7 @@ namespace AutoUml
             return file.SaveIfDifferent(filename);
         }
 
-        [CanBeNull]
-        public UmlEntity TryGetEntityByType(Type type)
+        public UmlEntity? TryGetEntityByType(Type? type)
         {
             if (type == null)
                 return null;
@@ -89,7 +87,7 @@ namespace AutoUml
         }
 
 
-        public void UpdateTypeInfo(Type type, [CanBeNull] Action<UmlEntity, bool> modification)
+        public void UpdateTypeInfo(Type type, Action<UmlEntity, bool>? modification)
         {
             var created = false;
             if (!_entities.TryGetValue(type, out var info))
@@ -266,7 +264,6 @@ namespace AutoUml
 
         private sealed class CreationState
         {
-            [NotNull]
             public PlantUmlFile File { get; } = new PlantUmlFile();
 
             public Dictionary<UmlPackageName, UmlPackage> UsedPackages { get; } =

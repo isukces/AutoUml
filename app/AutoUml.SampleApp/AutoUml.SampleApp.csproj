@@ -7,6 +7,7 @@
     <ProjectGuid>{1AF35F17-F3EB-4652-8598-31DAFCBCBD74}</ProjectGuid>
     <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     <LangVersion>13</LangVersion>
+    <Nullable>enable</Nullable>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>

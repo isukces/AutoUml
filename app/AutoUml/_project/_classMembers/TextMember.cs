@@ -9,7 +9,7 @@ namespace AutoUml
             Text = text;
         }
 
-        public override MemberInfo GetMemberInfo()
+        public override MemberInfo? GetMemberInfo()
         {
             return null;
         }

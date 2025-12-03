@@ -10,7 +10,7 @@ namespace AutoUml
     /// </summary>
     public class RemoveDeepPropertiesVisitor : INewTypeInDiagramVisitor
     {
-        public RemoveDeepPropertiesVisitor(params Type[] types)
+        public RemoveDeepPropertiesVisitor(params Type[]? types)
         {
             if (types == null) return;
             for (var index = 0; index < types.Length; index++)
@@ -39,7 +39,7 @@ namespace AutoUml
             }
         }
 
-        private bool ShouldBeHidden(MemberInfo memberInfo)
+        private bool ShouldBeHidden(MemberInfo? memberInfo)
         {
             if (memberInfo == null)
                 return false;

@@ -13,6 +13,7 @@
     <FileVersion>1.25.102.48</FileVersion>
     <Version>1.25.102.48</Version>
     <LangVersion>13</LangVersion>
+    <Nullable>enable</Nullable>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(SignKey)</AssemblyOriginatorKeyFile>
     <Description>Create UML diagrams directly from .NET code using annotation</Description>
