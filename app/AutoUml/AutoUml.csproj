@@ -40,9 +40,6 @@
     <WarningLevel>3</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Update="_project\OpenIconicKind.cs">
       <DependentUpon>OpenIconicKind.tt</DependentUpon>
     </Compile>
