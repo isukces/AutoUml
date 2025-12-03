@@ -24,5 +24,5 @@ public class SymbolLineUmlMember : UmlMember
         cf.Writeln("==");
     }
 
-    public List<PlantUmlText> Symbols { get; } = new List<PlantUmlText>();
+    public List<PlantUmlText> Symbols { get; } = new();
 }

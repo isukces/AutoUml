@@ -48,7 +48,7 @@ public class CodeWriter
 
     public string Code => _sb.ToString();
 
-    private readonly StringBuilder _sb = new StringBuilder();
+    private readonly StringBuilder _sb = new();
 
     private int _indentCount;
 }

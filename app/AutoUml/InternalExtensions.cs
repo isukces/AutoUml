@@ -19,9 +19,10 @@ internal static class InternalExtensions
         return lines.Length == 0 ? null : lines;
     }
 
-    public static IEnumerable<string>? SplitLines(this PlantUmlText? ptext, bool cutEmpty)
+    public static IEnumerable<string> SplitLines(this PlantUmlText? ptext, bool cutEmpty)
     {
-        return ptext?.Text.SplitLines(cutEmpty);
+        var ptextText = ptext?.Text;
+        return ptextText?.SplitLines(cutEmpty) ?? [];
     }
 
     public static HashSet<TArgument> ToHashSet<TArgument>(this IEnumerable<TArgument> src)

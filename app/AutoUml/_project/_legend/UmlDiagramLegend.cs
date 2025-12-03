@@ -36,7 +36,7 @@ public sealed class UmlDiagramLegend
         cf.Writeln("endlegend");
     }
 
-    public List<UmlDiagramLegendItem> Items { get; } = new List<UmlDiagramLegendItem>();
+    public List<UmlDiagramLegendItem> Items { get; } = new();
 
     public UmlDiagramLegendHorizontalAlignment HorizontalAlignment { get; set; }
     public UmlDiagramLegendVerticalAlignment   VerticalAlignment   { get; set; }

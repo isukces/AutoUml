@@ -56,7 +56,7 @@ public static class CreoleExtensions
     }
 
 
-    public static string CreoleWrapHtml(this string text, string tag, string arg = null)
+    public static string CreoleWrapHtml(this string text, string tag, string? arg = null)
     {
         if (string.IsNullOrEmpty(text))
             return string.Empty;

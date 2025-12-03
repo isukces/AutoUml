@@ -4,7 +4,7 @@ namespace AutoUml;
 
 public class PropertyUmlMember : UmlMember
 {
-    public override MemberInfo? GetMemberInfo()
+    public override MemberInfo GetMemberInfo()
     {
         return Property;
     }
@@ -20,5 +20,5 @@ public class PropertyUmlMember : UmlMember
         cf.Writeln(GetCodePrefix() + code);
     }
 
-    public PropertyInfo Property { get; set; }
+    public required PropertyInfo Property { get; set; }
 }

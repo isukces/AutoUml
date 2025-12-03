@@ -224,16 +224,16 @@ public class MemberToRelationVisitor : IDiagramVisitor
     {
     }
 
-    public ConvertToRelationDelegate ConvertToRelation { get; set; }
+    public ConvertToRelationDelegate? ConvertToRelation { get; set; }
 
     public event EventHandler<AfterConversionPropertyEventArgs>? AfterConversionProperty;
 
     public class AfterConversionPropertyEventArgs
     {
-        public UmlDiagram        Diagram       { get; set; }
-        public UmlEntity         Entity        { get; set; }
-        public PropertyUmlMember BaseUmlMember { get; set; }
-        public UmlRelation       Relation      { get; set; }
+        public required UmlDiagram        Diagram       { get; set; }
+        public required UmlEntity         Entity        { get; set; }
+        public required PropertyUmlMember BaseUmlMember { get; set; }
+        public required UmlRelation       Relation      { get; set; }
     }
 }
 

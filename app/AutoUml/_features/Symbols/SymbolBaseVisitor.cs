@@ -36,8 +36,10 @@ public abstract class SymbolBaseVisitor : INewTypeInDiagramVisitor
         existing.AddSymbol(symbolInfo.SymbolText);
     }
 
-    protected PlantUmlText AddStyle(PlantUmlText text)
+    protected PlantUmlText AddStyle(PlantUmlText? text)
     {
+        if (text is null) 
+            return new PlantUmlText("");
         if (SymbolColor != null)
             text = text.WithFontColor(SymbolColor.Value);
 
@@ -57,14 +59,14 @@ public abstract class SymbolBaseVisitor : INewTypeInDiagramVisitor
 
     public abstract void Visit(UmlDiagram diagram, UmlEntity info);
 
-    public PlantUmlText Symbol      { get; set; }
-    public UmlColor?    SymbolColor { get; set; }
-    public int?         FontSize    { get; set; }
+    public required PlantUmlText Symbol      { get; set; }
+    public required UmlColor?    SymbolColor { get; set; }
+    public          int?         FontSize    { get; set; }
 
     public event EventHandler<AddStyleToSymbolEventArgs>? AddStyleToSymbol;
 
     public class AddStyleToSymbolEventArgs : EventArgs
     {
-        public PlantUmlText Text { get; set; }
+        public required PlantUmlText Text { get; set; }
     }
 }

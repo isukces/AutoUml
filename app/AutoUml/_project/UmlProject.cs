@@ -43,15 +43,14 @@ public class UmlProject
         return x;
     }
 
-    private void XOnOnAddTypeToDiagram(object sender, AddTypeToDiagramEventArgs e)
+    private void XOnOnAddTypeToDiagram(object? sender, AddTypeToDiagramEventArgs e)
     {
         var handler = OnAddTypeToDiagram;
         if (handler == null) return;
         handler(this, e);
     }
 
-    public Dictionary<string, UmlDiagram> Diagrams { get; } =
-        new Dictionary<string, UmlDiagram>();
+    public Dictionary<string, UmlDiagram> Diagrams { get; } = new();
 
     public event EventHandler<AddDiagramEventArgs>? OnAddDiagram;
 

@@ -26,7 +26,7 @@ public class UmlEntity : IMetadataContainer
         AddNote(np.GetNoteLocation(), np.GetNoteText(), np.GetNoteBackground());
     }
 
-    public UmlNote? AddNote(NoteLocation location, string noteText, IUmlFill? background = null)
+    public UmlNote? AddNote(NoteLocation location, string? noteText, IUmlFill? background = null)
     {
         noteText = noteText?.Trim();
         if (string.IsNullOrEmpty(noteText))
@@ -47,7 +47,7 @@ public class UmlEntity : IMetadataContainer
 
     public string GetOpenClassCode()
     {
-        var items = new List<string>();
+        var items = new List<string?>();
         if (IsAbstract && KeyWord == UmlTypes.UmlClass)
             items.Add("abstract");
         items.Add(KeyWord.ToString().ToLower().Substring(3));
@@ -73,20 +73,20 @@ public class UmlEntity : IMetadataContainer
     public Type Type { get; }
 
     public string          Name          { get; set; }
-    public IUmlFill        Background    { get; set; }
+    public IUmlFill?       Background    { get; set; }
     public int             OrderIndex    { get; set; }
-    public UmlSpot         Spot          { get; set; }
+    public UmlSpot?        Spot          { get; set; }
     public UmlTypes        KeyWord       { get; set; }
     public bool            IsAbstract    { get; set; }
-    public List<UmlMember> Members       { get; set; } = new List<UmlMember>();
-    public string          PackageName   { get; set; }
-    public PlantUmlText    StartingLines { get; set; }
+    public List<UmlMember> Members       { get; set; } = new();
+    public string?         PackageName   { get; set; }
+    public PlantUmlText?   StartingLines { get; set; }
 
     public IReadOnlyDictionary<NoteLocation, UmlNote> Notes => _notes;
 
-    public Dictionary<string, object> Metadata { get; } = new Dictionary<string, object>();
+    public Dictionary<string, object> Metadata { get; } = new();
 
-    private readonly Dictionary<NoteLocation, UmlNote> _notes = new Dictionary<NoteLocation, UmlNote>();
+    private readonly Dictionary<NoteLocation, UmlNote> _notes = new();
 }
 
 public enum UmlTypes

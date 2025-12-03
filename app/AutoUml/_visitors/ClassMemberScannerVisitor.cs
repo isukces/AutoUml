@@ -63,7 +63,7 @@ public class ClassMemberScannerVisitor : INewTypeInDiagramVisitor
         return mi.DeclaringType != typeof(object);
     }
 
-    private static ReflectionFlags GetGetterFlag(MethodInfo m)
+    private static ReflectionFlags GetGetterFlag(MethodInfo? m)
     {
         return GetMFlag(m,
             ReflectionFlags.PublicGetterProperty,
@@ -83,7 +83,7 @@ public class ClassMemberScannerVisitor : INewTypeInDiagramVisitor
         return protectedFlag;
     }
 
-    private static ReflectionFlags GetSetterFlag(MethodInfo m)
+    private static ReflectionFlags GetSetterFlag(MethodInfo? m)
     {
         return GetMFlag(m,
             ReflectionFlags.PublicSetterProperty,
@@ -220,14 +220,14 @@ public class ClassMemberScannerVisitor : INewTypeInDiagramVisitor
 
     public sealed class AddTypeToDiagramEventArgs : EventArgs
     {
-        public AddDecision     Decision  { get; set; }
-        public MethodInfo      Member    { get; set; }
-        public MethodUmlMember UmlMember { get; set; }
+        public required AddDecision     Decision  { get; set; }
+        public required MethodInfo      Member    { get; set; }
+        public required MethodUmlMember UmlMember { get; set; }
     }
 
     public sealed class SortAndPrepareMethodsEventArgs : EventArgs
     {
-        public MethodInfo[] Methods { get; set; }
+        public required MethodInfo[] Methods { get; set; }
     }
 }
 

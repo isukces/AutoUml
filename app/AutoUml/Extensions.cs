@@ -17,8 +17,10 @@ public static class Extensions
         return "\"" + x + "\"";
     }
 
-    public static string? AddQuotesIfNecessary(this string name)
+    public static string? AddQuotesIfNecessary(this string? name)
     {
+        if (string.IsNullOrEmpty(name))
+            return name;
         foreach (var c in name)
             if (!char.IsLetterOrDigit(c))
                 return name.AddQuotes();
@@ -36,7 +38,7 @@ public static class Extensions
         return new PlantUmlText(kind);
     }
 
-    public static string CamelToNormal(this string n, bool onlyFirstUpper)
+    public static string CamelToNormal(this string? n, bool onlyFirstUpper)
     {
         n = n?.Trim();
         if (string.IsNullOrEmpty(n))
@@ -210,7 +212,7 @@ public static class Extensions
         return di;
     }
 
-    public static DirectoryInfo? SearchFoldersUntilFileExists(this DirectoryInfo di, string fileName)
+    public static DirectoryInfo? SearchFoldersUntilFileExists(this DirectoryInfo? di, string fileName)
     {
         while (di != null)
         {
@@ -244,7 +246,7 @@ public static class Extensions
             code.Writeln(name + " " + value.PlantUmlCode);
     }
 
-    public static void Write(this CodeWriter code, string name, string value)
+    public static void Write(this CodeWriter code, string name, string? value)
     {
         value = value?.Trim();
         if (!string.IsNullOrEmpty(value))

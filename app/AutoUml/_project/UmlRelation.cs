@@ -47,5 +47,5 @@ public class UmlRelation : IMetadataContainer
 
     public UmlMember? BaseMember { get; set; }
 
-    public Dictionary<string, object> Metadata { get; } = new Dictionary<string, object>();
+    public Dictionary<string, object> Metadata { get; } = new();
 }

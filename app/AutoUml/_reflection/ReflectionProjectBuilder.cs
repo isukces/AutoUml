@@ -17,7 +17,7 @@ public class ReflectionProjectBuilder
     public UmlProject Build()
     {
         var result = _project;
-        _project = null;
+        _project = null!;
         if (result == null)
             throw new Exception("Project already built");
         foreach (var diagram in result.Diagrams.Values)
@@ -26,7 +26,7 @@ public class ReflectionProjectBuilder
         return result;
     }
 
-    private void ProjectOnOnAddDiagram(object sender, AddDiagramEventArgs e)
+    private void ProjectOnOnAddDiagram(object? sender, AddDiagramEventArgs e)
     {
         foreach (var a in _scannedAssemblies)
         {
@@ -38,7 +38,7 @@ public class ReflectionProjectBuilder
             i.VisitDiagramCreated(e.Diagram);
     }
 
-    private void ProjectOnOnAddTypeToDiagram(object sender, AddTypeToDiagramEventArgs e)
+    private void ProjectOnOnAddTypeToDiagram(object? sender, AddTypeToDiagramEventArgs e)
     {
         foreach (var v in NewTypeVisitors)
             v.Visit(e.Diagram, e.Info);
@@ -159,12 +159,12 @@ public class ReflectionProjectBuilder
         return this;
     }
 
-    public List<IReflectionTypeVisitor>   ReflectionTypeVisitors { get; } = new List<IReflectionTypeVisitor>();
-    public List<INewTypeInDiagramVisitor> NewTypeVisitors        { get; } = new List<INewTypeInDiagramVisitor>();
-    public List<IDiagramVisitor>          DiagramVisitors        { get; } = new List<IDiagramVisitor>();
-    public List<IAssemblyVisitor>         AssemblyVisitors       { get; } = new List<IAssemblyVisitor>();
+    public List<IReflectionTypeVisitor>   ReflectionTypeVisitors { get; } = new();
+    public List<INewTypeInDiagramVisitor> NewTypeVisitors        { get; } = new();
+    public List<IDiagramVisitor>          DiagramVisitors        { get; } = new();
+    public List<IAssemblyVisitor>         AssemblyVisitors       { get; } = new();
 
-    private UmlProject _project = new UmlProject();
-    private readonly HashSet<Assembly> _scannedAssemblies = new HashSet<Assembly>();
-    private readonly HashSet<Type> _scannedTypes = new HashSet<Type>();
+    private UmlProject _project = new();
+    private readonly HashSet<Assembly> _scannedAssemblies = new();
+    private readonly HashSet<Type> _scannedTypes = new();
 }

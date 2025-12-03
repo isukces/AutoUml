@@ -4,7 +4,7 @@ namespace AutoUml;
 
 public struct UmlPackageName : IEquatable<UmlPackageName>, IComparable<UmlPackageName>, IComparable
 {
-    public UmlPackageName(string name)
+    public UmlPackageName(string? name)
     {
         _name = name?.Trim();
     }
@@ -57,7 +57,7 @@ public struct UmlPackageName : IEquatable<UmlPackageName>, IComparable<UmlPackag
         return string.Equals(Name, other.Name, StringComparison.OrdinalIgnoreCase);
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         return obj is UmlPackageName other && Equals(other);
     }
@@ -78,5 +78,5 @@ public struct UmlPackageName : IEquatable<UmlPackageName>, IComparable<UmlPackag
 
     public bool IsEmpty => string.IsNullOrEmpty(_name);
 
-    private readonly string _name;
+    private readonly string? _name;
 }

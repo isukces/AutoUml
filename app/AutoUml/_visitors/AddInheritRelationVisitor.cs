@@ -76,9 +76,9 @@ public class AddInheritRelationVisitor : IDiagramVisitor
 
             continue;
 
-            bool CanAddR(Type clasType, Type interfaceType)
+            bool CanAddR(Type? clasType, Type interfaceType)
             {
-                clasType = clasType.BaseType;
+                clasType = clasType?.BaseType;
                 while (clasType != null)
                 {
                     if (!diagram.ContainsType(clasType))

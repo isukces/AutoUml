@@ -30,5 +30,5 @@ public class MethodUmlMember : UmlMember
 
     public static int MaxLineLength { get; set; } = 120;
 
-    public MethodInfo Method { get; set; }
+    public required MethodInfo Method { get; set; }
 }

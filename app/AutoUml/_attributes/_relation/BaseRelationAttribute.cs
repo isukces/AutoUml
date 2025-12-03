@@ -9,22 +9,22 @@ public abstract class BaseRelationAttribute : Attribute, INoteProvider
         Kind = kind;
     }
 
-    IUmlFill INoteProvider.GetNoteBackground()
+    IUmlFill? INoteProvider.GetNoteBackground()
     {
         return UmlColor.FromString(NoteBackground).ToFill();
     }
 
 
-    string INoteProvider.GetNoteText()
+    string? INoteProvider.GetNoteText()
     {
         return Note;
     }
 
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
-    public string Note { get; set; }
+    public string? Note { get; set; }
 
-    public string NoteBackground { get; set; }
+    public string? NoteBackground { get; set; }
 
     public UmlRelationKind Kind { get; }
 
@@ -32,7 +32,7 @@ public abstract class BaseRelationAttribute : Attribute, INoteProvider
 
     public bool ForceAddToDiagram { get; set; }
 
-    public Type RelatedType { get; set; }
+    public Type? RelatedType { get; set; }
 
     /// <summary>
     ///     Creates one-to-one relation to collection type instead of one-to-many relation to
@@ -47,14 +47,14 @@ public abstract class BaseRelationAttribute : Attribute, INoteProvider
     public ForceArrowEnd  RightSign { get; set; } = ForceArrowEnd.NotSet;
     public ChangeDecision IsDotted  { get; set; } = ChangeDecision.Auto;
 
-    public string LeftSignDescription  { get; set; }
-    public string RightSignDescription { get; set; }
+    public string? LeftSignDescription  { get; set; }
+    public string? RightSignDescription { get; set; }
 
-    public string Color { get; set; }
+    public string? Color { get; set; }
 
 
     /// <summary>
     ///     Some tag added to relation object to identify it
     /// </summary>
-    public string Tag { get; set; }
+    public string? Tag { get; set; }
 }

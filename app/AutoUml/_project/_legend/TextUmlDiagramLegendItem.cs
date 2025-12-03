@@ -11,5 +11,5 @@ public class TextUmlDiagramLegendItem : UmlDiagramLegendItem
             cf.Writeln(line);
     }
 
-    public PlantUmlText Text { get; set; }
+    public PlantUmlText Text { get; set; } = "";
 }

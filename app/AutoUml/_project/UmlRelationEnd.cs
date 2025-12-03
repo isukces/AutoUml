@@ -4,7 +4,7 @@ public struct UmlRelationEnd
 {
     public UmlRelationEnd(string name, string? label = null)
     {
-        Name  = name;
+        Name  = name ?? "";
         Label = label;
     }
 
@@ -31,5 +31,5 @@ public struct UmlRelationEnd
     private string? QuotedName => Name.AddQuotesIfNecessary();
 
     public string Name  { get; }
-    public string Label { get; }
+    public string? Label { get; }
 }

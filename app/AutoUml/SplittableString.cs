@@ -35,7 +35,7 @@ public sealed class SplittableString : IEquatable<SplittableString>
         return new SplittableString(q.ToArray());
     }
 
-    public static SplittableString operator +(string? text, SplittableString splittable)
+    public static SplittableString? operator +(string? text, SplittableString? splittable)
     {
         if (string.IsNullOrEmpty(text))
             return splittable;
@@ -51,7 +51,7 @@ public sealed class SplittableString : IEquatable<SplittableString>
         return Equals(left, right);
     }
 
-    public static implicit operator string(SplittableString? x)
+    public static implicit operator string?(SplittableString? x)
     {
         return x?.ToString();
     }

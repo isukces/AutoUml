@@ -605,6 +605,7 @@ class AttributesList
     +void CopyTo(AttributesListItem[] array,int arrayIndex)
     +int EnsureCapacity(int capacity)
     #void Grow(int capacity)
+    #void GrowForInsertion(int indexToInsert,int insertionCount)
     +bool Exists(Predicate<AttributesListItem> match)
     +AttributesListItem Find(Predicate<AttributesListItem> match)
     +List<AttributesListItem> FindAll(Predicate<AttributesListItem> match)
@@ -696,10 +697,10 @@ interface INestedInterface14
 }
 class Class14
 {
+    +ExInfo14 ExInfo
     +int Count
     +string Name
     +Info14 CreationInfo
-    +ExInfo14 ExInfo
 }
 class DerivedClass14
 {

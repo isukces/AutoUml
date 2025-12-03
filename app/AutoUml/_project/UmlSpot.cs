@@ -2,12 +2,12 @@
 
 public class UmlSpot : IPlantUmlCodeProvider
 {
-    public string InCircle { get; set; }
+    public string? InCircle { get; set; }
 
 
     // supports only color, IUmlFill will not work
     public UmlColor CircleBackgroundColor { get; set; }
-    public string   Text                  { get; set; }
+    public string?  Text                  { get; set; }
 
     public string PlantUmlCode
     {

@@ -21,11 +21,9 @@ public class UmlPackageStyleAttribute : Attribute
     public string         PackageName { get; }
     public UmlPackageKind Kind        { get; }
 
-    public string DiagramName
+    public string? DiagramName
     {
-        get => _diagramName;
-        set => _diagramName = value?.Trim();
+        get;
+        set => field = value?.Trim();
     }
-
-    private string _diagramName;
 }

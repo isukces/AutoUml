@@ -112,9 +112,9 @@ public struct UmlRelationArrow
     public static UmlRelationArrow InheritRight => new(ArrowEnd.Empty, ArrowEnd.ArrowWhite);
 
 
-    public string LeftSignDescription { get; set; }
+    public string? LeftSignDescription { get; set; }
 
-    public string RightSignDescription { get; set; }
+    public string? RightSignDescription { get; set; }
 
 
     private string LeftSignText

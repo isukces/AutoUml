@@ -16,7 +16,7 @@ public struct UmlDiagramScale
         return Width.ToInv() + "*" + Height.ToInv();
     }
 
-    public static UmlDiagramScale Max => new UmlDiagramScale(4096, 4096);
+    public static UmlDiagramScale Max => new(4096, 4096);
 
     public int Width  { get; }
     public int Height { get; }

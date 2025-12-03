@@ -136,12 +136,12 @@ public class PlantUmlRunner
     /// <summary>
     ///     Dot.exe location i.e. c:\Program Files (x86)\Graphviz2.38\bin\dot.exe
     /// </summary>
-    public string GraphVizDot { get; set; }
+    public required string GraphVizDot { get; set; }
 
     /// <summary>
     ///     i.e. c:\Program Files (x86)\plantuml-jar-mit-1.2018.8\plantuml.jar
     /// </summary>
-    public string PlantUmlJar { get; set; }
+    public required string PlantUmlJar { get; set; }
 
     public string JavaExe { get; set; } = "java.exe";
 }

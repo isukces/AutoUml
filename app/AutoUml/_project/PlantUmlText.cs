@@ -4,9 +4,9 @@ namespace AutoUml;
 
 public sealed class PlantUmlText : IEquatable<PlantUmlText>, IComparable<PlantUmlText>, IComparable
 {
-    public PlantUmlText(string text)
+    public PlantUmlText(string? text)
     {
-        Text = text;
+        Text = text ?? "";
     }
 
     public PlantUmlText(OpenIconicKind kind)
@@ -54,9 +54,9 @@ public sealed class PlantUmlText : IEquatable<PlantUmlText>, IComparable<PlantUm
         return left.CompareTo(right) <= 0;
     }
 
-    public int CompareTo(PlantUmlText other)
+    public int CompareTo(PlantUmlText? other)
     {
-        return string.Compare(Text, other.Text, StringComparison.Ordinal);
+        return string.Compare(Text, other?.Text ?? "", StringComparison.Ordinal);
     }
 
     public int CompareTo(object? obj)
@@ -67,25 +67,13 @@ public sealed class PlantUmlText : IEquatable<PlantUmlText>, IComparable<PlantUm
             : throw new ArgumentException($"Object must be of type {nameof(PlantUmlText)}");
     }
 
-    public bool Equals(PlantUmlText? other)
-    {
-        return Text == other.Text;
-    }
+    public bool Equals(PlantUmlText? other) => Text == other?.Text;
 
-    public override bool Equals(object? obj)
-    {
-        return obj is PlantUmlText other && Equals(other);
-    }
+    public override bool Equals(object? obj) => obj is PlantUmlText other && Equals(other);
 
-    public override int GetHashCode()
-    {
-        return Text != null ? Text.GetHashCode() : 0;
-    }
+    public override int GetHashCode() => Text.GetHashCode();
 
-    public override string ToString()
-    {
-        return Text;
-    }
+    public override string ToString() => Text;
 
     public string Text { get; }
 

@@ -96,7 +96,7 @@ public class UmlDiagram : IMetadataContainer
         Legend.WriteTo(_state.File.Classes);
 
         var result = _state.File;
-        _state = null;
+        _state = null!;
         return result;
     }
 
@@ -147,7 +147,7 @@ public class UmlDiagram : IMetadataContainer
             var type = srcType.MeOrGeneric();
             if (!ContainsType(type))
                 continue;
-            if (_state.ProcessedTypes.Contains(type) || _state.ProcessedTypes.Contains(srcType))
+            if ((type is not null && _state.ProcessedTypes.Contains(type)) || _state.ProcessedTypes.Contains(srcType))
                 continue;
             if (!_entities.TryGetValue(type, out var entity))
                 continue;
@@ -224,14 +224,14 @@ public class UmlDiagram : IMetadataContainer
         handler.Invoke(this, args);
     }
 
-    public UmlDiagramLegend Legend { get; } = new UmlDiagramLegend();
+    public UmlDiagramLegend Legend { get; } = new();
 
     public UmlDiagramScale               Scale          { get; set; }
     public string                        Title          { get; set; }
     public string                        Name           { get; set; }
-    public UmlSkinParams                 Skin           { get; set; } = new UmlSkinParams();
-    public List<UmlRelation>             Relations      { get; set; } = new List<UmlRelation>();
-    public Dictionary<string, UmlSprite> Sprites        { get; }      = new Dictionary<string, UmlSprite>();
+    public UmlSkinParams                 Skin           { get; set; } = new();
+    public List<UmlRelation>             Relations      { get; set; } = new();
+    public Dictionary<string, UmlSprite> Sprites        { get; }      = new();
     public bool                          IgnorePackages { get; set; }
 
     [Obsolete("use " + nameof(HideMembers) + " instead")]
@@ -251,26 +251,24 @@ public class UmlDiagram : IMetadataContainer
 
     public MembersToHide HideMembers { get; set; }
 
-    public Dictionary<UmlPackageName, UmlPackage> Packages { get; } =
-        new Dictionary<UmlPackageName, UmlPackage>();
+    public Dictionary<UmlPackageName, UmlPackage> Packages { get; } = new();
 
-    public Dictionary<string, object> Metadata { get; } = new Dictionary<string, object>();
+    public Dictionary<string, object> Metadata { get; } = new();
 
     public event EventHandler<AddTypeToDiagramEventArgs>? OnAddTypeToDiagram;
 
-    private readonly Dictionary<Type, UmlEntity> _entities = new Dictionary<Type, UmlEntity>();
+    private readonly Dictionary<Type, UmlEntity> _entities = new();
 
     private CreationState _state;
 
 
     private sealed class CreationState
     {
-        public PlantUmlFile File { get; } = new PlantUmlFile();
+        public PlantUmlFile File { get; } = new();
 
-        public Dictionary<UmlPackageName, UmlPackage> UsedPackages { get; } =
-            new Dictionary<UmlPackageName, UmlPackage>();
+        public Dictionary<UmlPackageName, UmlPackage> UsedPackages { get; } = new();
 
-        public HashSet<Type> ProcessedTypes { get; } = new HashSet<Type>();
+        public HashSet<Type> ProcessedTypes { get; } = new();
 
         public bool IsPackageOpen => !PackageName.IsEmpty;
 

@@ -17,7 +17,7 @@ public class RemoveDeepPropertiesVisitor : INewTypeInDiagramVisitor
             AddTypeAndParents(types[index]);
     }
 
-    public void AddTypeAndParents(Type type)
+    public void AddTypeAndParents(Type? type)
     {
         type = type.MeOrGeneric();
         while (type != null)
@@ -32,7 +32,7 @@ public class RemoveDeepPropertiesVisitor : INewTypeInDiagramVisitor
         if (memberInfo == null)
             return false;
         var type = memberInfo.DeclaringType.MeOrGeneric();
-        return _types.Contains(type);
+        return type is not null && _types.Contains(type);
     }
 
     public void Visit(UmlDiagram diagram, UmlEntity info)
@@ -47,5 +47,5 @@ public class RemoveDeepPropertiesVisitor : INewTypeInDiagramVisitor
         }
     }
 
-    private readonly HashSet<Type> _types = new HashSet<Type>();
+    private readonly HashSet<Type> _types = new();
 }

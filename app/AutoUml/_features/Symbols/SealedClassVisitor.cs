@@ -1,7 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace AutoUml.Symbols;
 
 public sealed class SealedClassVisitor : SymbolBaseVisitor
 {
+    [SetsRequiredMembers]
     public SealedClassVisitor()
     {
         Symbol      = OpenIconicKind.Paperclip.AsPlantUmlText();

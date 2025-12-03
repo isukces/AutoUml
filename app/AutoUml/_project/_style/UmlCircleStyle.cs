@@ -8,6 +8,6 @@ public class UmlCircleStyle
         file.Write("circledCharacterRadius", Radius);
     }
 
-    public UmlSkinFont Font   { get; set; }
-    public int?        Radius { get; set; }
+    public UmlSkinFont? Font   { get; set; }
+    public int?         Radius { get; set; }
 }

@@ -2,7 +2,7 @@ namespace AutoUml;
 
 public interface IEntityBackgroundProvider
 {
-    IUmlFill GetEntityBackground();
+    IUmlFill? GetEntityBackground();
 }
 
 public interface IUmlFill
@@ -26,8 +26,8 @@ public static class UmlFillExt
 
 public interface INoteProvider
 {
-    IUmlFill GetNoteBackground();
-    string GetNoteText();
+    IUmlFill? GetNoteBackground();
+    string? GetNoteText();
 }
 
 public interface INoteWithLocationProvider : INoteProvider

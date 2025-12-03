@@ -41,7 +41,7 @@ public class PlantUmlFile
         }
     }
 
-    public CodeWriter        Top       { get; } = new CodeWriter();
-    public List<UmlRelation> Relations { get; } = new List<UmlRelation>();
-    public CodeWriter        Classes   { get; } = new CodeWriter();
+    public CodeWriter        Top       { get; } = new();
+    public List<UmlRelation> Relations { get; } = new();
+    public CodeWriter        Classes   { get; } = new();
 }

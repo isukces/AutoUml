@@ -17,11 +17,11 @@ public class UmlSkinParam
         code.Writeln("}");
     }
 
-    public UmlSkinFont Font           { get; set; }
-    public UmlSkinFont ArrowFont      { get; set; }
-    public UmlSkinFont StereotypeFont { get; set; }
+    public UmlSkinFont? Font           { get; set; }
+    public UmlSkinFont? ArrowFont      { get; set; }
+    public UmlSkinFont? StereotypeFont { get; set; }
 
-    public UmlColor    BorderColor     { get; set; }
-    public UmlColor    BackgroundColor { get; set; }
-    public UmlSkinFont AttributeFont   { get; set; }
+    public UmlColor BorderColor     { get; set; }
+    public UmlColor BackgroundColor { get; set; }
+    public UmlSkinFont? AttributeFont   { get; set; }
 }

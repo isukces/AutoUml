@@ -16,12 +16,12 @@ public static class PlantUmlTextFluent
     {
         if (color.IsEmpty)
             return src;
-        return src.WithWrapHtml("color", color.PlantUmlCode);
+        return src.WithWrapHtml("color", color.PlantUmlCode) ?? "";
     }
 
-    public static PlantUmlText? WithFontSize(this PlantUmlText src, int size)
+    public static PlantUmlText WithFontSize(this PlantUmlText src, int size)
     {
-        return src.WithWrapHtml("size", size.ToInv());
+        return src.WithWrapHtml("size", size.ToInv())!;
     }
 
     public static PlantUmlText? WithItalic(this PlantUmlText src)
@@ -39,10 +39,10 @@ public static class PlantUmlTextFluent
         return src.WithWrap("--");
     }
 
-    public static PlantUmlText WithTextInNewLine(this PlantUmlText src, string? x)
+    public static PlantUmlText WithTextInNewLine(this PlantUmlText? src, string? x)
     {
         if (string.IsNullOrEmpty(x))
-            return src;
+            return src ?? "";
         if (src is null || src.IsEmpty)
             return x;
         return $"{src.Text}\n{x}";

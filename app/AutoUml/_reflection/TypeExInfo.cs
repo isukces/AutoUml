@@ -28,8 +28,9 @@ public class TypeExInfo
         IsCollection = true;
     }
 
-    public static Type GetListElement(Type type)
+    public static Type? GetListElement(Type? type)
     {
+        if (type is null) return null;
         {
             var h = OnGetListElement;
             if (h != null)
@@ -70,13 +71,13 @@ public class TypeExInfo
         }
     }
 
-    public Type OriginalType   { get; }
-    public Type ElementType    { get; }
-    public Type GenericTypeDef { get; }
-    public bool IsGeneric      { get; }
-    public bool IsCollection   { get; }
+    public Type  OriginalType   { get; }
+    public Type  ElementType    { get; }
+    public Type? GenericTypeDef { get; }
+    public bool  IsGeneric      { get; }
+    public bool  IsCollection   { get; }
 
-    public static EventHandler<OnGetListElementEventArgs> OnGetListElement;
+    public static EventHandler<OnGetListElementEventArgs>? OnGetListElement;
 
     public class OnGetListElementEventArgs
     {
@@ -85,8 +86,8 @@ public class TypeExInfo
             Type = type;
         }
 
-        public Type Type        { get; }
-        public bool Handled     { get; set; }
-        public Type ElementType { get; set; }
+        public Type  Type        { get; }
+        public bool  Handled     { get; set; }
+        public Type? ElementType { get; set; }
     }
 }
