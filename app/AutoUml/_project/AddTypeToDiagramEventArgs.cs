@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace AutoUml
+namespace AutoUml;
+
+public class AddTypeToDiagramEventArgs : EventArgs
 {
-    public class AddTypeToDiagramEventArgs : EventArgs
-    {
-        public UmlEntity         Info    { get; set; }
-        public UmlDiagram Diagram { get; set; }
-    }
+    public UmlEntity  Info    { get; set; }
+    public UmlDiagram Diagram { get; set; }
 }

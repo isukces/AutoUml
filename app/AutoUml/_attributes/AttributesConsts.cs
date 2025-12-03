@@ -1,10 +1,9 @@
 using System;
 
-namespace AutoUml
+namespace AutoUml;
+
+public static class AttributesConsts
 {
-    public static class AttributesConsts
-    {
-        public const AttributeTargets Entities =
-            AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Interface | AttributeTargets.Enum;
-    }
+    public const AttributeTargets Entities =
+        AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Interface | AttributeTargets.Enum;
 }

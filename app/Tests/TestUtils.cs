@@ -2,23 +2,22 @@ using System.IO;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace Tests
+namespace Tests;
+
+static class TestUtils
 {
-    static class TestUtils
+    public static string ToCompareJson(this object obj)
     {
-        public static string ToCompareJson(this object obj)
+        var sb = new StringBuilder();
+        using(var sw = new StringWriter(sb))
+        using(var writer = new JsonTextWriter(sw))
         {
-            var sb = new StringBuilder();
-            using(var sw = new StringWriter(sb))
-            using(var writer = new JsonTextWriter(sw))
-            {
-                writer.QuoteChar = '\'';
+            writer.QuoteChar = '\'';
 
-                var ser = new JsonSerializer();
-                ser.Serialize(writer, obj);
-            }
-
-            return sb.ToString();
+            var ser = new JsonSerializer();
+            ser.Serialize(writer, obj);
         }
+
+        return sb.ToString();
     }
 }

@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace AutoUml
+namespace AutoUml;
+
+public class AddDiagramEventArgs : EventArgs
 {
-    public class AddDiagramEventArgs : EventArgs
-    {
-        public UmlDiagram Diagram { get; set; }
-    }
+    public UmlDiagram Diagram { get; set; }
 }

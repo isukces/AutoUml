@@ -1,22 +1,20 @@
-using System;
 using System.Reflection;
 
-namespace AutoUml
+namespace AutoUml;
+
+public class UmlPackageStyleAttributeVisitor : IAssemblyVisitor
 {
-    public class UmlPackageStyleAttributeVisitor : IAssemblyVisitor
+    public void Visit(Assembly assembly, UmlDiagram diagram)
     {
-        public void Visit(Assembly assembly, UmlDiagram diagram)
+        var packages = diagram.Packages;
+        foreach (var attribute in assembly.GetCustomAttributes<UmlPackageStyleAttribute>())
         {
-            var packages = diagram.Packages;
-            foreach (var attribute in assembly.GetCustomAttributes<UmlPackageStyleAttribute>())
-            {
-                if (!attribute.CanBeUsedFor(diagram))
-                    continue;
-                var umlPackageName = new UmlPackageName(attribute.PackageName);
-                if (!packages.TryGetValue(umlPackageName, out var x))
-                    packages[umlPackageName] = x = new UmlPackage();
-                x.Kind = attribute.Kind;
-            }
+            if (!attribute.CanBeUsedFor(diagram))
+                continue;
+            var umlPackageName = new UmlPackageName(attribute.PackageName);
+            if (!packages.TryGetValue(umlPackageName, out var x))
+                packages[umlPackageName] = x = new UmlPackage();
+            x.Kind = attribute.Kind;
         }
     }
 }

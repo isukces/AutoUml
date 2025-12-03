@@ -1,9 +1,8 @@
-namespace AutoUml
+namespace AutoUml;
+
+public enum UmlDiagramLegendVerticalAlignment
 {
-    public enum UmlDiagramLegendVerticalAlignment
-    {
-        Auto,
-        Top,
-        Bottom
-    }
+    Auto,
+    Top,
+    Bottom
 }

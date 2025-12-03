@@ -1,15 +1,14 @@
 using System;
 
-namespace AutoUml
-{
-    [AttributeUsage(AttributesConsts.Entities)]
-    public class UmlStereotypeAttribute : Attribute
-    {
-        public UmlStereotypeAttribute(string name)
-        {
-            Name = name;
-        }
+namespace AutoUml;
 
-        public string Name { get; set; }
+[AttributeUsage(AttributesConsts.Entities)]
+public class UmlStereotypeAttribute : Attribute
+{
+    public UmlStereotypeAttribute(string name)
+    {
+        Name = name;
     }
+
+    public string Name { get; set; }
 }

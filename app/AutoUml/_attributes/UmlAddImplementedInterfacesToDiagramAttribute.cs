@@ -1,9 +1,8 @@
 using System;
 
-namespace AutoUml
+namespace AutoUml;
+
+[AttributeUsage(AttributesConsts.Entities)]
+public sealed class UmlAddImplementedInterfacesToDiagramAttribute : Attribute
 {
-    [AttributeUsage(AttributesConsts.Entities)]
-    public sealed class UmlAddImplementedInterfacesToDiagramAttribute : Attribute
-    {
-    }
 }

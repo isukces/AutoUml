@@ -1,10 +1,9 @@
-﻿namespace AutoUml
+﻿namespace AutoUml;
+
+/// <summary>
+///     Visitor used when new type is added to diagram
+/// </summary>
+public interface INewTypeInDiagramVisitor:IUmlVisitor
 {
-    /// <summary>
-    ///     Visitor used when new type is added to diagram
-    /// </summary>
-    public interface INewTypeInDiagramVisitor:IUmlVisitor
-    {
-        void Visit(UmlDiagram diagram, UmlEntity info);
-    }
+    void Visit(UmlDiagram diagram, UmlEntity info);
 }

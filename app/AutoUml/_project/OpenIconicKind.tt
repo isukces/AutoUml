@@ -2,7 +2,6 @@
 <#@ assembly name="System.Core" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Linq" #>
-<#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Globalization" #>
 <#
     var lines = @"account-login

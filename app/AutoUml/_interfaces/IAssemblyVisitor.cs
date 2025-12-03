@@ -1,9 +1,8 @@
 ﻿using System.Reflection;
 
-namespace AutoUml
+namespace AutoUml;
+
+public interface IAssemblyVisitor
 {
-    public interface IAssemblyVisitor
-    {
-        void Visit(Assembly assembly, UmlDiagram diagram);        
-    }
+    void Visit(Assembly assembly, UmlDiagram diagram);        
 }

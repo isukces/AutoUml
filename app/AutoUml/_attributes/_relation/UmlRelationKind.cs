@@ -1,9 +1,8 @@
-﻿namespace AutoUml
+﻿namespace AutoUml;
+
+public enum UmlRelationKind
 {
-    public enum UmlRelationKind
-    {
-        Aggregation,
-        AggregationDotted,
-        Composition
-    }
+    Aggregation,
+    AggregationDotted,
+    Composition
 }

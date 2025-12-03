@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace AutoUml
+namespace AutoUml;
+
+public interface IReflectionTypeVisitor
 {
-    public interface IReflectionTypeVisitor
-    {
-        void Visit(Type type, UmlProject umlProject);
-    }
+    void Visit(Type type, UmlProject umlProject);
 }

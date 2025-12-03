@@ -1,8 +1,7 @@
 using System;
 
-namespace AutoUml
+namespace AutoUml;
+
+public class DontConvertToRelationAttribute : Attribute
 {
-    public class DontConvertToRelationAttribute : Attribute
-    {
-    }
 }

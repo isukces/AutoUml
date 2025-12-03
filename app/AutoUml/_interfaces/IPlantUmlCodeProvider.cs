@@ -1,7 +1,6 @@
-﻿namespace AutoUml
+﻿namespace AutoUml;
+
+public interface IPlantUmlCodeProvider
 {
-    public interface IPlantUmlCodeProvider
-    {
-        string PlantUmlCode { get; }
-    }
+    string PlantUmlCode { get; }
 }

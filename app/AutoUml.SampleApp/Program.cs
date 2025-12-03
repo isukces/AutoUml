@@ -1,13 +1,12 @@
 ﻿using System;
 
-namespace AutoUml.SampleApp
+namespace AutoUml.SampleApp;
+
+internal class Program
 {
-    internal class Program
+    private static void Main(string[] args)
     {
-        private static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
-            DiagramMaker.MakeDiagrams();
-        }
+        Console.WriteLine("Hello World!");
+        DiagramMaker.MakeDiagrams();
     }
 }

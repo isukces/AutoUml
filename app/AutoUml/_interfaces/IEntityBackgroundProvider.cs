@@ -1,37 +1,36 @@
-namespace AutoUml
+namespace AutoUml;
+
+public interface IEntityBackgroundProvider
 {
-    public interface IEntityBackgroundProvider
+    IUmlFill GetEntityBackground();
+}
+
+public interface IUmlFill
+{
+    string GetCode(bool convertToRgb = false);
+}
+
+public static class UmlFillExt
+{
+    public static string GetCodeWithSpace(this IUmlFill? fill, bool convertToRgb = false)
     {
-        IUmlFill GetEntityBackground();
+        var code = fill?.GetCode(convertToRgb);
+        return string.IsNullOrEmpty(code) ? string.Empty : " " + code;
     }
 
-    public interface IUmlFill
+    public static bool IsEmpty(this IUmlFill? fill)
     {
-        string GetCode(bool convertToRgb = false);
+        return string.IsNullOrEmpty(fill?.GetCode());
     }
+}
 
-    public static class UmlFillExt
-    {
-        public static string GetCodeWithSpace(this IUmlFill? fill, bool convertToRgb = false)
-        {
-            var code = fill?.GetCode(convertToRgb);
-            return string.IsNullOrEmpty(code) ? string.Empty : " " + code;
-        }
+public interface INoteProvider
+{
+    IUmlFill GetNoteBackground();
+    string GetNoteText();
+}
 
-        public static bool IsEmpty(this IUmlFill? fill)
-        {
-            return string.IsNullOrEmpty(fill?.GetCode());
-        }
-    }
-
-    public interface INoteProvider
-    {
-        IUmlFill GetNoteBackground();
-        string GetNoteText();
-    }
-
-    public interface INoteWithLocationProvider : INoteProvider
-    {
-        NoteLocation GetNoteLocation();
-    }
+public interface INoteWithLocationProvider : INoteProvider
+{
+    NoteLocation GetNoteLocation();
 }

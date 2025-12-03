@@ -1,7 +1,6 @@
-﻿namespace AutoUml
+﻿namespace AutoUml;
+
+public interface IUmlVisitor
 {
-    public interface IUmlVisitor
-    {
         
-    }
 }

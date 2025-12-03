@@ -1,10 +1,9 @@
-namespace AutoUml
+namespace AutoUml;
+
+public enum UmlDiagramLegendHorizontalAlignment
 {
-    public enum UmlDiagramLegendHorizontalAlignment
-    {
-        Auto,
-        Left,
-        Center,
-        Right
-    }
+    Auto,
+    Left,
+    Center,
+    Right
 }

@@ -1,17 +1,16 @@
-﻿namespace AutoUml
-{
-    public class UmlPackage
-    {
-        public UmlPackageKind Kind { get; set; }
-    }
+﻿namespace AutoUml;
 
-    public enum UmlPackageKind
-    {
-        Node,
-        Rectangle,
-        Folder,
-        Frame,
-        Cloud,
-        Database
-    }
+public class UmlPackage
+{
+    public UmlPackageKind Kind { get; set; }
+}
+
+public enum UmlPackageKind
+{
+    Node,
+    Rectangle,
+    Folder,
+    Frame,
+    Cloud,
+    Database
 }

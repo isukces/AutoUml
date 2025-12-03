@@ -1,11 +1,10 @@
-﻿namespace AutoUml
+﻿namespace AutoUml;
+
+public enum UmlArrowDirections
 {
-    public enum UmlArrowDirections
-    {
-        Auto,
-        Left,
-        Right,
-        Up,
-        Down
-    }
+    Auto,
+    Left,
+    Right,
+    Up,
+    Down
 }

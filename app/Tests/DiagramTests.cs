@@ -1,29 +1,28 @@
-using System.Collections.Generic;
 using System.Linq;
 using AutoUml;
 using Xunit;
 
-namespace Tests
+namespace Tests;
+
+public class DiagramTests : TestsBase
 {
-    public class DiagramTests : TestsBase
+    [Fact]
+    public void T01_Should_create_simple_diagram()
     {
-        [Fact]
-        public void T01_Should_create_simple_diagram()
-        {
-            var b = new ReflectionProjectBuilder(true)
-                .WithAssembly(typeof(DiagramTests).Assembly)
-                .Build();
-            Assert.NotNull(b);
-            Assert.True(b.Diagrams.ContainsKey("Test"));
-            var diag = b.Diagrams["Test"];
-            Assert.NotNull(diag);
+        var b = new ReflectionProjectBuilder(true)
+            .WithAssembly(typeof(DiagramTests).Assembly)
+            .Build();
+        Assert.NotNull(b);
+        Assert.True(b.Diagrams.ContainsKey("Test"));
+        var diag = b.Diagrams["Test"];
+        Assert.NotNull(diag);
 
-            var file = diag.CreateFile();
-            Assert.NotNull(file);
-            var code = file.Code;
-            Save(code);
+        var file = diag.CreateFile();
+        Assert.NotNull(file);
+        var code = file.Code;
+        Save(code);
 
-            var expected = @"@startuml
+        var expected = @"@startuml
 title
  Diagram Test
 end title
@@ -38,30 +37,30 @@ class OrderItem
 Order --{ OrderItem:Items
 @enduml
 ";
-            Assert.Equal(expected, code);
-        }
+        Assert.Equal(expected, code);
+    }
 
 
-        [Fact]
-        public void T02_Should_create_simple_diagram_with_entity_note()
-        {
-            var b = new ReflectionProjectBuilder(true)
-                .WithAssembly(typeof(DiagramTests).Assembly)
-                .Build();
-            Assert.NotNull(b);
-            Assert.True(b.Diagrams.ContainsKey("Test"));
-            var diag = b.Diagrams["Test"];
-            Assert.NotNull(diag);
+    [Fact]
+    public void T02_Should_create_simple_diagram_with_entity_note()
+    {
+        var b = new ReflectionProjectBuilder(true)
+            .WithAssembly(typeof(DiagramTests).Assembly)
+            .Build();
+        Assert.NotNull(b);
+        Assert.True(b.Diagrams.ContainsKey("Test"));
+        var diag = b.Diagrams["Test"];
+        Assert.NotNull(diag);
 
-            var ent = diag.TryGetEntityByType(typeof(Order));
-            ent.AddNote(NoteLocation.Top, "Sample note");
+        var ent = diag.TryGetEntityByType(typeof(Order));
+        ent.AddNote(NoteLocation.Top, "Sample note");
 
-            var file = diag.CreateFile();
-            Assert.NotNull(file);
-            var code = file.Code;
-            Save(code);
-            // 1074296
-            var expected = @"@startuml
+        var file = diag.CreateFile();
+        Assert.NotNull(file);
+        var code = file.Code;
+        Save(code);
+        // 1074296
+        var expected = @"@startuml
 title
  Diagram Test
 end title
@@ -79,25 +78,25 @@ class OrderItem
 Order --{ OrderItem:Items
 @enduml
 ";
-            Assert.Equal(expected, code);
-        }
+        Assert.Equal(expected, code);
+    }
 
-        [Fact]
-        public void T03_Should_create_simple_diagram_with_auto_entity_note()
-        {
-            var b = new ReflectionProjectBuilder(true)
-                .WithAssembly(typeof(DiagramTests).Assembly)
-                .Build();
-            Assert.NotNull(b);
-            Assert.True(b.Diagrams.ContainsKey("Test2"));
-            var diag = b.Diagrams["Test2"];
-            Assert.NotNull(diag);
+    [Fact]
+    public void T03_Should_create_simple_diagram_with_auto_entity_note()
+    {
+        var b = new ReflectionProjectBuilder(true)
+            .WithAssembly(typeof(DiagramTests).Assembly)
+            .Build();
+        Assert.NotNull(b);
+        Assert.True(b.Diagrams.ContainsKey("Test2"));
+        var diag = b.Diagrams["Test2"];
+        Assert.NotNull(diag);
 
-            var file = diag.CreateFile();
-            Assert.NotNull(file);
-            var code = file.Code;
-            Save(code);
-            var expected = @"@startuml
+        var file = diag.CreateFile();
+        Assert.NotNull(file);
+        var code = file.Code;
+        Save(code);
+        var expected = @"@startuml
 title
  Diagram Test2
 end title
@@ -118,29 +117,29 @@ end note
 Order2 --{ OrderItem2:Items
 @enduml
 ";
-            Assert.Equal(expected, code);
-        }
+        Assert.Equal(expected, code);
+    }
 
-        [Fact]
-        public void T04_Should_create_simple_diagram_with_entity_note_with_background()
-        {
-            var b = new ReflectionProjectBuilder(true)
-                .WithAssembly(typeof(DiagramTests).Assembly)
-                .Build();
-            Assert.NotNull(b);
-            Assert.True(b.Diagrams.ContainsKey("Test"));
-            var diag = b.Diagrams["Test"];
-            Assert.NotNull(diag);
+    [Fact]
+    public void T04_Should_create_simple_diagram_with_entity_note_with_background()
+    {
+        var b = new ReflectionProjectBuilder(true)
+            .WithAssembly(typeof(DiagramTests).Assembly)
+            .Build();
+        Assert.NotNull(b);
+        Assert.True(b.Diagrams.ContainsKey("Test"));
+        var diag = b.Diagrams["Test"];
+        Assert.NotNull(diag);
 
-            var ent = diag.TryGetEntityByType(typeof(Order));
-            ent.AddNote(NoteLocation.Top, "Sample note", UmlColor.IndianRed.ToFill());
+        var ent = diag.TryGetEntityByType(typeof(Order));
+        ent.AddNote(NoteLocation.Top, "Sample note", UmlColor.IndianRed.ToFill());
 
-            var file = diag.CreateFile();
-            Assert.NotNull(file);
-            var code = file.Code;
-            Save(code);
-            // 1074296
-            var expected = @"@startuml
+        var file = diag.CreateFile();
+        Assert.NotNull(file);
+        var code = file.Code;
+        Save(code);
+        // 1074296
+        var expected = @"@startuml
 title
  Diagram Test
 end title
@@ -158,32 +157,32 @@ class OrderItem
 Order --{ OrderItem:Items
 @enduml
 ";
-            Assert.Equal(expected, code);
-        }
+        Assert.Equal(expected, code);
+    }
 
-        [Fact]
-        public void T05_Should_create_spot_with_background()
+    [Fact]
+    public void T05_Should_create_spot_with_background()
+    {
+        var b = new ReflectionProjectBuilder(true)
+            .WithAssembly(typeof(DiagramTests).Assembly)
+            .Build();
+        Assert.NotNull(b);
+        Assert.True(b.Diagrams.ContainsKey("Test"));
+        var diag = b.Diagrams["Test"];
+        Assert.NotNull(diag);
+
+        var ent = diag.TryGetEntityByType(typeof(Order));
+        ent.Spot = new UmlSpot
         {
-            var b = new ReflectionProjectBuilder(true)
-                .WithAssembly(typeof(DiagramTests).Assembly)
-                .Build();
-            Assert.NotNull(b);
-            Assert.True(b.Diagrams.ContainsKey("Test"));
-            var diag = b.Diagrams["Test"];
-            Assert.NotNull(diag);
+            InCircle              = "X",
+            CircleBackgroundColor = UmlColor.Blue
+        };
 
-            var ent = diag.TryGetEntityByType(typeof(Order));
-            ent.Spot = new UmlSpot
-            {
-                InCircle              = "X",
-                CircleBackgroundColor = UmlColor.Blue
-            };
-
-            var file = diag.CreateFile();
-            Assert.NotNull(file);
-            var code = file.Code;
-            Save(code);
-            var expected = @"@startuml
+        var file = diag.CreateFile();
+        Assert.NotNull(file);
+        var code = file.Code;
+        Save(code);
+        var expected = @"@startuml
 title
  Diagram Test
 end title
@@ -198,29 +197,29 @@ class OrderItem
 Order --{ OrderItem:Items
 @enduml
 ";
-            Assert.Equal(expected, code);
-        }
+        Assert.Equal(expected, code);
+    }
 
-        [Fact]
-        public void T06_Should_create_note_on_relation()
-        {
-            var b = new ReflectionProjectBuilder(true)
-                .WithAssembly(typeof(DiagramTests).Assembly)
-                .Build();
-            Assert.NotNull(b);
-            Assert.True(b.Diagrams.ContainsKey("Test"));
-            var diag = b.Diagrams["Test"];
-            Assert.NotNull(diag);
-            var rel = diag.Relations.Single();
-            rel.Note           = "Note on rel";
-            rel.NoteBackground = new GradientColorFill(UmlColor.Aqua, UmlColor.AliceBlue, GradientDirection.DownRight);
+    [Fact]
+    public void T06_Should_create_note_on_relation()
+    {
+        var b = new ReflectionProjectBuilder(true)
+            .WithAssembly(typeof(DiagramTests).Assembly)
+            .Build();
+        Assert.NotNull(b);
+        Assert.True(b.Diagrams.ContainsKey("Test"));
+        var diag = b.Diagrams["Test"];
+        Assert.NotNull(diag);
+        var rel = diag.Relations.Single();
+        rel.Note           = "Note on rel";
+        rel.NoteBackground = new GradientColorFill(UmlColor.Aqua, UmlColor.AliceBlue, GradientDirection.DownRight);
 
-            var file = diag.CreateFile();
-            Assert.NotNull(file);
-            var code = file.Code;
-            Save(code);
+        var file = diag.CreateFile();
+        Assert.NotNull(file);
+        var code = file.Code;
+        Save(code);
 
-            var expected = @"@startuml
+        var expected = @"@startuml
 title
  Diagram Test
 end title
@@ -238,28 +237,28 @@ Note on rel
 end note
 @enduml
 ";
-            Assert.Equal(expected, code);
-        }
+        Assert.Equal(expected, code);
+    }
 
 
-        [Fact]
-        public void T07_Should_add_related_class_to_diagram()
-        {
-            var b = new ReflectionProjectBuilder(true)
-                .WithAssembly(typeof(DiagramTests).Assembly)
-                .Build();
-            Assert.NotNull(b);
-            Assert.True(b.Diagrams.ContainsKey("Test3"));
-            var diagram = b.Diagrams["Test3"];
-            Assert.NotNull(diagram);
-            Assert.Equal(3, diagram.GetEntities().Count());
+    [Fact]
+    public void T07_Should_add_related_class_to_diagram()
+    {
+        var b = new ReflectionProjectBuilder(true)
+            .WithAssembly(typeof(DiagramTests).Assembly)
+            .Build();
+        Assert.NotNull(b);
+        Assert.True(b.Diagrams.ContainsKey("Test3"));
+        var diagram = b.Diagrams["Test3"];
+        Assert.NotNull(diagram);
+        Assert.Equal(3, diagram.GetEntities().Count());
 
-            var file = diagram.CreateFile();
-            Assert.NotNull(file);
-            var code = file.Code;
-            Save(code);
+        var file = diagram.CreateFile();
+        Assert.NotNull(file);
+        var code = file.Code;
+        Save(code);
 
-            var expected = @"@startuml
+        var expected = @"@startuml
 title
  Diagram Test3
 end title
@@ -291,35 +290,35 @@ Order3 ""bla 1"" *-[#yellow]up-|> ""bla 2"" CompanyInfo:Customer2
 Order3 *-----{ OrderItem3:Items
 @enduml
 ";
-            Assert.Equal(expected, code);
-        }
+        Assert.Equal(expected, code);
+    }
 
 
-        [Fact]
-        public void T08_Should_add_metadata_with_reflection()
-        {
-            var b = new ReflectionProjectBuilder(true)
-                .WithAssembly(typeof(DiagramTests).Assembly)
-                .Build();
-            Assert.NotNull(b);
-            Assert.True(b.Diagrams.ContainsKey("Test3"));
-            var diagram = b.Diagrams["Test3"];
-            Assert.NotNull(diagram);
+    [Fact]
+    public void T08_Should_add_metadata_with_reflection()
+    {
+        var b = new ReflectionProjectBuilder(true)
+            .WithAssembly(typeof(DiagramTests).Assembly)
+            .Build();
+        Assert.NotNull(b);
+        Assert.True(b.Diagrams.ContainsKey("Test3"));
+        var diagram = b.Diagrams["Test3"];
+        Assert.NotNull(diagram);
 
-            var x = diagram.TryGetEntityByType(typeof(Order3));
-            Assert.Equal("world", x.TryGetStringMetadata("hello"));
-            Assert.Null(x.TryGetStringMetadata("hello 2"));
+        var x = diagram.TryGetEntityByType(typeof(Order3));
+        Assert.Equal("world", x.TryGetStringMetadata("hello"));
+        Assert.Null(x.TryGetStringMetadata("hello 2"));
 
-            x = diagram.TryGetEntityByType(typeof(OrderItem3));
-            Assert.Null(x.TryGetStringMetadata("hello"));
-            Assert.Null(x.TryGetStringMetadata("hello 2"));
+        x = diagram.TryGetEntityByType(typeof(OrderItem3));
+        Assert.Null(x.TryGetStringMetadata("hello"));
+        Assert.Null(x.TryGetStringMetadata("hello 2"));
             
             
-            var file = diagram.CreateFile();
-            Assert.NotNull(file);
-            var code = file.Code;
-            Save(code);
-            string expected=@"@startuml
+        var file = diagram.CreateFile();
+        Assert.NotNull(file);
+        var code = file.Code;
+        Save(code);
+        string expected=@"@startuml
 title
  Diagram Test3
 end title
@@ -351,45 +350,45 @@ Order3 ""bla 1"" *-[#yellow]up-|> ""bla 2"" CompanyInfo:Customer2
 Order3 *-----{ OrderItem3:Items
 @enduml
 ";
-            Assert.Equal(expected, code);
-        }
+        Assert.Equal(expected, code);
+    }
 
 
-        [Fact]
-        public void T09_Should_add_sprite()
+    [Fact]
+    public void T09_Should_add_sprite()
+    {
+        var b = new ReflectionProjectBuilder(true)
+            .WithAssembly(typeof(DiagramTests).Assembly)
+            .Build();
+        Assert.NotNull(b);
+        Assert.True(b.Diagrams.ContainsKey("Test"));
+        var diag = b.Diagrams["Test"];
+        Assert.NotNull(diag);
+
+        diag.Sprites["test"] = new UmlSprite
         {
-            var b = new ReflectionProjectBuilder(true)
-                .WithAssembly(typeof(DiagramTests).Assembly)
-                .Build();
-            Assert.NotNull(b);
-            Assert.True(b.Diagrams.ContainsKey("Test"));
-            var diag = b.Diagrams["Test"];
-            Assert.NotNull(diag);
-
-            diag.Sprites["test"] = new UmlSprite
-            {
-                Width     = 50,
-                Height    = 100,
-                GrayLevel = SpriteGrayLevels.Level8,
-                Zipped    = true,
-                Data =
-                    @"xTH5ZiL034NHHzd_aflHglgMco5t6fsW7M3UcJW5yL0u6WlE0Esf-Fp7OAB7IA1FUP4jjimHxvFiUrUhpqqyzSXARDuKMIkF8SpI5un8viBuR07YSpiZr-Ex
+            Width     = 50,
+            Height    = 100,
+            GrayLevel = SpriteGrayLevels.Level8,
+            Zipped    = true,
+            Data =
+                @"xTH5ZiL034NHHzd_aflHglgMco5t6fsW7M3UcJW5yL0u6WlE0Esf-Fp7OAB7IA1FUP4jjimHxvFiUrUhpqqyzSXARDuKMIkF8SpI5un8viBuR07YSpiZr-Ex
 1udm72ddBks43nEFqKvYIqxO3wES8nQ9cnot6y8aVk9qr6s8Ok8v9Mm5oo4F1N-cy4Pe9o2kHLX44nDNqHFD19HO9EaYzgd-z_ietoNCEXCk9Q76N2IEkHVK
 UWwv5Kf7gk1AW8vxKObc0aeu4t0y54mq4r3CNbGo5107egQfeAE2QvHVbYD-QYsKVMi1NWXVtHav1J6dGlYlmiCHrn7N96dlV6JTbYXcRNED-PEVmiHlxXe
 "
-            };
-            /*
-            var rel = diag.Relations.Single();
-            rel.Note           = "<$test>Note on rel";
-            rel.NoteBackground = new GradientColorFill(UmlColor.Aqua, UmlColor.AliceBlue, GradientDirection.DownRight);
- */
-            diag.GetEntities().First().Members.Add(new UmlTextMember(UmlSprite.MakeCode("test")));
-            var file = diag.CreateFile();
-            Assert.NotNull(file);
-            var code = file.Code;
-            Save(code);
+        };
+        /*
+        var rel = diag.Relations.Single();
+        rel.Note           = "<$test>Note on rel";
+        rel.NoteBackground = new GradientColorFill(UmlColor.Aqua, UmlColor.AliceBlue, GradientDirection.DownRight);
+*/
+        diag.GetEntities().First().Members.Add(new UmlTextMember(UmlSprite.MakeCode("test")));
+        var file = diag.CreateFile();
+        Assert.NotNull(file);
+        var code = file.Code;
+        Save(code);
 
-            var expected = @"@startuml
+        var expected = @"@startuml
 title
  Diagram Test
 end title
@@ -410,26 +409,26 @@ class OrderItem
 Order --{ OrderItem:Items
 @enduml
 ";
-            Assert.Equal(expected, code);
-        }
+        Assert.Equal(expected, code);
+    }
 
-        [Fact]
-        public void T10_Should_create_packages()
-        {
-            var b = new ReflectionProjectBuilder(true)
-                .WithAssembly(typeof(DiagramTests).Assembly)
-                .Build();
-            Assert.NotNull(b);
-            Assert.True(b.Diagrams.ContainsKey("Test4"));
-            var diagram = b.Diagrams["Test4"];
-            Assert.NotNull(diagram);
+    [Fact]
+    public void T10_Should_create_packages()
+    {
+        var b = new ReflectionProjectBuilder(true)
+            .WithAssembly(typeof(DiagramTests).Assembly)
+            .Build();
+        Assert.NotNull(b);
+        Assert.True(b.Diagrams.ContainsKey("Test4"));
+        var diagram = b.Diagrams["Test4"];
+        Assert.NotNull(diagram);
 
-            var file = diagram.CreateFile();
-            Assert.NotNull(file);
-            var code = file.Code;
-            Save(code);
+        var file = diagram.CreateFile();
+        Assert.NotNull(file);
+        var code = file.Code;
+        Save(code);
 
-            var expected = @"@startuml
+        var expected = @"@startuml
 title
  Diagram Test4
 end title
@@ -461,27 +460,27 @@ OrderItem4 o--> OrderItem4Related1:""DoSomething1(a)""
 OrderItem4 o--> OrderItem4Related3:""DoSomething2()""
 @enduml
 ";
-            Assert.Equal(expected, code);
-        }
+        Assert.Equal(expected, code);
+    }
 
-        [Fact]
-        public void T11_Should_convert_generics()
-        {
-            var b = new ReflectionProjectBuilder(true)
-                .WithAssembly(typeof(DiagramTests).Assembly)
-                .Build();
-            Assert.NotNull(b);
-            const string diagramName = "Generics";
-            Assert.True(b.Diagrams.ContainsKey(diagramName));
-            var diagram = b.Diagrams[diagramName];
-            Assert.NotNull(diagram);
+    [Fact]
+    public void T11_Should_convert_generics()
+    {
+        var b = new ReflectionProjectBuilder(true)
+            .WithAssembly(typeof(DiagramTests).Assembly)
+            .Build();
+        Assert.NotNull(b);
+        const string diagramName = "Generics";
+        Assert.True(b.Diagrams.ContainsKey(diagramName));
+        var diagram = b.Diagrams[diagramName];
+        Assert.NotNull(diagram);
 
-            var file = diagram.CreateFile();
-            Assert.NotNull(file);
-            var code = file.Code;
-            Save(code);
+        var file = diagram.CreateFile();
+        Assert.NotNull(file);
+        var code = file.Code;
+        Save(code);
 
-            var expected = @"@startuml
+        var expected = @"@startuml
 title
  Diagram Generics
 end title
@@ -505,29 +504,29 @@ class NonGeneric
 NonGeneric -up-|> ""Generic2<TModel,TElement>"":""TModel=int, TElement=string""
 @enduml
 ";
-            Assert.Equal(expected, code);
-        }
+        Assert.Equal(expected, code);
+    }
 
-        [Fact]
-        public void T12_Should_mark_static_method()
-        {
-            var b = new ReflectionProjectBuilder(true)
-                .UpdateVisitor<ClassMemberScannerVisitor>(a => { a.ScanFlags |= ReflectionFlags.StaticMethod; })
-                .WithAssembly(typeof(DiagramTests).Assembly)
-                .Build();
+    [Fact]
+    public void T12_Should_mark_static_method()
+    {
+        var b = new ReflectionProjectBuilder(true)
+            .UpdateVisitor<ClassMemberScannerVisitor>(a => { a.ScanFlags |= ReflectionFlags.StaticMethod; })
+            .WithAssembly(typeof(DiagramTests).Assembly)
+            .Build();
 
-            Assert.NotNull(b);
-            const string diagramName = "Test4";
-            Assert.True(b.Diagrams.ContainsKey(diagramName));
-            var diagram = b.Diagrams[diagramName];
-            Assert.NotNull(diagram);
+        Assert.NotNull(b);
+        const string diagramName = "Test4";
+        Assert.True(b.Diagrams.ContainsKey(diagramName));
+        var diagram = b.Diagrams[diagramName];
+        Assert.NotNull(diagram);
 
-            var file = diagram.CreateFile();
-            Assert.NotNull(file);
-            var code = file.Code;
-            Save(code);
+        var file = diagram.CreateFile();
+        Assert.NotNull(file);
+        var code = file.Code;
+        Save(code);
 
-            var expected = @"@startuml
+        var expected = @"@startuml
 title
  Diagram Test4
 end title
@@ -559,29 +558,29 @@ OrderItem4 o--> OrderItem4Related1:""DoSomething1(a)""
 OrderItem4 o--> OrderItem4Related3:""DoSomething2()""
 @enduml
 ";
-            Assert.Equal(expected, code);
-        }
+        Assert.Equal(expected, code);
+    }
 
-        [Fact]
-        public void T13_Should_do_not_convert_collections()
-        {
-            const string diagramName = "Test13";
-            var b = new ReflectionProjectBuilder(true)
-                .UpdateVisitor<ClassMemberScannerVisitor>(a => { a.ScanFlags |= ReflectionFlags.StaticMethod; })
-                .WithAssembly(typeof(DiagramTests).Assembly)
-                .Build();
+    [Fact]
+    public void T13_Should_do_not_convert_collections()
+    {
+        const string diagramName = "Test13";
+        var b = new ReflectionProjectBuilder(true)
+            .UpdateVisitor<ClassMemberScannerVisitor>(a => { a.ScanFlags |= ReflectionFlags.StaticMethod; })
+            .WithAssembly(typeof(DiagramTests).Assembly)
+            .Build();
 
-            Assert.NotNull(b);
-            Assert.True(b.Diagrams.ContainsKey(diagramName));
-            var diagram = b.Diagrams[diagramName];
-            Assert.NotNull(diagram);
+        Assert.NotNull(b);
+        Assert.True(b.Diagrams.ContainsKey(diagramName));
+        var diagram = b.Diagrams[diagramName];
+        Assert.NotNull(diagram);
 
-            var file = diagram.CreateFile();
-            Assert.NotNull(file);
-            var code = file.Code;
-            Save(code);
+        var file = diagram.CreateFile();
+        Assert.NotNull(file);
+        var code = file.Code;
+        Save(code);
 
-            var expected = @"@startuml
+        var expected = @"@startuml
 title
  Diagram Test13
 end title
@@ -653,33 +652,33 @@ AttributesListOwner o--> AttributesList:Attributes2
 AttributesList --> AttributesListItem:Item
 @enduml
 ";
-            Assert.Equal(expected, code);
-        }
+        Assert.Equal(expected, code);
+    }
         
         
-        [Fact]
-        public void T14_Should_do_not_add_relation_to_base_interface()
-        {
-            const string diagramName = "Test14";
-            var b = new ReflectionProjectBuilder(true)
-                .UpdateVisitor<ClassMemberScannerVisitor>(a =>
-                {
-                    a.ScanFlags |= ReflectionFlags.StaticMethod;
-                })
-                .WithAssembly(typeof(DiagramTests).Assembly)
-                .Build();
+    [Fact]
+    public void T14_Should_do_not_add_relation_to_base_interface()
+    {
+        const string diagramName = "Test14";
+        var b = new ReflectionProjectBuilder(true)
+            .UpdateVisitor<ClassMemberScannerVisitor>(a =>
+            {
+                a.ScanFlags |= ReflectionFlags.StaticMethod;
+            })
+            .WithAssembly(typeof(DiagramTests).Assembly)
+            .Build();
 
-            Assert.NotNull(b);
-            Assert.True(b.Diagrams.ContainsKey(diagramName));
-            var diagram = b.Diagrams[diagramName];
-            Assert.NotNull(diagram);
+        Assert.NotNull(b);
+        Assert.True(b.Diagrams.ContainsKey(diagramName));
+        var diagram = b.Diagrams[diagramName];
+        Assert.NotNull(diagram);
 
-            var file = diagram.CreateFile();
-            Assert.NotNull(file);
-            var code = file.Code;
-            Save(code);
+        var file = diagram.CreateFile();
+        Assert.NotNull(file);
+        var code = file.Code;
+        Save(code);
 
-            var expected = @"@startuml
+        var expected = @"@startuml
 title
  Diagram Test14
 end title
@@ -713,33 +712,33 @@ Class14 -up-|> INestedInterface14
 DerivedClass14 -up-|> Class14
 @enduml
 ";
-            Assert.Equal(expected, code);
-        }
+        Assert.Equal(expected, code);
+    }
         
             
-        [Fact]
-        public void T15_Should_do_not_add_relation_property_if_declaring_interface_is_on_diagram()
-        {
-            const string diagramName = "Test15";
-            var b = new ReflectionProjectBuilder(true)
-                .UpdateVisitor<ClassMemberScannerVisitor>(a =>
-                {
-                    a.ScanFlags |= ReflectionFlags.StaticMethod;
-                })
-                .WithAssembly(typeof(DiagramTests).Assembly)
-                .Build();
+    [Fact]
+    public void T15_Should_do_not_add_relation_property_if_declaring_interface_is_on_diagram()
+    {
+        const string diagramName = "Test15";
+        var b = new ReflectionProjectBuilder(true)
+            .UpdateVisitor<ClassMemberScannerVisitor>(a =>
+            {
+                a.ScanFlags |= ReflectionFlags.StaticMethod;
+            })
+            .WithAssembly(typeof(DiagramTests).Assembly)
+            .Build();
 
-            Assert.NotNull(b);
-            Assert.True(b.Diagrams.ContainsKey(diagramName));
-            var diagram = b.Diagrams[diagramName];
-            Assert.NotNull(diagram);
+        Assert.NotNull(b);
+        Assert.True(b.Diagrams.ContainsKey(diagramName));
+        var diagram = b.Diagrams[diagramName];
+        Assert.NotNull(diagram);
 
-            var file = diagram.CreateFile();
-            Assert.NotNull(file);
-            var code = file.Code;
-            Save(code);
+        var file = diagram.CreateFile();
+        Assert.NotNull(file);
+        var code = file.Code;
+        Save(code);
 
-            var expected = @"@startuml
+        var expected = @"@startuml
 title
  Diagram Test15
 end title
@@ -779,33 +778,33 @@ Interface15D -up-|> Interface15C
 Class15 -up-|> Interface15D
 @enduml
 ";
-            Assert.Equal(expected, code);
-        }
+        Assert.Equal(expected, code);
+    }
         
         
-        [Fact]
-        public void T16_Should_add_starting_lines()
-        {
-            const string diagramName = "Test16";
-            var b = new ReflectionProjectBuilder(true)
-                .UpdateVisitor<ClassMemberScannerVisitor>(a =>
-                {
-                    a.ScanFlags |= ReflectionFlags.StaticMethod;
-                })
-                .WithAssembly(typeof(DiagramTests).Assembly)
-                .Build();
+    [Fact]
+    public void T16_Should_add_starting_lines()
+    {
+        const string diagramName = "Test16";
+        var b = new ReflectionProjectBuilder(true)
+            .UpdateVisitor<ClassMemberScannerVisitor>(a =>
+            {
+                a.ScanFlags |= ReflectionFlags.StaticMethod;
+            })
+            .WithAssembly(typeof(DiagramTests).Assembly)
+            .Build();
 
-            Assert.NotNull(b);
-            Assert.True(b.Diagrams.ContainsKey(diagramName));
-            var diagram = b.Diagrams[diagramName];
-            Assert.NotNull(diagram);
+        Assert.NotNull(b);
+        Assert.True(b.Diagrams.ContainsKey(diagramName));
+        var diagram = b.Diagrams[diagramName];
+        Assert.NotNull(diagram);
 
-            var file = diagram.CreateFile();
-            Assert.NotNull(file);
-            var code = file.Code;
-            Save(code);
+        var file = diagram.CreateFile();
+        Assert.NotNull(file);
+        var code = file.Code;
+        Save(code);
 
-            var expected = @"@startuml
+        var expected = @"@startuml
 title
  Diagram Test16
 end title
@@ -821,33 +820,33 @@ class Info16A
 
 @enduml
 ";
-            Assert.Equal(expected, code);
-        }
+        Assert.Equal(expected, code);
+    }
         
         
-        [Fact]
-        public void T17_Should_add_symbols_legend()
-        {
-            const string diagramName = "Test17";
-            var b = new ReflectionProjectBuilder(true)
-                .UpdateVisitor<ClassMemberScannerVisitor>(a =>
-                {
-                    a.ScanFlags |= ReflectionFlags.StaticMethod;
-                })
-                .WithAssembly(typeof(DiagramTests).Assembly)
-                .Build();
+    [Fact]
+    public void T17_Should_add_symbols_legend()
+    {
+        const string diagramName = "Test17";
+        var b = new ReflectionProjectBuilder(true)
+            .UpdateVisitor<ClassMemberScannerVisitor>(a =>
+            {
+                a.ScanFlags |= ReflectionFlags.StaticMethod;
+            })
+            .WithAssembly(typeof(DiagramTests).Assembly)
+            .Build();
 
-            Assert.NotNull(b);
-            Assert.True(b.Diagrams.ContainsKey(diagramName));
-            var diagram = b.Diagrams[diagramName];
-            Assert.NotNull(diagram);
+        Assert.NotNull(b);
+        Assert.True(b.Diagrams.ContainsKey(diagramName));
+        var diagram = b.Diagrams[diagramName];
+        Assert.NotNull(diagram);
 
-            var file = diagram.CreateFile();
-            Assert.NotNull(file);
-            var code = file.Code;
-            Save(code);
+        var file = diagram.CreateFile();
+        Assert.NotNull(file);
+        var code = file.Code;
+        Save(code);
 
-            var expected = @"@startuml
+        var expected = @"@startuml
 title
  Diagram Test17
 end title
@@ -864,35 +863,35 @@ endlegend
 
 @enduml
 ";
-            Assert.Equal(expected, code);
-        }
+        Assert.Equal(expected, code);
+    }
         
         
            
-        [Fact]
-        public void T17a_Should_hide_empty_methods()
-        {
-            const string diagramName = "Test17";
-            var b = new ReflectionProjectBuilder(true)
-                .UpdateVisitor<ClassMemberScannerVisitor>(a =>
-                {
-                    a.ScanFlags |= ReflectionFlags.StaticMethod;
-                })
-                .WithAssembly(typeof(DiagramTests).Assembly)
-                .Build();
+    [Fact]
+    public void T17a_Should_hide_empty_methods()
+    {
+        const string diagramName = "Test17";
+        var b = new ReflectionProjectBuilder(true)
+            .UpdateVisitor<ClassMemberScannerVisitor>(a =>
+            {
+                a.ScanFlags |= ReflectionFlags.StaticMethod;
+            })
+            .WithAssembly(typeof(DiagramTests).Assembly)
+            .Build();
 
-            Assert.NotNull(b);
-            Assert.True(b.Diagrams.ContainsKey(diagramName));
-            var diagram = b.Diagrams[diagramName];
-            Assert.NotNull(diagram);
-            diagram.HideEmptyMethods = true;
+        Assert.NotNull(b);
+        Assert.True(b.Diagrams.ContainsKey(diagramName));
+        var diagram = b.Diagrams[diagramName];
+        Assert.NotNull(diagram);
+        diagram.HideEmptyMethods = true;
 
-            var file = diagram.CreateFile();
-            Assert.NotNull(file);
-            var code = file.Code;
-            Save(code);
+        var file = diagram.CreateFile();
+        Assert.NotNull(file);
+        var code = file.Code;
+        Save(code);
 
-            var expected = @"@startuml
+        var expected = @"@startuml
 hide empty methods
 title
  Diagram Test17
@@ -910,34 +909,34 @@ endlegend
 
 @enduml
 ";
-            Assert.Equal(expected, code);
-        }
+        Assert.Equal(expected, code);
+    }
      
            
-        [Fact]
-        public void T17b_Should_hide_empty_attributes()
-        {
-            const string diagramName = "Test17";
-            var b = new ReflectionProjectBuilder(true)
-                .UpdateVisitor<ClassMemberScannerVisitor>(a =>
-                {
-                    a.ScanFlags |= ReflectionFlags.StaticMethod;
-                })
-                .WithAssembly(typeof(DiagramTests).Assembly)
-                .Build();
+    [Fact]
+    public void T17b_Should_hide_empty_attributes()
+    {
+        const string diagramName = "Test17";
+        var b = new ReflectionProjectBuilder(true)
+            .UpdateVisitor<ClassMemberScannerVisitor>(a =>
+            {
+                a.ScanFlags |= ReflectionFlags.StaticMethod;
+            })
+            .WithAssembly(typeof(DiagramTests).Assembly)
+            .Build();
 
-            Assert.NotNull(b);
-            Assert.True(b.Diagrams.ContainsKey(diagramName));
-            var diagram = b.Diagrams[diagramName];
-            Assert.NotNull(diagram);
-            diagram.HideEmptyAttributes = true;
+        Assert.NotNull(b);
+        Assert.True(b.Diagrams.ContainsKey(diagramName));
+        var diagram = b.Diagrams[diagramName];
+        Assert.NotNull(diagram);
+        diagram.HideEmptyAttributes = true;
 
-            var file = diagram.CreateFile();
-            Assert.NotNull(file);
-            var code = file.Code;
-            Save(code);
+        var file = diagram.CreateFile();
+        Assert.NotNull(file);
+        var code = file.Code;
+        Save(code);
 
-            var expected = @"@startuml
+        var expected = @"@startuml
 hide empty attributes
 title
  Diagram Test17
@@ -955,9 +954,7 @@ endlegend
 
 @enduml
 ";
-            Assert.Equal(expected, code);
-        }
-
+        Assert.Equal(expected, code);
     }
-    
+
 }

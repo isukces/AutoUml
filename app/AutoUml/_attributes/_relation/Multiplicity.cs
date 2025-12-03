@@ -1,20 +1,19 @@
-namespace AutoUml
+namespace AutoUml;
+
+public enum Multiplicity
 {
-    public enum Multiplicity
-    {
-        /// <summary>
-        ///     Auto from reflection
-        /// </summary>
-        Auto,
+    /// <summary>
+    ///     Auto from reflection
+    /// </summary>
+    Auto,
 
-        /// <summary>
-        ///     Force multiple
-        /// </summary>
-        Multiple,
+    /// <summary>
+    ///     Force multiple
+    /// </summary>
+    Multiple,
 
-        /// <summary>
-        ///     Force not multiple
-        /// </summary>
-        Single
-    }
+    /// <summary>
+    ///     Force not multiple
+    /// </summary>
+    Single
 }
