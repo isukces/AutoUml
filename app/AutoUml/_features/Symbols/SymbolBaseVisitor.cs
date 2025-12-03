@@ -38,7 +38,7 @@ public abstract class SymbolBaseVisitor : INewTypeInDiagramVisitor
 
     protected PlantUmlText AddStyle(PlantUmlText? text)
     {
-        if (text is null) 
+        if (text is null)
             return new PlantUmlText("");
         if (SymbolColor != null)
             text = text.WithFontColor(SymbolColor.Value);
@@ -59,9 +59,9 @@ public abstract class SymbolBaseVisitor : INewTypeInDiagramVisitor
 
     public abstract void Visit(UmlDiagram diagram, UmlEntity info);
 
-    public required PlantUmlText Symbol      { get; set; }
-    public required UmlColor?    SymbolColor { get; set; }
-    public          int?         FontSize    { get; set; }
+    public PlantUmlText? Symbol      { get; set; }
+    public UmlColor?     SymbolColor { get; set; }
+    public int?          FontSize    { get; set; }
 
     public event EventHandler<AddStyleToSymbolEventArgs>? AddStyleToSymbol;
 

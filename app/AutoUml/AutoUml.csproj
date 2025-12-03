@@ -9,9 +9,9 @@
     <ProjectGuid>{3F3A2A17-30C4-45D9-833D-1F1470E7509B}</ProjectGuid>
     <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
     <RootNamespace>AutoUml</RootNamespace>
-    <AssemblyVersion>1.25.102.48</AssemblyVersion>
-    <FileVersion>1.25.102.48</FileVersion>
-    <Version>1.25.102.48</Version>
+    <AssemblyVersion>1.25.1203.49</AssemblyVersion>
+    <FileVersion>1.25.1203.49</FileVersion>
+    <Version>1.25.1203.49</Version>
     <LangVersion>14</LangVersion>
     <Nullable>enable</Nullable>
     <SignAssembly>true</SignAssembly>

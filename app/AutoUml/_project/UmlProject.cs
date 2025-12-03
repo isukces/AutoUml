@@ -43,6 +43,13 @@ public class UmlProject
         return x;
     }
 
+    public override string ToString()
+    {
+        return Diagrams.Count == 0
+            ? "Empty project" 
+            : $"{Diagrams.Count} diagrams";
+    }
+
     private void XOnOnAddTypeToDiagram(object? sender, AddTypeToDiagramEventArgs e)
     {
         var handler = OnAddTypeToDiagram;

@@ -1,6 +1,6 @@
 // using System.IO;
 var builder = new ProjectBuilder(){
-	VisualStudioExe = GlobalVar["MsBuild 2022"],
+	VisualStudioExe = GlobalVar["MsBuild 18"],
 	Nuget = {
 		Exe = GlobalVar["Nuget"],
 		RepositoryDir =  GlobalVar["Private Nuget Repository"],
@@ -14,7 +14,10 @@ var builder = new ProjectBuilder(){
 };
 
 builder.DeleteBinObj();  
-builder.Nuget.Restore();  
+// builder.Nuget.Restore();
+Execute("dotnet", "restore", builder.SolutionFileName.FullName);
+
+  
 var version = builder.UpdateVersionCore(VersionNumberStyles.DoNotChange);  
 builder.MsBuild();  
 foreach (var options in new[] { PackageNameOptions.Normal, PackageNameOptions.SNupkg })  
