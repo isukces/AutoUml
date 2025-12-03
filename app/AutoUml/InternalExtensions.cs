@@ -5,31 +5,40 @@ namespace AutoUml;
 
 internal static class InternalExtensions
 {
-    public static IEnumerable<string>? SplitLines(this string? text, bool cutEmpty)
+    extension(string? text)
     {
-        if (string.IsNullOrEmpty(text))
-            return null;
-        var lines = text
-            .Replace("\r\n", "\n")
-            .Split('\n');
-        if (cutEmpty)
-            lines = lines
-                .Where(a => !string.IsNullOrEmpty(a?.Trim()))
-                .ToArray();
-        return lines.Length == 0 ? null : lines;
+        public IEnumerable<string>? SplitLines(bool cutEmpty)
+        {
+            if (string.IsNullOrEmpty(text))
+                return null;
+            var lines = text
+                .Replace("\r\n", "\n")
+                .Split('\n');
+            if (cutEmpty)
+                lines = lines
+                    .Where(a => !string.IsNullOrEmpty(a?.Trim()))
+                    .ToArray();
+            return lines.Length == 0 ? null : lines;
+        }
     }
 
-    public static IEnumerable<string> SplitLines(this PlantUmlText? ptext, bool cutEmpty)
+    extension(PlantUmlText? ptext)
     {
-        var ptextText = ptext?.Text;
-        return ptextText?.SplitLines(cutEmpty) ?? [];
+        public IEnumerable<string> SplitLines(bool cutEmpty)
+        {
+            var ptextText = ptext?.Text;
+            return ptextText?.SplitLines(cutEmpty) ?? [];
+        }
     }
 
-    public static HashSet<TArgument> ToHashSet<TArgument>(this IEnumerable<TArgument> src)
+    extension<TArgument>(IEnumerable<TArgument> src)
     {
-        var result = new HashSet<TArgument>();
-        foreach (var i in src)
-            result.Add(i);
-        return result;
+        public HashSet<TArgument> ToHashSet()
+        {
+            var result = new HashSet<TArgument>();
+            foreach (var i in src)
+                result.Add(i);
+            return result;
+        }
     }
 }

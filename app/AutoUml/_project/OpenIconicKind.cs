@@ -452,8 +452,7 @@ namespace AutoUml {
     }
 
     public static class OpenIconicKindUtils {
-        static readonly string[] Names =
-        [
+        static readonly string[] Names = {
             "account-login",
             "account-logout",
             "action-redo",
@@ -677,7 +676,7 @@ namespace AutoUml {
             "yen",
             "zoom-in",
             "zoom-out"
-        ];
+       };
  
        public static string ToCode(this OpenIconicKind kind)
         {

@@ -12,15 +12,18 @@ public interface IUmlFill
 
 public static class UmlFillExt
 {
-    public static string GetCodeWithSpace(this IUmlFill? fill, bool convertToRgb = false)
+    extension(IUmlFill? fill)
     {
-        var code = fill?.GetCode(convertToRgb);
-        return string.IsNullOrEmpty(code) ? string.Empty : " " + code;
-    }
+        public string GetCodeWithSpace(bool convertToRgb = false)
+        {
+            var code = fill?.GetCode(convertToRgb);
+            return string.IsNullOrEmpty(code) ? string.Empty : " " + code;
+        }
 
-    public static bool IsEmpty(this IUmlFill? fill)
-    {
-        return string.IsNullOrEmpty(fill?.GetCode());
+        public bool IsEmpty()
+        {
+            return string.IsNullOrEmpty(fill?.GetCode());
+        }
     }
 }
 

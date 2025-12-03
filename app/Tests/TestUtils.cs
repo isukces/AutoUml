@@ -6,18 +6,21 @@ namespace Tests;
 
 internal static class TestUtils
 {
-    public static string ToCompareJson(this object obj)
+    extension(object obj)
     {
-        var sb = new StringBuilder();
-        using(var sw = new StringWriter(sb))
-        using(var writer = new JsonTextWriter(sw))
+        public string ToCompareJson()
         {
-            writer.QuoteChar = '\'';
+            var sb = new StringBuilder();
+            using(var sw = new StringWriter(sb))
+            using(var writer = new JsonTextWriter(sw))
+            {
+                writer.QuoteChar = '\'';
 
-            var ser = new JsonSerializer();
-            ser.Serialize(writer, obj);
+                var ser = new JsonSerializer();
+                ser.Serialize(writer, obj);
+            }
+
+            return sb.ToString();
         }
-
-        return sb.ToString();
     }
 }

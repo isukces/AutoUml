@@ -42,23 +42,26 @@ public static class MembersToHideExt
         ];
     }
 
-    public static IReadOnlyList<string> GetPumlCommands(this MembersToHide src, string prefix)
+    extension(MembersToHide src)
     {
-        prefix = prefix?.Trim() + " ";
-        var list = new List<string>();
-        foreach (var test in testItems)
+        public IReadOnlyList<string> GetPumlCommands(string prefix)
         {
-            if ((src & test.Member) != test.Member)
-                continue;
-            list.Add(prefix + test.Command);
-            src &= test.Member;
-        }
+            prefix = prefix?.Trim() + " ";
+            var list = new List<string>();
+            foreach (var test in testItems)
+            {
+                if ((src & test.Member) != test.Member)
+                    continue;
+                list.Add(prefix + test.Command);
+                src &= test.Member;
+            }
 
-        if ((src & MembersToHide.EmptyMembers) != MembersToHide.EmptyMembers)
-        {
-        }
+            if ((src & MembersToHide.EmptyMembers) != MembersToHide.EmptyMembers)
+            {
+            }
 
-        return list;
+            return list;
+        }
     }
 
     private static readonly Test[] testItems;

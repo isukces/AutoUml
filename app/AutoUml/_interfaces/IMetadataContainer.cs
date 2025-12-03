@@ -9,17 +9,20 @@ public interface IMetadataContainer
 
 public static class MetadataContainerExtensions
 {
-    public static string? TryGetStringMetadata(this IMetadataContainer? container, string key)
+    extension(IMetadataContainer? container)
     {
-        if (container == null)
-            return null;
-        if (!container.Metadata.TryGetValue(key, out var x)) return null;
-        switch (x)
+        public string? TryGetStringMetadata(string key)
         {
-            case string s: return s;
-            case null: return null;
-        }
+            if (container == null)
+                return null;
+            if (!container.Metadata.TryGetValue(key, out var x)) return null;
+            switch (x)
+            {
+                case string s: return s;
+                case null: return null;
+            }
 
-        return x.ToString();
+            return x.ToString();
+        }
     }
 }
